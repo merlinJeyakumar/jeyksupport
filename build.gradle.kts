@@ -26,4 +26,5 @@ dependencies {
     roomLibraries()
     supportLibraries()
     imageLoaderLibraries()
+    firebaseLibraries()
 }
