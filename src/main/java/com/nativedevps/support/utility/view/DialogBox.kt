@@ -1,10 +1,13 @@
 package com.nativedevps.support.utility.view
 
 import android.app.Activity
+import android.text.method.ScrollingMovementMethod
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nativedevps.support.custom_views.ArrayDrawableListViewAdapter
+import nativedevps.support.databinding.DialogInformationBinding
 import nativedevps.support.databinding.DialogListBinding
+
 
 object DialogBox {
     fun Activity.confirmationDialog(
@@ -62,6 +65,48 @@ object DialogBox {
             alertDialog = this
             alertDialog?.setOnCancelListener {
                 callback(false, null)
+            }
+        }
+    }
+
+    fun Activity.informationDialog(
+        title: String? = "Alert",
+        message: String,
+        isCancellable: Boolean = true,
+        negativeText: String? = "Close",
+        positiveText: String? = "Okay",
+        callback: (positive: Boolean) -> Unit,
+    ): AlertDialog {
+        var alertDialog: AlertDialog?
+        val binding = DialogInformationBinding.inflate(layoutInflater).apply {
+            messageAppCompatTextView.setText(message)
+            messageAppCompatTextView.setMovementMethod(ScrollingMovementMethod())
+        }
+
+        val materialAlertDialogBuilder = MaterialAlertDialogBuilder(this)
+        materialAlertDialogBuilder.setView(binding.root)
+        materialAlertDialogBuilder.setTitle(title)
+        materialAlertDialogBuilder.setCancelable(isCancellable)
+
+        if (negativeText.isNullOrEmpty()) {
+            materialAlertDialogBuilder.setNegativeButton(negativeText) { dialog, which ->
+                materialAlertDialogBuilder.create().dismiss()
+                callback(false)
+            }
+        }
+        if (positiveText.isNullOrEmpty()) {
+            throw NullPointerException("cannot be empty")
+        }
+
+        materialAlertDialogBuilder.setPositiveButton(positiveText) { dialog, which ->
+            materialAlertDialogBuilder.create().dismiss()
+            callback(true)
+        }
+
+        return materialAlertDialogBuilder.show().apply {
+            alertDialog = this
+            alertDialog?.setOnCancelListener {
+                callback(false)
             }
         }
     }
