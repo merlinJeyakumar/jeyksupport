@@ -8,15 +8,26 @@ import com.nativedevps.support.utility.view.ViewUtils.setLeftDrawable
 import nativedevps.support.R
 import nativedevps.support.databinding.ItemSimpleListViewBinding
 
-class ArrayDrawableListViewAdapter(
+/**
+ * support string based list and left-drawable, string based lists
+ * type should be Pair<Int, String> or Primitive type
+ **/
+class ArrayDrawableListViewAdapter<T>(
     var activity: Activity,
-    var items: List<Pair<Int, String>>,
-) : ArrayAdapter<Pair<Int, String>>(activity, R.layout.item_simple_list_view, items) {
+    var items: List<T>,
+) : ArrayAdapter<T>(activity, R.layout.item_simple_list_view, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding = ItemSimpleListViewBinding.inflate(activity.layoutInflater, parent, false)
-        binding.text1.setLeftDrawable(items[position].first)
-        binding.text1.text = items[position].second
+        val currentItem = items[position]
+        if (currentItem is Pair<*, *>) {
+            (currentItem as Pair<Int, String>).let {
+                binding.text1.setLeftDrawable(it.first)
+                binding.text1.text = it.second
+            }
+        } else {
+            binding.text1.text = currentItem.toString()
+        }
         return binding.root
     }
 }

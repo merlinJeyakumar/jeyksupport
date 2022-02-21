@@ -46,19 +46,19 @@ object DialogBox {
         return materialAlertDialogBuilder.show()
     }
 
-    fun Activity.listDialog(
+    fun <T> Activity.listDialog(
         title: String? = "Alert",
         isCancellable: Boolean = true,
-        stringList: List<Pair<Int, String>>,
+        stringList: List<T>,
         negativeText: String? = getString(R.string.cancel),
-        callback: (success: Boolean, selection: Pair<Int, String>?) -> Unit,
+        callback: (success: Boolean, selection: Pair<Int, T>?) -> Unit,
     ): AlertDialog {
         var alertDialog: AlertDialog? = null
         val binding = DialogListBinding.inflate(layoutInflater)
         binding.itemsListView.adapter = ArrayDrawableListViewAdapter(this, stringList)
         binding.itemsListView.setOnItemClickListener { adapterView, view, position, id ->
             alertDialog?.dismiss()
-            callback(true, Pair(position, stringList[position].second))
+            callback(true, Pair(position, stringList[position]))
         }
         val materialAlertDialogBuilder = MaterialAlertDialogBuilder(this)
         materialAlertDialogBuilder.setView(binding.root)
@@ -180,7 +180,8 @@ object DialogBox {
         return materialAlertDialogBuilder.show().apply {
             alertDialog = this
             this.window?.setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+            );
             alertDialog?.setOnCancelListener {
                 callback(false, null)
             }
