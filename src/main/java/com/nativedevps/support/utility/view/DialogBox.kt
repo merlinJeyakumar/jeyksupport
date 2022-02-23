@@ -137,11 +137,12 @@ object DialogBox {
         dismissOnPositive: Boolean = true,
         setup: ((textInputLayout: TextInputLayout?) -> Unit)? = null,
         callback: (
+            alertDialog:AlertDialog?,
             positive: Boolean,
             textInputLayout: TextInputLayout?,
         ) -> Unit,
     ): AlertDialog {
-        var alertDialog: AlertDialog?
+        var alertDialog: AlertDialog? = null
         val binding = DialogInputBinding.inflate(layoutInflater).apply {
             messageAppCompatTextView.setText(message)
             messageAppCompatTextView.setMovementMethod(ScrollingMovementMethod())
@@ -165,7 +166,7 @@ object DialogBox {
         if (!negativeText.isNullOrEmpty()) {
             materialAlertDialogBuilder.setNegativeButton(negativeText) { dialog, which ->
                 materialAlertDialogBuilder.create().dismiss()
-                callback(false, binding.inputTextInputLayout)
+                callback(null,false, binding.inputTextInputLayout)
             }
         }
         if (positiveText.isNullOrEmpty()) {
@@ -180,14 +181,14 @@ object DialogBox {
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
             );
             alertDialog?.setOnCancelListener {
-                callback(false, null)
+                callback(alertDialog,false, null)
             }
             alertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
                 setOnClickListener {
                     if (dismissOnPositive) {
                         alertDialog?.dismiss()
                     }
-                    callback(true, binding.inputTextInputLayout)
+                    callback(alertDialog,true, binding.inputTextInputLayout)
                 }
             }
         }
