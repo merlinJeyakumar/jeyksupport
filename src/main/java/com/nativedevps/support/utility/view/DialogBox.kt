@@ -67,7 +67,7 @@ object DialogBox {
 
         if (negativeText != null) {
             materialAlertDialogBuilder.setNegativeButton(negativeText) { dialog, which ->
-                materialAlertDialogBuilder.create().dismiss()
+                alertDialog?.dismiss()
                 callback(false, null)
             }
         }
@@ -134,6 +134,7 @@ object DialogBox {
         isCancellable: Boolean = true,
         negativeText: String? = getString(R.string.cancel),
         positiveText: String? = getString(R.string.ok),
+        dismissOnPositive: Boolean = true,
         setup: ((textInputLayout: TextInputLayout?) -> Unit)? = null,
         callback: (
             positive: Boolean,
@@ -147,8 +148,7 @@ object DialogBox {
 
             inputTextInputLayout.isHintEnabled = true
             inputTextInputLayout.hint = hint
-            inputTextInputLayout.isPasswordVisibilityToggleEnabled =
-                inputType == InputType_WebPassword
+            inputTextInputLayout.isPasswordVisibilityToggleEnabled = inputType == InputType_WebPassword
 
             inputTextInputLayout.editText?.apply {
                 setInputType(inputType)
@@ -172,10 +172,7 @@ object DialogBox {
             throw NullPointerException("cannot be empty")
         }
 
-        materialAlertDialogBuilder.setPositiveButton(positiveText) { dialog, which ->
-            materialAlertDialogBuilder.create().dismiss()
-            callback(true, binding.inputTextInputLayout)
-        }
+        materialAlertDialogBuilder.setPositiveButton(positiveText,null)
 
         return materialAlertDialogBuilder.show().apply {
             alertDialog = this
@@ -184,6 +181,14 @@ object DialogBox {
             );
             alertDialog?.setOnCancelListener {
                 callback(false, null)
+            }
+            alertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
+                setOnClickListener {
+                    if (dismissOnPositive) {
+                        alertDialog?.dismiss()
+                    }
+                    callback(true, binding.inputTextInputLayout)
+                }
             }
         }
     }
