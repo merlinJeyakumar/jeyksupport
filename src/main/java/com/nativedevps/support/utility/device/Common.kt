@@ -10,13 +10,15 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import nativedevps.support.R
 import java.io.File
 
 object Common {
     fun Activity.shareText(
         description: String,
-        subject: String? =null,
+        subject: String? = null,
     ) {
 
         // The value which we will sending through data via
@@ -138,5 +140,18 @@ object Common {
             url = "http://$url"
         }
         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+
+    fun Context.isGooglePlayServicesAvailable(): Boolean {
+        val apiAvailability: GoogleApiAvailability = GoogleApiAvailability.getInstance()
+        val connectionStatusCode: Int = apiAvailability.isGooglePlayServicesAvailable(this)
+        return connectionStatusCode == ConnectionResult.SUCCESS
+    }
+
+    fun Context.acquireGooglePlayServices(): Pair<Boolean,Int> {
+        val apiAvailability: GoogleApiAvailability = GoogleApiAvailability.getInstance()
+        val connectionStatusCode: Int = apiAvailability.isGooglePlayServicesAvailable(this)
+        return Pair(apiAvailability.isUserResolvableError(connectionStatusCode),
+            connectionStatusCode)
     }
 }
