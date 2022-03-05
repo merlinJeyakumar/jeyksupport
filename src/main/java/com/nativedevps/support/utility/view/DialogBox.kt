@@ -86,7 +86,7 @@ object DialogBox {
         isCancellable: Boolean = true,
         negativeText: String? = getString(R.string.close),
         positiveText: String? = getString(R.string.ok),
-        callback: (positive: Boolean) -> Unit,
+        callback: ((positive: Boolean) -> Unit?)? = null,
     ): AlertDialog {
         var alertDialog: AlertDialog?
         val binding = DialogInformationBinding.inflate(layoutInflater).apply {
@@ -102,7 +102,7 @@ object DialogBox {
         if (negativeText.isNullOrEmpty()) {
             materialAlertDialogBuilder.setNegativeButton(negativeText) { dialog, which ->
                 materialAlertDialogBuilder.create().dismiss()
-                callback(false)
+                callback?.invoke(false)
             }
         }
         if (positiveText.isNullOrEmpty()) {
@@ -111,13 +111,13 @@ object DialogBox {
 
         materialAlertDialogBuilder.setPositiveButton(positiveText) { dialog, which ->
             materialAlertDialogBuilder.create().dismiss()
-            callback(true)
+            callback?.invoke(true)
         }
 
         return materialAlertDialogBuilder.show().apply {
             alertDialog = this
             alertDialog?.setOnCancelListener {
-                callback(false)
+                callback?.invoke(false)
             }
         }
     }
