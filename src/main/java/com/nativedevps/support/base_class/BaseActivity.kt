@@ -17,7 +17,7 @@ import java.util.*
 
 
 abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
-    internal val bindingFactory: Int,
+    bindingFactory: Int,
     private val viewModelClass: Class<VM>,
 ) : AppCompatActivity() {
     protected val viewModel: VM by lazy { ViewModelProvider(this).get(viewModelClass) }
