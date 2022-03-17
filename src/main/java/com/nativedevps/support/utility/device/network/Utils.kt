@@ -7,6 +7,19 @@ import android.net.NetworkCapabilities
 import android.net.NetworkCapabilities.TRANSPORT_CELLULAR
 import android.net.NetworkInfo
 import android.os.Build
+import android.util.Log
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.internal.Util
+import okio.BufferedSink
+import okio.BufferedSource
+import okio.Okio
+import java.io.File
+import java.io.IOException
+import java.util.*
 
 
 @SuppressLint("MissingPermission")
@@ -71,4 +84,47 @@ fun Context.isConnectedToWifi(): Boolean {
                 ?: return false
         networkInfo.isConnected
     }
+}
+
+/**
+ * @param url:      donwload url
+ * @param destFile: output path
+ * @return Rxjava.Observable
+ */
+fun okioFileDownload(url: String, destFile: File): Observable<Int>? {
+    return Observable.create<Int> { emitter ->
+        var sink: BufferedSink? = null
+        var source: BufferedSource? = null
+        val lastProgress = 0
+        try {
+            val request = Request.Builder().url(url).build()
+            val response = OkHttpClient().newCall(request).execute()
+            val body = response.body()
+            val contentLength = body!!.contentLength()
+            source = body.source()
+            sink = Okio.buffer(Okio.sink(destFile))
+            val sinkBuffer = sink.buffer()
+            var totalBytesRead: Long = 0
+            val bufferSize = 6 * 1024
+            var bytesRead: Long
+            while (source.read(sinkBuffer, bufferSize.toLong()).also { bytesRead = it } != -1L) {
+                sink.emit()
+                totalBytesRead += bytesRead
+                val progress = (totalBytesRead * 100 / contentLength).toInt()
+                if (lastProgress != progress) { //reduce_redundant_callback
+                    emitter.onNext(progress)
+                }
+            }
+            sink.flush()
+        } catch (e: IOException) {
+            Log.e("@@@", "IOException --- ", e)
+            emitter.onError(e)
+        } finally {
+            Util.closeQuietly(sink)
+            Util.closeQuietly(source)
+        }
+        emitter.onComplete()
+    }
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
 }

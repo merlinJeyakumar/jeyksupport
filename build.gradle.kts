@@ -27,4 +27,5 @@ dependencies {
     supportLibraries()
     imageLoaderLibraries()
     firebaseLibraries()
+    rxJavaLibraries()
 }
