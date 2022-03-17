@@ -43,8 +43,8 @@ suspend fun Context.downloadFile(
     } catch (e: IOException) {
         callbackStatusUpdate.invoke(false,null, e.localizedMessage)
     } finally {
-        Util.closeQuietly(sink)
-        Util.closeQuietly(source)
+        sink ?: Util.closeQuietly(sink)
+        source ?: Util.closeQuietly(source)
     }
     callbackStatusUpdate.invoke(true, destFile, null)
 }
