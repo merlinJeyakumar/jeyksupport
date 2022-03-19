@@ -4,18 +4,18 @@ import android.content.Context
 import com.nativedevps.support.utility.date_time_utility.MillisecondUtility.now
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.internal.Util
 import okio.BufferedSink
 import okio.BufferedSource
 import okio.Okio
 import java.io.File
 import java.io.IOException
+import java.lang.Exception
 
 suspend fun Context.downloadFile(
     url: String,
-    destFile: File = File(cacheDir, "file_${now}"),
+    destFile: File,
     callbackProgress: (int: Int) -> Unit,
-    callbackStatusUpdate: (boolean: Boolean, file:File?, error: String?) -> Unit
+    callbackStatusUpdate: (boolean: Boolean, file: File?, error: String?) -> Unit
 ) {
     var sink: BufferedSink? = null
     var source: BufferedSource? = null
@@ -40,11 +40,11 @@ suspend fun Context.downloadFile(
             }
         }
         sink.flush()
-    } catch (e: IOException) {
-        callbackStatusUpdate.invoke(false,null, e.localizedMessage)
+        callbackStatusUpdate.invoke(true, destFile, null)
+    } catch (e: Exception) {
+        callbackStatusUpdate.invoke(false, null, e.localizedMessage)
     } finally {
-        sink ?: Util.closeQuietly(sink)
-        source ?: Util.closeQuietly(source)
+        sink?.close()
+        source?.close()
     }
-    callbackStatusUpdate.invoke(true, destFile, null)
 }
