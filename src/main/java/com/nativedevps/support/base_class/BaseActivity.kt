@@ -2,6 +2,7 @@ package com.nativedevps.support.base_class
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
@@ -42,7 +43,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     }
 
     private fun initObserver() {
-        viewModel.liveDataProgressBar.observe(this, { triple ->
+        viewModel.liveDataProgressBar.observe(this) { triple ->
             if (triple.first) {
                 progressDialog?.setProgress(triple.second).orElse {
                     progressDialog = ProgressDialog(this)
@@ -52,7 +53,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
                 progressDialog?.dismiss()
                 progressDialog = null
             }
-        })
+        }
     }
 
     private fun initBinding() {
@@ -69,6 +70,20 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             callback()
+        }
+    }
+
+    open fun showProgressDialog(message: String = "loading..", progress: Int = -1) {
+        Log.e("JK", "showProgressDialog")
+        runOnUiThread {
+            viewModel.liveDataProgressBar.value = Triple(true, progress, message)
+        }
+    }
+
+    open fun hideProgressDialog() {
+        Log.e("JK", "hideProgressDialog")
+        runOnUiThread {
+            viewModel.liveDataProgressBar.value = Triple(false, -1, "")
         }
     }
 
