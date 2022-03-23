@@ -52,7 +52,7 @@ fun JLogE(tag: String, message: String) {
 }
 
 fun Context.JLogE(message: String) {
-    JLogI("Error: ${this.javaClass.simpleName}-", message)
+    JLogE("Error: ${this.javaClass.simpleName}-", message)
 }
 
 fun JLogW(message: String) {
