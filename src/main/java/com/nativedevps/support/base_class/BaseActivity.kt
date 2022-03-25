@@ -73,6 +73,12 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
         }
     }
 
+    fun CoroutineScope.runOnUiThread(callback: suspend CoroutineScope.() -> Unit) {
+        CoroutineScope(Dispatchers.Main).launch {
+            callback()
+        }
+    }
+
     open fun showProgressDialog(message: String = "loading..", progress: Int = -1) {
         Log.e("JK", "showProgressDialog")
         runOnUiThread {
