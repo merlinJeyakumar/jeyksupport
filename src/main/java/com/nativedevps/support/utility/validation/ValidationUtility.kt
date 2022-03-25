@@ -25,13 +25,14 @@ import java.util.regex.Pattern
  */
 object ValidationUtility {
 
-    fun showToast(context: Context, message: String) = Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    fun showToast(context: Context, message: String) =
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 
     private fun isNullOrEmpty(input: String?): Boolean = input == null || input.isEmpty()
 
     fun isValidUsername(username: String?, regex: String = "^[a-zA-Z0-9._-]{3,20}$"): Boolean {
         return !isNullOrEmpty(username) &&
-        Pattern.matches(regex, username)
+                Pattern.matches(regex, username)
     }
 
     fun isValidEmail(email: String?): Boolean {
@@ -43,12 +44,28 @@ object ValidationUtility {
     }
 
     fun isValidPassword(password: String?): String? {
-        return  when {
+        return when {
             isNullOrEmpty(password) -> "Please enter Password first."
             password!!.length < 6 -> "Password length should not be less than 6 characters"
             password.length > 30 -> "Password length should not be greater than 30 characters"
             else -> return null
         }
+    }
+
+    /**
+     *password must contain 1 number (0-9)
+     *password must contain 1 uppercase letters
+     *password must contain 1 lowercase letters
+     *password must contain 1 non-alpha numeric number
+     *password is 8-16 characters with no space
+     *
+     * https://regex101.com/library/0bH043?orderBy=RELEVANCE&search=password
+     **/
+    fun isSecurePassword(password: String): Boolean {
+        return Pattern.matches(
+            "^(?=.*\\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\\w\\d\\s:])([^\\s]){8,16}\$",
+            password
+        )
     }
 
     fun isValidName(txtInput: String?): String? {
