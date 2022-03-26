@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
@@ -37,8 +38,8 @@ abstract class BaseViewModel constructor(application: Application) :
         context.toast(string)
     }
 
-    fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit) {
-        CoroutineScope(Dispatchers.IO).launch {
+    fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit): Job {
+        return CoroutineScope(Dispatchers.IO).launch {
             callback()
         }
     }
