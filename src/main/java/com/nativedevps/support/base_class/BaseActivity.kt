@@ -47,11 +47,13 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
             if (triple.first) {
                 progressDialog?.setProgress(triple.second).orElse {
                     progressDialog = ProgressDialog(this)
+                    progressDialog?.setOnDismissListener {
+                        progressDialog = null
+                    }
                 }
                 progressDialog?.setMessage(triple.third)?.build()
             } else {
                 progressDialog?.dismiss()
-                progressDialog = null
             }
         }
     }
