@@ -2,6 +2,7 @@ package com.nativedevps.support.custom_views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.Editable;
 import android.util.AttributeSet;
@@ -40,7 +41,7 @@ public class OneTimePasswordEditText extends AppCompatEditText {
         mLineStroke = multi * mLineStroke;
         mLinesPaint = new Paint(getPaint());
         mLinesPaint.setStrokeWidth(mLineStroke);
-        mLinesPaint.setColor(getResources().getColor(R.color.trans_gray));
+        mLinesPaint.setColor(getResources().getColor(R.color.trans_gray)); //underline_color
         setBackgroundResource(0);
         mSpace = multi * mSpace; //convert to pixels for our density
         mLineSpacing = multi * mLineSpacing; //convert to pixels for our density
@@ -86,6 +87,7 @@ public class OneTimePasswordEditText extends AppCompatEditText {
         int textLength = text.length();
         float[] textWidths = new float[textLength];
         getPaint().getTextWidths(getText(), 0, textLength, textWidths);
+        getPaint().setColor(Color.WHITE); //text_color
 
         for (int i = 0; i < mNumChars; i++) {
             canvas.drawLine(startX, bottom, startX + mCharSize, bottom, mLinesPaint);
