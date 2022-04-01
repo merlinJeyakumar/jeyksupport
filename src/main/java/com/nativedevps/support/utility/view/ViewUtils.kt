@@ -123,6 +123,18 @@ object ViewUtils {
         dispatchTouchEvent(motionEvent)
     }
 
+    fun View.invertVisibility(gone: Boolean = true) {
+        if (this.visibility == View.VISIBLE) {
+            this.visibility = if (gone) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
+        } else {
+            this.visibility = View.VISIBLE
+        }
+    }
+
     fun View.gone() {
         this.visibility = View.GONE
     }
