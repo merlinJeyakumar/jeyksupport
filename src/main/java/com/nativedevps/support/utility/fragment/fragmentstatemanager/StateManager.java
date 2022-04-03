@@ -28,7 +28,7 @@ public class StateManager {
      */
 
     public static StateManager buildInstance(@NonNull StateManagerBuilder builder) {
-        if(instance == null) {
+        if (instance == null) {
             instance = new StateManager(builder);
         }
         return instance;
@@ -65,11 +65,10 @@ public class StateManager {
      */
 
     public void showOnNavigationClick(int id, Fragment fragment) {
-        if(bottomNavigations.get(id).isEmpty()) {
+        if (bottomNavigations.get(id).isEmpty()) {
             bottomNavigations.get(id).push(fragment);
             manageFragments(fragment, id, false);
-        }
-        else {
+        } else {
             manageFragments(bottomNavigations.get(id).peek(), id, false);
         }
     }
@@ -89,11 +88,11 @@ public class StateManager {
 
     public void removeAllFragmentStream(int id, Fragment nextToShow) {
 
-        while(!bottomNavigations.get(id).isEmpty()) {
+        while (!bottomNavigations.get(id).isEmpty()) {
             Fragment fg = bottomNavigations.get(id).pop();
             Fragment removable = supportFragmentManager.findFragmentByTag(fg.getClass().getSimpleName());
 
-            if(removable != null) {
+            if (removable != null) {
                 supportFragmentManager.beginTransaction().remove(removable).commit();
             }
         }
@@ -101,10 +100,10 @@ public class StateManager {
         FragmentTransaction transaction = supportFragmentManager.beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         Fragment current = getVisibleFragment();
 
-        if(current != null)
+        if (current != null)
             transaction.remove(current);
 
-        if(nextToShow != null) {
+        if (nextToShow != null) {
             bottomNavigations.get(id).push(nextToShow);
             transaction.add(fragmentContainer.getId(), nextToShow, nextToShow.getClass().getSimpleName()).commit();
         }
@@ -116,7 +115,7 @@ public class StateManager {
      */
 
     public void removeAll() {
-        for(int key : bottomNavigations.keySet()) {
+        for (int key : bottomNavigations.keySet()) {
             bottomNavigations.get(key).clear();
         }
         instance = null;
@@ -132,16 +131,15 @@ public class StateManager {
 
         FragmentTransaction transaction = supportFragmentManager.beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 
-        if(foundFragment == null) {
-            if(current != null)
+        if (foundFragment == null) {
+            if (current != null)
                 transaction.hide(current);
 
             bottomNavigations.get(id).push(fragment);
             transaction.add(fragmentContainer.getId(), fragment, fragment.getClass().getSimpleName()).commit();
-        }
-        else {
-            if(current != null) {
-                if(isComeByBackButton)
+        } else {
+            if (current != null) {
+                if (isComeByBackButton)
                     transaction.remove(current);
                 else
                     transaction.hide(current);
@@ -156,9 +154,9 @@ public class StateManager {
      */
     private Fragment getVisibleFragment() {
         List<Fragment> fragments = supportFragmentManager.getFragments();
-        if(!fragments.isEmpty()) {
-            for(Fragment fragment : fragments) {
-                if(fragment.isVisible()) {
+        if (!fragments.isEmpty()) {
+            for (Fragment fragment : fragments) {
+                if (fragment.isVisible()) {
                     return fragment;
                 }
             }
@@ -166,4 +164,16 @@ public class StateManager {
         return null;
     }
 
+    public boolean hasChildren(Integer id){
+        return bottomNavigations.get(id).size() > 2;
+    }
+
+    public boolean hasBackStack(Integer id) {
+        if (bottomNavigations.containsKey(id)) {
+            if (hasChildren(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
