@@ -137,7 +137,7 @@ object DialogBox {
         dismissOnPositive: Boolean = true,
         setup: ((textInputLayout: TextInputLayout?) -> Unit)? = null,
         callback: (
-            alertDialog:AlertDialog?,
+            alertDialog: AlertDialog?,
             positive: Boolean,
             textInputLayout: TextInputLayout?,
         ) -> Unit,
@@ -149,7 +149,8 @@ object DialogBox {
 
             inputTextInputLayout.isHintEnabled = true
             inputTextInputLayout.hint = hint
-            inputTextInputLayout.isPasswordVisibilityToggleEnabled = inputType == InputType_WebPassword
+            inputTextInputLayout.isPasswordVisibilityToggleEnabled =
+                inputType == InputType_WebPassword
 
             inputTextInputLayout.editText?.apply {
                 setInputType(inputType)
@@ -166,14 +167,14 @@ object DialogBox {
         if (!negativeText.isNullOrEmpty()) {
             materialAlertDialogBuilder.setNegativeButton(negativeText) { dialog, which ->
                 materialAlertDialogBuilder.create().dismiss()
-                callback(null,false, binding.inputTextInputLayout)
+                callback(null, false, binding.inputTextInputLayout)
             }
         }
         if (positiveText.isNullOrEmpty()) {
             throw NullPointerException("cannot be empty")
         }
 
-        materialAlertDialogBuilder.setPositiveButton(positiveText,null)
+        materialAlertDialogBuilder.setPositiveButton(positiveText, null)
 
         return materialAlertDialogBuilder.show().apply {
             alertDialog = this
@@ -181,14 +182,14 @@ object DialogBox {
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
             );
             alertDialog?.setOnCancelListener {
-                callback(alertDialog,false, null)
+                callback(alertDialog, false, null)
             }
             alertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
                 setOnClickListener {
                     if (dismissOnPositive) {
                         alertDialog?.dismiss()
                     }
-                    callback(alertDialog,true, binding.inputTextInputLayout)
+                    callback(alertDialog, true, binding.inputTextInputLayout)
                 }
             }
         }

@@ -152,7 +152,7 @@ public class StateManager {
     /*
      * This function gives the current fragment on screen
      */
-    private Fragment getVisibleFragment() {
+    public Fragment getVisibleFragment() {
         List<Fragment> fragments = supportFragmentManager.getFragments();
         if (!fragments.isEmpty()) {
             for (Fragment fragment : fragments) {
