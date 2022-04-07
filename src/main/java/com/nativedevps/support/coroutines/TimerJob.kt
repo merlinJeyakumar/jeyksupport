@@ -27,8 +27,8 @@ object TimerJob {
     fun emitPostDuration(
         milliseconds: Long,
         intervalMillis: Long = 0,
-        interval: (suspend CoroutineScope.(interval: Long) -> Unit?)? = null,
-        block: suspend CoroutineScope.() -> Unit,
+        interval: ((interval: Long) -> Unit)? = null,
+        block: () -> Unit,
     ): Job {
         return CoroutineScope(Dispatchers.Default).launch {
             val initialTime = now
