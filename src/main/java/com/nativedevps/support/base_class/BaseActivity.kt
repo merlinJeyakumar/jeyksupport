@@ -29,9 +29,9 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     private lateinit var _binding: ViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initBinding()
         preInit()
+        initBinding()
+        super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         initObserver()
