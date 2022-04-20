@@ -38,3 +38,16 @@ fun Uri.getFilePath(context: Context): String? {
         null
     }
 }
+
+
+fun File.getMegaByteSize(): Long {
+    return getKiloByteSize() / 1024
+}
+
+fun File.getKiloByteSize(): Long {
+    return this.getByteSize() / 1024
+}
+
+fun File.getByteSize(): Long {
+    return this.length()
+}
