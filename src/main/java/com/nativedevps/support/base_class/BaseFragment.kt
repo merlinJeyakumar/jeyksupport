@@ -12,7 +12,7 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     private val inflate: Inflate<VB>,
-    private val viewModelClass: Class<VM>
+    private val viewModelClass: Class<VM>,
 ) : Fragment() {
 
     private var _binding: VB? = null
@@ -22,10 +22,11 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
 
+        onInit(inflater, container, savedInstanceState)
         onInit(savedInstanceState)
         return binding.root
     }
@@ -35,5 +36,16 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         _binding = null
     }
 
-    abstract fun onInit(savedInstanceState: Bundle?)
+    open fun onInit(savedInstanceState: Bundle?){
+
+    }
+
+    open fun onInit(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ) {
+
+    }
+
 }
