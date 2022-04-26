@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import org.jetbrains.anko.toast
 
 
 abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
@@ -36,7 +37,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         _binding = null
     }
 
-    open fun onInit(savedInstanceState: Bundle?){
+    open fun onInit(savedInstanceState: Bundle?) {
 
     }
 
@@ -48,4 +49,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
 
     }
 
+    fun toast(string: String) {
+        activity?.toast(string)
+    }
 }
