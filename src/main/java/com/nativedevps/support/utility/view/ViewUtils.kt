@@ -158,4 +158,38 @@ object ViewUtils {
     fun View.isInvisible(): Boolean {
         return this.visibility == View.INVISIBLE
     }
+
+    fun Activity.hideSystemUI() { //pass getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController!!.hide(WindowInsets.Type.systemBars())
+        } else {
+            val decorView = window.decorView
+            var uiVisibility = decorView.systemUiVisibility
+            uiVisibility = uiVisibility or View.SYSTEM_UI_FLAG_LOW_PROFILE
+            uiVisibility = uiVisibility or View.SYSTEM_UI_FLAG_FULLSCREEN
+            uiVisibility = uiVisibility or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                uiVisibility = uiVisibility or View.SYSTEM_UI_FLAG_IMMERSIVE
+                uiVisibility = uiVisibility or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            }
+            decorView.systemUiVisibility = uiVisibility
+        }
+    }
+
+    fun Activity.showSystemUI() { //pass getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController!!.show(WindowInsets.Type.systemBars())
+        } else {
+            val decorView = window.decorView
+            var uiVisibility = decorView.systemUiVisibility
+            uiVisibility = uiVisibility and View.SYSTEM_UI_FLAG_LOW_PROFILE.inv()
+            uiVisibility = uiVisibility and View.SYSTEM_UI_FLAG_FULLSCREEN.inv()
+            uiVisibility = uiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION.inv()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                uiVisibility = uiVisibility and View.SYSTEM_UI_FLAG_IMMERSIVE.inv()
+                uiVisibility = uiVisibility and View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY.inv()
+            }
+            decorView.systemUiVisibility = uiVisibility
+        }
+    }
 }

@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.toast
 
 
@@ -51,5 +54,23 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
 
     fun toast(string: String) {
         activity?.toast(string)
+    }
+
+    open fun showProgressDialog(message: String = "loading..", progress: Int = -1) {
+        (activity as BaseActivity<*, *>).showProgressDialog(message, progress)
+    }
+
+    open fun hideProgressDialog() {
+        (activity as BaseActivity<*, *>).hideProgressDialog()
+    }
+
+    open fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit) {
+        (activity as BaseActivity<*, *>).runOnNewThread(callback)
+    }
+
+    fun CoroutineScope.runOnUiThread(callback: suspend CoroutineScope.() -> Unit) {
+        CoroutineScope(Dispatchers.Main).launch {
+            callback()
+        }
     }
 }
