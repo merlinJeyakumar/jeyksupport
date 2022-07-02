@@ -37,12 +37,14 @@ abstract class BaseViewModel constructor(application: Application) :
         context.toast(string)
     }
 
+    @Deprecated("use com.nativedevps.support.utility.threading functions")
     fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit): Job {
         return CoroutineScope(Dispatchers.IO).launch {
             callback()
         }
     }
 
+    @Deprecated("use com.nativedevps.support.utility.threading functions")
     fun runOnUiThread(callback: () -> Unit) {
         context.runOnUiThread {
             callback()

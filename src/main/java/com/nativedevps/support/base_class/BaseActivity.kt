@@ -70,12 +70,14 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
         progressDialog?.dismiss()
     }
 
+    @Deprecated("use com.nativedevps.support.utility.threading functions")
     fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             callback()
         }
     }
 
+    @Deprecated("use com.nativedevps.support.utility.threading functions")
     fun CoroutineScope.runOnUiThread(callback: suspend CoroutineScope.() -> Unit) {
         CoroutineScope(Dispatchers.Main).launch {
             callback()
