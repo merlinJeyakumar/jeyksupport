@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.nativedevps.support.custom_views.ProgressDialog
 import com.nativedevps.support.inline.orElse
+import com.nativedevps.support.model.LoaderProperties
 import com.nativedevps.support.utility.language.ContextWrapper
 import com.nativedevps.support.utility.language.Utility.getDeviceLocale
 import kotlinx.coroutines.CoroutineScope
@@ -43,16 +44,19 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     }
 
     private fun initObserver() {
-        viewModel.liveDataProgressBar.observe(this) { triple ->
-            if (triple.first) {
-                progressDialog?.setProgress(triple.second).orElse {
+        viewModel.liveDataProgressBar.observe(this) { loaderProperties ->
+            if (loaderProperties.show) {
+                progressDialog?.setProgress(loaderProperties.progress).orElse {
                     progressDialog = ProgressDialog(this)
-                    progressDialog?.setCancelable(false)
+                    progressDialog?.setCancelable(loaderProperties.cancellable)
+                    progressDialog?.setOnCancelListener {
+                        viewModel.onProgressDialogCancelled()
+                    }
                     progressDialog?.setOnDismissListener {
                         progressDialog = null
                     }
                 }
-                progressDialog?.setMessage(triple.third)?.build()
+                progressDialog?.setMessage(loaderProperties.message)?.build()
             } else {
                 progressDialog?.dismiss()
             }
@@ -70,29 +74,36 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
         progressDialog?.dismiss()
     }
 
+    @Deprecated("use com.nativedevps.support.utility.threading functions")
     fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             callback()
         }
     }
 
+    @Deprecated("use com.nativedevps.support.utility.threading functions")
     fun CoroutineScope.runOnUiThread(callback: suspend CoroutineScope.() -> Unit) {
         CoroutineScope(Dispatchers.Main).launch {
             callback()
         }
     }
 
-    open fun showProgressDialog(message: String = "loading..", progress: Int = -1) {
+    open fun showProgressDialog(
+        message: String = "loading..",
+        progress: Int = -1,
+        cancellable: Boolean
+    ) {
         Log.e("JK", "showProgressDialog")
         runOnUiThread {
-            viewModel.liveDataProgressBar.value = Triple(true, progress, message)
+            viewModel.liveDataProgressBar.value =
+                LoaderProperties(true, message, progress, cancellable)
         }
     }
 
     open fun hideProgressDialog() {
         Log.e("JK", "hideProgressDialog")
         runOnUiThread {
-            viewModel.liveDataProgressBar.value = Triple(false, -1, "")
+            viewModel.liveDataProgressBar.value = LoaderProperties(false)
         }
     }
 
