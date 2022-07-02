@@ -5,25 +5,25 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit): Job {
+fun runOnAsyncThread(callback: suspend CoroutineScope.() -> Unit): Job {
     return CoroutineScope(Dispatchers.IO).launch {
         callback()
     }
 }
 
-fun CoroutineScope.runOnUiThread(callback: suspend CoroutineScope.() -> Unit): Job {
+fun CoroutineScope.runOnMainThread(callback: suspend CoroutineScope.() -> Unit): Job {
     return CoroutineScope(Dispatchers.Main).launch {
         callback()
     }
 }
 
-fun executeAndMainCallback(
+private fun executeAndMainCallback(
     backgroundExecution: () -> Unit,
     mainThreadExecution: () -> Unit
 ): Job {
-    return runOnNewThread {
+    return runOnAsyncThread {
         backgroundExecution()
-        runOnUiThread {
+        runOnMainThread {
             mainThreadExecution()
         }
     }
