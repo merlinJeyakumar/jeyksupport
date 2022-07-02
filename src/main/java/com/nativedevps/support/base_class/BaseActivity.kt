@@ -91,7 +91,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     open fun showProgressDialog(
         message: String = "loading..",
         progress: Int = -1,
-        cancellable: Boolean
+        cancellable: Boolean=false
     ) {
         Log.e("JK", "showProgressDialog")
         runOnUiThread {
