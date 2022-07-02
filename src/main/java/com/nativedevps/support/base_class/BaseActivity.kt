@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.nativedevps.support.custom_views.ProgressDialog
 import com.nativedevps.support.inline.orElse
-import com.nativedevps.support.model.LoaderProperties
 import com.nativedevps.support.utility.language.ContextWrapper
 import com.nativedevps.support.utility.language.Utility.getDeviceLocale
 import kotlinx.coroutines.CoroutineScope
@@ -44,19 +43,16 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     }
 
     private fun initObserver() {
-        viewModel.liveDataProgressBar.observe(this) { loaderProperties ->
-            if (loaderProperties.show) {
-                progressDialog?.setProgress(loaderProperties.progress).orElse {
+        viewModel.liveDataProgressBar.observe(this) { triple ->
+            if (triple.first) {
+                progressDialog?.setProgress(triple.second).orElse {
                     progressDialog = ProgressDialog(this)
-                    progressDialog?.setCancelable(loaderProperties.cancellable)
-                    progressDialog?.setOnCancelListener {
-                        viewModel.onProgressDialogCancelled()
-                    }
+                    progressDialog?.setCancelable(false)
                     progressDialog?.setOnDismissListener {
                         progressDialog = null
                     }
                 }
-                progressDialog?.setMessage(loaderProperties.message)?.build()
+                progressDialog?.setMessage(triple.third)?.build()
             } else {
                 progressDialog?.dismiss()
             }
@@ -86,22 +82,17 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
         }
     }
 
-    open fun showProgressDialog(
-        message: String = "loading..",
-        progress: Int = -1,
-        cancellable: Boolean
-    ) {
+    open fun showProgressDialog(message: String = "loading..", progress: Int = -1) {
         Log.e("JK", "showProgressDialog")
         runOnUiThread {
-            viewModel.liveDataProgressBar.value =
-                LoaderProperties(true, message, progress, cancellable)
+            viewModel.liveDataProgressBar.value = Triple(true, progress, message)
         }
     }
 
     open fun hideProgressDialog() {
         Log.e("JK", "hideProgressDialog")
         runOnUiThread {
-            viewModel.liveDataProgressBar.value = LoaderProperties(false)
+            viewModel.liveDataProgressBar.value = Triple(false, -1, "")
         }
     }
 

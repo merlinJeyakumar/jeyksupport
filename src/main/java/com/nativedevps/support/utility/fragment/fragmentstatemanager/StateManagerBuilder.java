@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import kotlin.Pair;
+
 /*
  * Created By Emre UYSAL
  * 03.05.2020
@@ -17,7 +19,7 @@ import java.util.Stack;
 
 public class StateManagerBuilder {
 
-    private Map<Integer, Stack<Fragment>> navigationStacks;
+    private Map<Integer, Stack<Pair<String, Fragment>>> navigationStacks;
     private FragmentManager supportFragmentManager;
     private ViewGroup fragmentContainer;
 
@@ -28,7 +30,7 @@ public class StateManagerBuilder {
         navigationStacks = new HashMap<>();
 
         for(int id : ids) {
-            navigationStacks.put(id, new Stack<Fragment>());
+            navigationStacks.put(id, new Stack<Pair<String, Fragment>>());
         }
     }
 
@@ -49,7 +51,7 @@ public class StateManagerBuilder {
     }
 
     /* Getter Methods */
-    public Map<Integer, Stack<Fragment>> getNavigationStacks() {
+    public Map<Integer, Stack<Pair<String, Fragment>>> getNavigationStacks() {
         return navigationStacks;
     }
 
