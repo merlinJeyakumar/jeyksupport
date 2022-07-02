@@ -6,11 +6,14 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.SystemClock
 import android.view.*
+import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
+import com.google.android.material.tabs.TabLayout
+import nativedevps.support.R
 
 
 object ViewUtils {
@@ -190,6 +193,28 @@ object ViewUtils {
                 uiVisibility = uiVisibility and View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY.inv()
             }
             decorView.systemUiVisibility = uiVisibility
+        }
+    }
+
+    fun View.setSize(int: Int) {
+        this.layoutParams.height = resources.getDimensionPixelSize(R.dimen._10sdp)
+        this.layoutParams.width = resources.getDimensionPixelSize(R.dimen._10sdp)
+    }
+
+    fun EditText.clear() {
+        setText("")
+    }
+
+    fun TabLayout.setTabDisabled(tabPosition: Int) {
+        val vg: ViewGroup = this.getChildAt(0) as ViewGroup
+        val tabsCount = vg.childCount
+        for (j in 0 until tabsCount) {
+            //get view of selected tab
+            val vgTab = vg.getChildAt(j) as ViewGroup
+            if (j == tabPosition) {
+                //disable the selected tab
+                vgTab.isEnabled = false
+            }
         }
     }
 }

@@ -5,7 +5,6 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.nativedevps.support.model.LoaderProperties
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -16,32 +15,21 @@ import org.jetbrains.anko.toast
 abstract class BaseViewModel constructor(application: Application) :
     AndroidViewModel(application) {
     protected val context: Context get() = getApplication<Application>()
-    val liveDataProgressBar = MutableLiveData<LoaderProperties>()
+    val liveDataProgressBar = MutableLiveData<Triple<Boolean, Int, String>>()
 
     abstract fun onCreate()
 
-    open fun showProgressDialog(
-        message: String = "loading..",
-        progress: Int = -1,
-        cancelable: Boolean = false
-    ) {
+    open fun showProgressDialog(message: String = "loading..", progress: Int = -1) {
         Log.e("JK", "showProgressDialog")
         context.runOnUiThread {
-            liveDataProgressBar.value = LoaderProperties(
-                true,
-                message,
-                progress,
-                cancelable
-            )
+            liveDataProgressBar.value = Triple(true, progress, message)
         }
     }
 
     open fun hideProgressDialog() {
         Log.e("JK", "hideProgressDialog")
         context.runOnUiThread {
-            liveDataProgressBar.value = LoaderProperties(
-                false
-            )
+            liveDataProgressBar.value = Triple(false, -1, "")
         }
     }
 
@@ -59,8 +47,5 @@ abstract class BaseViewModel constructor(application: Application) :
         context.runOnUiThread {
             callback()
         }
-    }
-
-    open fun onProgressDialogCancelled() {
     }
 }

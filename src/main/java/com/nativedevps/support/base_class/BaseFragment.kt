@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.nativedevps.support.custom_views.ProgressDialog
+import com.nativedevps.support.inline.orElse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,6 +24,9 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     private var _binding: VB? = null
     val binding get() = _binding!!
     protected val viewModel: VM by lazy { ViewModelProvider(this).get(viewModelClass) }
+    private val baseViewModel: BaseViewModel get() = viewModel as BaseViewModel
+    private val currentActivity get() = (activity as BaseActivity<*, *>)
+    private var progressDialog: ProgressDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,18 +35,39 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
 
+        initObserver()
         onInit(inflater, container, savedInstanceState)
         onInit(savedInstanceState)
         return binding.root
     }
 
+    private fun initObserver() {
+        activity?.let {
+            baseViewModel.liveDataProgressBar.observe(it) { triple ->
+                if (triple.first) {
+                    progressDialog?.setProgress(triple.second).orElse {
+                        progressDialog = ProgressDialog(currentActivity)
+                        progressDialog?.setCancelable(false)
+                        progressDialog?.setOnDismissListener {
+                            progressDialog = null
+                        }
+                    }
+                    progressDialog?.setMessage(triple.third)?.build()
+                } else {
+                    progressDialog?.dismiss()
+                }
+            }
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        progressDialog?.dismiss()
         _binding = null
     }
 
     open fun onInit(savedInstanceState: Bundle?) {
-
+        //noop
     }
 
     open fun onInit(
@@ -49,7 +75,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ) {
-
+        //noop
     }
 
     fun toast(string: String) {
@@ -57,15 +83,15 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     }
 
     open fun showProgressDialog(message: String = "loading..", progress: Int = -1) {
-        (activity as BaseActivity<*, *>).showProgressDialog(message, progress)
+        currentActivity.showProgressDialog(message, progress)
     }
 
     open fun hideProgressDialog() {
-        (activity as BaseActivity<*, *>).hideProgressDialog()
+        currentActivity.hideProgressDialog()
     }
 
     open fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit) {
-        (activity as BaseActivity<*, *>).runOnNewThread(callback)
+        currentActivity.runOnNewThread(callback)
     }
 
     fun CoroutineScope.runOnUiThread(callback: suspend CoroutineScope.() -> Unit) {
@@ -73,4 +99,5 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
             callback()
         }
     }
+
 }
