@@ -43,16 +43,19 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
 
     private fun initObserver() {
         activity?.let {
-            baseViewModel.liveDataProgressBar.observe(it) { triple ->
-                if (triple.first) {
-                    progressDialog?.setProgress(triple.second).orElse {
+            baseViewModel.liveDataProgressBar.observe(currentActivity) { loaderProperties ->
+                if (loaderProperties.show) {
+                    progressDialog?.setProgress(loaderProperties.progress).orElse {
                         progressDialog = ProgressDialog(currentActivity)
-                        progressDialog?.setCancelable(false)
+                        progressDialog?.setCancelable(loaderProperties.cancellable)
+                        progressDialog?.setOnCancelListener {
+                            baseViewModel.onProgressDialogCancelled()
+                        }
                         progressDialog?.setOnDismissListener {
                             progressDialog = null
                         }
                     }
-                    progressDialog?.setMessage(triple.third)?.build()
+                    progressDialog?.setMessage(loaderProperties.message)?.build()
                 } else {
                     progressDialog?.dismiss()
                 }
