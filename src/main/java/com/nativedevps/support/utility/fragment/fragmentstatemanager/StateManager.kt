@@ -200,10 +200,31 @@ class StateManager private constructor(builder: StateManagerBuilder) {
         if (bottomNavigation[pacId] == null) {
             return
         }
-        for (pair in list.asReversed()) {
-            val currentItem: Pair<String, Fragment> = bottomNavigation[pacId]?.pop() ?: return
-            Log.e("JeyK", "currentItem: ${currentItem.first} traversal:${pair.first}")
-            val currentTag = getTag(pacId, currentItem.first)
+
+
+        val searchedIndex = list.indexOfFirst {
+            it.first == tag
+        }
+
+        val listToKeep = list.slice(0..searchedIndex)
+        val listToRemove = list - listToKeep
+
+        for (pair in listToRemove) {
+            val fragmentedTag = getTag(pacId,pair.first)
+            supportFragmentManager.findFragmentByTag(fragmentedTag)?.let {
+                it.userVisibleHint = false
+                supportFragmentManager.beginTransaction().remove(it).commit()
+                bottomNavigation[pacId]?.removeIf {
+                    it.first == pair.first
+                }
+            }
+        }
+
+
+        /*for (pair in list.asReversed()) {
+            //val currentItem: Pair<String, Fragment> = bottomNavigation[pacId]?.pop() ?: return
+            Log.e("JeyK", "currentItem: ${pair.first} traversal:${pair.first}")
+            val currentTag = getTag(pacId, pair.first)
 
             Log.e("JeyK", "currentTag $currentTag")
             Log.e("JeyK", "tag $tag")
@@ -213,16 +234,17 @@ class StateManager private constructor(builder: StateManagerBuilder) {
                 break
 
             } else {
-                val removable = supportFragmentManager.findFragmentByTag(getTag(pacId, currentItem.first))
+                val removable = supportFragmentManager.findFragmentByTag(currentTag)
                 if (removable != null) {
                     removable.userVisibleHint = false
                     supportFragmentManager.beginTransaction().remove(removable).commit()
+                    bottomNavigation[pacId]?.removeIf {
+                        it.first == pair.first
+                    }
                 }
             }
-        }
-
-        Log.e("JeyK", "id $pacId")
-        bottomNavigation[pacId]?.firstOrNull()?.let {
+        }*/
+        bottomNavigation[pacId]?.lastElement()?.let {
             val foundFragment = supportFragmentManager.findFragmentByTag(getTag(pacId, it.first))
             val transaction = supportFragmentManager.beginTransaction().setTransition(
                 FragmentTransaction.TRANSIT_FRAGMENT_FADE
