@@ -1,7 +1,5 @@
 package com.nativedevps.support.utility.fragment.fragmentstatemanager
 
-import android.annotation.SuppressLint
-import android.util.Log
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -63,7 +61,7 @@ class StateManager private constructor(builder: StateManagerBuilder) {
             if (removable != null) {
                 val transaction = supportFragmentManager.beginTransaction()
                 removable.userVisibleHint = false
-                transaction.remove(removable).commit()
+                transaction.remove(removable).commitAllowingStateLoss()
             }
         }
         val transaction = supportFragmentManager.beginTransaction().setTransition(
@@ -76,7 +74,7 @@ class StateManager private constructor(builder: StateManagerBuilder) {
         if (nextToShow != null) {
             bottomNavigation[id]?.push(Pair(tag, nextToShow))
             nextToShow.userVisibleHint = true
-            transaction.add(fragmentContainer.id, nextToShow, getTag(id, tag)).commit()
+            transaction.add(fragmentContainer.id, nextToShow, getTag(id, tag)).commitAllowingStateLoss()
         }
     }
 
@@ -88,7 +86,6 @@ class StateManager private constructor(builder: StateManagerBuilder) {
         for (key in bottomNavigation.keys) {
             bottomNavigation[key]?.clear()
         }
-        stateManager = null
     }
 
     /*
@@ -111,7 +108,7 @@ class StateManager private constructor(builder: StateManagerBuilder) {
                 fragment.setMenuVisibility(true)
                 fragment.userVisibleHint = true
                 current?.userVisibleHint = false
-                transaction.add(fragmentContainer.id, it, getTag(id, tag)).commit()
+                transaction.add(fragmentContainer.id, it, getTag(id, tag)).commitAllowingStateLoss()
             }
         } else {
             if (current != null) {
@@ -127,7 +124,7 @@ class StateManager private constructor(builder: StateManagerBuilder) {
             }
             foundFragment.userVisibleHint = true
             foundFragment.setMenuVisibility(true)
-            transaction.show(foundFragment).commit()
+            transaction.show(foundFragment).commitAllowingStateLoss()
         }
     }
 
@@ -169,7 +166,7 @@ class StateManager private constructor(builder: StateManagerBuilder) {
                 val removable = supportFragmentManager.findFragmentByTag(getTag(id, fg.first))
                 if (removable != null) {
                     removable.userVisibleHint = false
-                    supportFragmentManager.beginTransaction().remove(removable).commit()
+                    supportFragmentManager.beginTransaction().remove(removable).commitAllowingStateLoss()
                 }
             }
         }
@@ -187,7 +184,7 @@ class StateManager private constructor(builder: StateManagerBuilder) {
             )
             foundFragment?.let {
                 it.userVisibleHint = true
-                transaction.show(it).commit()
+                transaction.show(it).commitAllowingStateLoss()
             }
         }
     }
@@ -210,72 +207,35 @@ class StateManager private constructor(builder: StateManagerBuilder) {
         val listToRemove = list - listToKeep
 
         for (pair in listToRemove) {
-            val fragmentedTag = getTag(pacId,pair.first)
+            val fragmentedTag = getTag(pacId, pair.first)
             supportFragmentManager.findFragmentByTag(fragmentedTag)?.let {
                 it.userVisibleHint = false
-                supportFragmentManager.beginTransaction().remove(it).commit()
+                supportFragmentManager.beginTransaction().remove(it).commitAllowingStateLoss()
                 bottomNavigation[pacId]?.removeIf {
                     it.first == pair.first
                 }
             }
         }
 
-
-        /*for (pair in list.asReversed()) {
-            //val currentItem: Pair<String, Fragment> = bottomNavigation[pacId]?.pop() ?: return
-            Log.e("JeyK", "currentItem: ${pair.first} traversal:${pair.first}")
-            val currentTag = getTag(pacId, pair.first)
-
-            Log.e("JeyK", "currentTag $currentTag")
-            Log.e("JeyK", "tag $tag")
-            Log.e("JeyK", "CurrentTag equal ${currentTag == tag}")
-
-            if (currentTag == tag) {
-                break
-
-            } else {
-                val removable = supportFragmentManager.findFragmentByTag(currentTag)
-                if (removable != null) {
-                    removable.userVisibleHint = false
-                    supportFragmentManager.beginTransaction().remove(removable).commit()
-                    bottomNavigation[pacId]?.removeIf {
-                        it.first == pair.first
-                    }
-                }
-            }
-        }*/
-        bottomNavigation[pacId]?.lastElement()?.let {
+        bottomNavigation[pacId]?.lastOrNull()?.let {
             val foundFragment = supportFragmentManager.findFragmentByTag(getTag(pacId, it.first))
             val transaction = supportFragmentManager.beginTransaction().setTransition(
                 FragmentTransaction.TRANSIT_FRAGMENT_FADE
             )
             foundFragment?.let {
                 it.userVisibleHint = true
-                transaction.show(it).commit()
+                transaction.show(it).commitAllowingStateLoss()
             }
         }
     }
 
     companion object {
-        @SuppressLint("StaticFieldLeak")
-        private var stateManager: StateManager? = null
-
         /*
      * This function gets StateManagerBuilder object as a parameter
      * Builds the instance to use with getInstance
      */
         fun buildInstance(builder: StateManagerBuilder): StateManager {
-            return if (stateManager == null) {
-                StateManager(builder).apply {
-                    stateManager = this
-                }
-            } else {
-                stateManager!!
-            }
-        }
-
-        fun getInstance(): StateManager {
-            return stateManager!!
+            return StateManager(builder)
         }
     }
 

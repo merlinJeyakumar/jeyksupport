@@ -1,17 +1,18 @@
 package com.nativedevps.support.utility.view
 
 import android.app.Activity
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.SystemClock
 import android.view.*
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.PopupWindow
-import android.widget.TextView
+import android.widget.*
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import com.google.android.material.tabs.TabLayout
 import nativedevps.support.R
 
@@ -45,13 +46,13 @@ object ViewUtils {
         activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
-    fun setViewAndChildrenEnabled(view: View, enabled: Boolean) {
-        view.isEnabled = enabled
-        if (view is ViewGroup) {
-            val viewGroup = view
+    fun View.setViewAndChildrenEnabled(enabled: Boolean) {
+        this.isEnabled = enabled
+        if (this is ViewGroup) {
+            val viewGroup = this
             for (i in 0 until viewGroup.childCount) {
                 val child = viewGroup.getChildAt(i)
-                setViewAndChildrenEnabled(child, enabled)
+                child.setViewAndChildrenEnabled(enabled)
             }
         }
     }
@@ -216,5 +217,9 @@ object ViewUtils {
                 vgTab.isEnabled = false
             }
         }
+    }
+
+    fun ImageView.setTint(@ColorRes colorRes: Int) {
+        ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(ContextCompat.getColor(context, colorRes)))
     }
 }

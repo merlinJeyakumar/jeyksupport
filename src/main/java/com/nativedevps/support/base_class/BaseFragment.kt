@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.anko.toast
 
 
-abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
+abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
     private val inflate: Inflate<VB>,
     private val viewModelClass: Class<VM>,
 ) : Fragment() {
@@ -24,7 +24,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     private var _binding: VB? = null
     val binding get() = _binding!!
     protected val viewModel: VM by lazy { ViewModelProvider(this).get(viewModelClass) }
-    private val baseViewModel: BaseViewModel get() = viewModel as BaseViewModel
+    private val baseViewModel: BaseViewModel get() = viewModel
     private val currentActivity get() = (activity as BaseActivity<*, *>)
     private var progressDialog: ProgressDialog? = null
 
@@ -41,8 +41,8 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         return binding.root
     }
 
-    private fun initObserver() {
-        activity?.let {
+    open fun initObserver() {
+        /*activity?.let {
             baseViewModel.liveDataProgressBar.observe(currentActivity) { loaderProperties ->
                 if (loaderProperties.show) {
                     progressDialog?.setProgress(loaderProperties.progress).orElse {
@@ -60,7 +60,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
                     progressDialog?.dismiss()
                 }
             }
-        }
+        }*/
     }
 
     override fun onDestroyView() {
@@ -86,15 +86,15 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     }
 
     open fun showProgressDialog(message: String = "loading..", progress: Int = -1) {
-        currentActivity.showProgressDialog(message, progress)
+        viewModel.showProgressDialog(message, progress)
     }
 
     open fun hideProgressDialog() {
-        currentActivity.hideProgressDialog()
+        viewModel.hideProgressDialog()
     }
 
     open fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit) {
-        currentActivity.runOnNewThread(callback)
+        viewModel.runOnNewThread(callback)
     }
 
     fun CoroutineScope.runOnUiThread(callback: suspend CoroutineScope.() -> Unit) {

@@ -6,7 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -26,7 +28,7 @@ public class StateManagerBuilder {
     /*
      * Constructor takes parameters to create Stacks and Map
      */
-    public StateManagerBuilder(@NonNull int... ids) {
+    public StateManagerBuilder(@NonNull List<Integer> ids) {
         navigationStacks = new HashMap<>();
 
         for(int id : ids) {

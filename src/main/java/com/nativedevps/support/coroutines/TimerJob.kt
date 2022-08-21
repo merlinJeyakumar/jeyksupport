@@ -24,6 +24,7 @@ object TimerJob {
      * until duration meets [block] not called, if duration meets equal or more than
      * duration [block] called
      */
+    @Deprecated("interval")
     fun emitPostDuration(
         milliseconds: Long,
         intervalMillis: Long = 0,
@@ -39,10 +40,18 @@ object TimerJob {
                     block()
                     break
                 } else if (intervalMillis != 0L && currentDuration >= nextInterval) {
-                    interval?.let { it(currentDuration) }
+                    interval?.invoke(intervalMillis - currentDuration)
                     nextInterval += intervalMillis
                 }
                 delay(if (intervalMillis != 0L) intervalMillis else milliseconds)
+            }
+        }
+    }
+
+    fun runAfterInUi(durationMilliseconds: Long, block: () -> Unit): Job {
+        return runAfter(durationMilliseconds) {
+            CoroutineScope(Dispatchers.Main).launch {
+                block()
             }
         }
     }

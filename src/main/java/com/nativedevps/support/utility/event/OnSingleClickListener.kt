@@ -26,3 +26,11 @@ abstract class SingleClickListener constructor(private val minClickInterval: Int
     companion object {
     }
 }
+
+fun View.singleClickListener(callback: (View?) -> Unit) {
+    setOnClickListener(object : SingleClickListener() {
+        override fun onSingleClick(v: View?) {
+            callback(v)
+        }
+    })
+}

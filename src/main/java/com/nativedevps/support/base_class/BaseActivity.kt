@@ -43,8 +43,8 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     open fun preInit() {
     }
 
-    private fun initObserver() {
-        viewModel.liveDataProgressBar.observe(this) { loaderProperties ->
+    open fun initObserver() {
+        /*viewModel.liveDataProgressBar.observe(this) { loaderProperties ->
             if (loaderProperties.show) {
                 progressDialog?.setProgress(loaderProperties.progress).orElse {
                     progressDialog = ProgressDialog(this)
@@ -60,7 +60,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
             } else {
                 progressDialog?.dismiss()
             }
-        }
+        }*/
     }
 
     private fun initBinding() {

@@ -200,11 +200,11 @@ fun formatDuration(millis: Long): String? {
     val minutes = millis / (1000 * 60) % 60
     val hours = millis / (1000 * 60 * 60)
     val b = StringBuilder()
-    b.append(if (hours == 0L) "00" else if (hours < 10) "0$hours" else hours.toString())
+    /*b.append(if (hours == 0L) "00" else if (hours < 10) "0$hours" else hours.toString())
     b.append(":")
-    b.append(if (minutes == 0L) "00" else if (minutes < 10) "0$minutes" else minutes.toString())
-    /*b.append(":")
-    b.append(if (seconds == 0L) "00" else if (seconds < 10) "0$seconds" else seconds.toString())*/
+    b.append(if (minutes == 0L) "00" else if (minutes < 10) "0$minutes" else minutes.toString())*/
+    b.append(if (seconds == 0L) "00" else if (seconds < 10) "0$seconds" else seconds.toString())
+    b.append(" Sec")
     return b.toString()
 }
 

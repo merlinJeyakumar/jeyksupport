@@ -1,13 +1,10 @@
 package com.nativedevps.support.base_class.dialog
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
 import androidx.annotation.Nullable
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
@@ -15,7 +12,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nativedevps.support.base_class.Inflate
-import nativedevps.support.R
 
 /*
 * supportFragmentManager.setFragmentResultListener(
@@ -41,8 +37,13 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : ViewModel>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        /*dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))*/
+        preInit()
+    }
+
+    open fun preInit() {
+
     }
 
     override fun onCreateView(
@@ -58,18 +59,18 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : ViewModel>(
 
     abstract fun onInit()
 
-    override fun onStart() {
+    /*override fun onStart() {
         super.onStart()
 
         val dialog = dialog
         if (dialog != null) {
             dialog.window?.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.MATCH_PARENT
             )
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
-    }
+    }*/
 
     override fun onViewCreated(view: View, @Nullable savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -83,19 +84,42 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : ViewModel>(
                 }
                 val dialog = dialog as BottomSheetDialog?
                 val bottomSheet: FrameLayout =
-                    dialog!!.findViewById<View>(R.id.design_bottom_sheet) as FrameLayout
+                    dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
                 val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from<View?>(bottomSheet)
-                behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                behavior.peekHeight =
-                    0 // Remove this line to hide a dark background if you manually hide the dialog.
+                behavior.state = initialExpandState()
+                behavior.isDraggable = setDraggable()
+                setupBehavior(behavior)
+                setupWindow(bottomSheet)
+                /*behavior.peekHeight = 0 // Remove this line to hide a dark background if you manually hide the dialog.*/
             }
         })
     }
 
-    override fun show(manager: FragmentManager, tag: String?) {
+    open fun setupWindow(bottomSheet: FrameLayout) {
+        val layoutParams = bottomSheet.layoutParams
+        layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
+        bottomSheet.layoutParams = layoutParams
+    }
+
+    /*
+    * override for behaviour changes
+    * */
+    open fun setupBehavior(behavior: BottomSheetBehavior<*>) {
+        //noop
+    }
+
+    /*override fun show(manager: FragmentManager, tag: String?) {
         if (isAdded || isVisible) {
             return
         }
         super.show(manager, tag)
+    }*/
+
+    open fun setDraggable(): Boolean {
+        return true
+    }
+
+    open fun initialExpandState(): Int {
+        return BottomSheetBehavior.STATE_EXPANDED
     }
 }
