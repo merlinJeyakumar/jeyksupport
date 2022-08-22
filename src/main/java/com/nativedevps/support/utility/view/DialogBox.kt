@@ -25,7 +25,7 @@ object DialogBox {
         title: String = "Alert",
         message: String = "Are you sure?",
         isCancellable: Boolean = true,
-        negativeText: String = getString(R.string.cancel),
+        negativeText: String? = getString(R.string.cancel),
         positiveText: String = getString(R.string.ok),
         callback: (success: Boolean) -> Unit,
     ): AlertDialog {
