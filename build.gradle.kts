@@ -28,4 +28,6 @@ dependencies {
     imageLoaderLibraries()
     firebaseLibraries()
     rxJavaLibraries()
+    cryptoLibraries()
+    networkLibraries()
 }
