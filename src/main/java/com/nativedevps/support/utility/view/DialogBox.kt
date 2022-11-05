@@ -88,7 +88,7 @@ object DialogBox {
         positiveText: String? = getString(R.string.ok),
         callback: ((positive: Boolean) -> Unit?)? = null,
     ): AlertDialog {
-        var alertDialog: AlertDialog?
+        var alertDialog: AlertDialog?=null
         val binding = DialogInformationBinding.inflate(layoutInflater).apply {
             messageAppCompatTextView.setText(message)
             messageAppCompatTextView.setMovementMethod(ScrollingMovementMethod())
@@ -102,6 +102,7 @@ object DialogBox {
         if (negativeText.isNullOrEmpty()) {
             materialAlertDialogBuilder.setNegativeButton(negativeText) { dialog, which ->
                 materialAlertDialogBuilder.create().dismiss()
+                alertDialog?.dismiss()
                 callback?.invoke(false)
             }
         }
@@ -111,6 +112,7 @@ object DialogBox {
 
         materialAlertDialogBuilder.setPositiveButton(positiveText) { dialog, which ->
             materialAlertDialogBuilder.create().dismiss()
+            alertDialog?.dismiss()
             callback?.invoke(true)
         }
 
