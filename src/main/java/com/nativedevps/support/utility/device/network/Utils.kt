@@ -13,13 +13,13 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.internal.Util
+import okhttp3.internal.closeQuietly
 import okio.BufferedSink
 import okio.BufferedSource
-import okio.Okio
+import okio.buffer
+import okio.sink
 import java.io.File
 import java.io.IOException
-import java.util.*
 
 
 @SuppressLint("MissingPermission")
@@ -99,10 +99,10 @@ fun okioFileDownload(url: String, destFile: File): Observable<Int>? {
         try {
             val request = Request.Builder().url(url).build()
             val response = OkHttpClient().newCall(request).execute()
-            val body = response.body()
-            val contentLength = body!!.contentLength()
+            val body = response.body
+            val contentLength = body.contentLength()
             source = body.source()
-            sink = Okio.buffer(Okio.sink(destFile))
+            sink = destFile.sink().buffer()
             val sinkBuffer = sink.buffer()
             var totalBytesRead: Long = 0
             val bufferSize = 6 * 1024
@@ -120,8 +120,8 @@ fun okioFileDownload(url: String, destFile: File): Observable<Int>? {
             Log.e("@@@", "IOException --- ", e)
             emitter.onError(e)
         } finally {
-            Util.closeQuietly(sink)
-            Util.closeQuietly(source)
+            sink?.closeQuietly()
+            source?.closeQuietly()
         }
         emitter.onComplete()
     }
