@@ -12,7 +12,7 @@ import org.jetbrains.anko.layoutInflater
 abstract class BaseAlertDialog<B : ViewBinding>(
     context: Context,
     bindingFactory: (LayoutInflater) -> B,
-    theme: Int = R.style.FullScreenDialogStyle
+    theme: Int = R.style.FullScreenDialogStyle,
 ) : AlertDialog(context, theme) {
 
     private var _binding: ViewBinding = bindingFactory.invoke(context.layoutInflater)
@@ -21,21 +21,13 @@ abstract class BaseAlertDialog<B : ViewBinding>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        preinit()
-        setView(binding.root)
+        preInit()
         setContentView(binding.root)
+        onCreate()
     }
 
-    open fun preinit() {
+    open fun preInit() {
 
-    }
-
-    override fun setView(view: View?) {
-        super.setView(binding.root).let {
-            return it.also {
-                onCreate(binding)
-            }
-        }
     }
 
     override fun show() {
@@ -44,7 +36,7 @@ abstract class BaseAlertDialog<B : ViewBinding>(
         }
     }
 
-    abstract fun onCreate(binding: B)
+    abstract fun onCreate()
 
     protected open fun onShow(alertDialog: AlertDialog?) {}
 }

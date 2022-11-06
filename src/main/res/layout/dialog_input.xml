@@ -9,16 +9,17 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:orientation="vertical">
 
         <com.nativedevps.support.custom_views.ScrollingTextView
             android:id="@+id/messageAppCompatTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_25sdp"
             android:maxHeight="@dimen/_200sdp"
             android:scrollbars="vertical"
             android:text="@string/example_lorem_ipsum" />
@@ -27,7 +28,6 @@
             android:id="@+id/inputTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_2sdp"
             android:hint="@string/app_name"
             app:hintEnabled="true">
 

@@ -2,20 +2,46 @@ package com.nativedevps.support.custom_views.dialogs
 
 import android.content.Context
 import android.view.WindowManager
-import com.nativedevps.support.base_class.dialog.BaseAlertDialog
+import nativedevps.support.R
 import nativedevps.support.databinding.DialogInputBinding
 
-class InputDialog(context: Context) : BaseAlertDialog<DialogInputBinding>(
+class InputDialog(context: Context) : FramedAlertDialog<DialogInputBinding>(
     context = context,
     bindingFactory = DialogInputBinding::inflate,
-    theme = 0
+    theme = R.style.TransparentDialogStyle
 ) {
 
-    override fun preinit() {
+    override fun preInit() {
         window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
     }
 
-    override fun onCreate(binding: DialogInputBinding)= with(binding) {
+    override fun onCreate() = with(binding) {
+        super.onCreate()
 
+    }
+
+    var message = ""
+        set(text) = with(childBinding) {
+            messageAppCompatTextView.setText(text)
+        }
+
+    var hint = ""
+        set(text) = with(childBinding) {
+            inputTextInputLayout.hint = text
+        }
+
+    var inputDefault = ""
+        set(text) = with(childBinding) {
+            inputTextInputLayout.editText?.setText(text)
+        }
+
+    val textInputLayout get() = childBinding.inputTextInputLayout
+
+    companion object {
+        fun build(context: Context): InputDialog {
+            return InputDialog(context).also {
+                it.show()
+            }
+        }
     }
 }
