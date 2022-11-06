@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.SystemClock
 import android.view.*
@@ -13,7 +14,9 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import nativedevps.support.R
 
 
@@ -220,6 +223,17 @@ object ViewUtils {
     }
 
     fun ImageView.setTint(@ColorRes colorRes: Int) {
-        ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(ContextCompat.getColor(context, colorRes)))
+        ImageViewCompat.setImageTintList(this,
+            ColorStateList.valueOf(ContextCompat.getColor(context, colorRes)))
+    }
+
+    fun TabLayout.setupWithViewPager(viewPager: ViewPager2, tabList: List<Pair<String, Drawable>>) {
+        if (tabList.size != viewPager.adapter?.itemCount)
+            throw Exception("The size of list and the tab count should be equal!")
+        TabLayoutMediator(this, viewPager
+        ) { tab, position ->
+            tab.text = tabList[position].first
+            tab.icon = tabList[position].second
+        }.attach()
     }
 }
