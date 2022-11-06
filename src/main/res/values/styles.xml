@@ -1,4 +1,5 @@
 <resources>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
@@ -7,5 +8,20 @@
         <item name="android:background">@color/trans_gray</item>
         <item name="android:layout_marginTop">@dimen/_10sdp</item>
         <item name="android:layout_marginBottom">@dimen/_5sdp</item>
+    </style>
+
+    <style name="FullScreenDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:gravity">center</item>
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
     </style>
 </resources>

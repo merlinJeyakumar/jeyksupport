@@ -11,24 +11,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="fill_parent"
+        <com.nativedevps.support.custom_views.ScrollingTextView
+            android:id="@+id/messageAppCompatTextView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fillViewport="true"
-            android:nestedScrollingEnabled="false">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/messageAppCompatTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:maxHeight="@dimen/_200sdp"
-                android:scrollbars="vertical"
-                android:text="@string/example_lorem_ipsum" />
-        </ScrollView>
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:maxHeight="@dimen/_200sdp"
+            android:scrollbars="vertical"
+            android:text="@string/example_lorem_ipsum" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputTextInputLayout"
