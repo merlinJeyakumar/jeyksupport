@@ -10,8 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
 
-@Deprecated("Use com.nativedevps.support.base_class.AbstractRecyclerAdapter instead of")
-abstract class BaseAdapter2<ITEM_TYPE, SELECTION_TYPE>() :
+abstract class AbstractRecyclerAdapter<ITEM_TYPE, SELECTION_TYPE>() :
     ListAdapter<ITEM_TYPE, BaseViewHolder<ITEM_TYPE, SELECTION_TYPE>>() {
 
     private val TAG: String = "BaseAdapter"
