@@ -14,6 +14,7 @@ import nativedevps.support.databinding.DialogInputBinding
 import nativedevps.support.databinding.DialogListBinding
 
 
+@Deprecated("consider using com.nativedevps.support.custom_views.dialogs")
 object DialogBox {
     const val InputType_WebEmail = InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
     const val InputType_WebPassword =

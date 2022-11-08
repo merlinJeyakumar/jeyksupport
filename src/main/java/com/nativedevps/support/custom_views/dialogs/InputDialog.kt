@@ -2,6 +2,7 @@ package com.nativedevps.support.custom_views.dialogs
 
 import android.content.Context
 import android.view.WindowManager
+import androidx.core.widget.doOnTextChanged
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogInputBinding
 
@@ -15,8 +16,16 @@ class InputDialog(context: Context) : FramedAlertDialog<DialogInputBinding>(
         window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
     }
 
-    override fun onCreate() = with(binding) {
+    override fun onCreate(): Unit = with(binding) {
         super.onCreate()
+
+        initListener()
+    }
+
+    private fun initListener() = with(childBinding) {
+        inputTextInputLayout.editText?.doOnTextChanged { text, start, before, count ->
+
+        }
 
     }
 
