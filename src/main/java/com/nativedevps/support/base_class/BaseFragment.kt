@@ -41,27 +41,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
         return binding.root
     }
 
-    open fun initObserver() {
-        /*activity?.let {
-            baseViewModel.liveDataProgressBar.observe(currentActivity) { loaderProperties ->
-                if (loaderProperties.show) {
-                    progressDialog?.setProgress(loaderProperties.progress).orElse {
-                        progressDialog = ProgressDialog(currentActivity)
-                        progressDialog?.setCancelable(loaderProperties.cancellable)
-                        progressDialog?.setOnCancelListener {
-                            baseViewModel.onProgressDialogCancelled()
-                        }
-                        progressDialog?.setOnDismissListener {
-                            progressDialog = null
-                        }
-                    }
-                    progressDialog?.setMessage(loaderProperties.message)?.build()
-                } else {
-                    progressDialog?.dismiss()
-                }
-            }
-        }*/
-    }
+    open fun initObserver() {}
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -85,12 +65,14 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
         activity?.toast(string)
     }
 
-    open fun showProgressDialog(message: String = "loading..", progress: Int = -1) {
-        viewModel.showProgressDialog(message, progress)
+    @Deprecated("extend with custom class")
+    private fun showProgressDialog(message: String = "loading..", progress: Int = -1) {
+        ////noop
     }
 
-    open fun hideProgressDialog() {
-        viewModel.hideProgressDialog()
+    @Deprecated("extend with custom class")
+    private fun hideProgressDialog() {
+        //noop
     }
 
     open fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit) {
