@@ -26,7 +26,6 @@ class InputDialog(context: Context) : FramedAlertDialog<DialogInputBinding>(
         inputTextInputLayout.editText?.doOnTextChanged { text, start, before, count ->
 
         }
-
     }
 
     var message = ""
@@ -44,7 +43,20 @@ class InputDialog(context: Context) : FramedAlertDialog<DialogInputBinding>(
             inputTextInputLayout.editText?.setText(text)
         }
 
+    var error: String? = ""
+        set(text) = with(childBinding) {
+            if (text != null) {
+                inputTextInputLayout.isErrorEnabled = true
+                inputTextInputLayout.error = text
+            } else {
+                inputTextInputLayout.isErrorEnabled = false
+                inputTextInputLayout.error = null
+            }
+        }
+
     val textInputLayout get() = childBinding.inputTextInputLayout
+
+    val text get() = childBinding.inputTextInputLayout.editText?.text.toString()
 
     companion object {
         fun build(context: Context): InputDialog {

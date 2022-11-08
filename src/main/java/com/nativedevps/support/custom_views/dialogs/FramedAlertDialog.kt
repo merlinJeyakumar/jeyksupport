@@ -22,6 +22,7 @@ abstract class FramedAlertDialog<B : ViewBinding>(
 
     private var _binding: ViewBinding = bindingFactory.invoke(context.layoutInflater)
     protected val childBinding: B by lazy { _binding as B }
+    private var actionCallback: ((Boolean) -> Unit)? = null
 
     override fun onCreate() {
         binding.frameLayout.addView(childBinding.root)
@@ -32,6 +33,12 @@ abstract class FramedAlertDialog<B : ViewBinding>(
     private fun initListener() {
         binding.closeAppCompatImageView.setOnClickListener {
             dismiss()
+        }
+        binding.okButton.setOnClickListener {
+            actionButton(true)
+        }
+        binding.cancelButton.setOnClickListener {
+            actionButton(false)
         }
     }
 
@@ -49,4 +56,17 @@ abstract class FramedAlertDialog<B : ViewBinding>(
         set(value) = with(binding) {
             frameTitleAppCompatTextView.textColor = value
         }
+
+    var hasButton: Boolean = true
+        set(value) = with(binding) {
+            hasButton = value
+        }
+
+    open fun onActionButton(actionCallback: (Boolean) -> Unit) {
+        this.actionCallback = actionCallback
+    }
+
+    private fun actionButton(isOkButton: Boolean) {
+        actionCallback?.invoke(isOkButton)
+    }
 }

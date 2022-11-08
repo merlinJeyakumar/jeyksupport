@@ -4,6 +4,11 @@
 
     <data>
 
+        <variable
+            name="hasButton"
+            type="Boolean" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -20,7 +25,7 @@
                 android:id="@+id/headerParentLayout"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/color_background">
+                android:background="?attr/colorPrimary">
 
                 <RelativeLayout
                     android:id="@+id/headerContainer"
@@ -37,7 +42,10 @@
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/closeAppCompatImageView"
                         android:singleLine="true"
-                        android:text="@string/app_name" />
+                        android:text="@string/app_name"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/closeAppCompatImageView"
@@ -61,6 +69,29 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:visibility="@{hasButton?View.GONE:View.VISIBLE}">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/cancelButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:text="@string/cancel"
+                    app:backgroundTint="@color/gray" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/okButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ok" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
