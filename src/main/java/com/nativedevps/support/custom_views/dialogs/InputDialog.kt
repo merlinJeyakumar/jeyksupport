@@ -23,9 +23,7 @@ class InputDialog(context: Context) : FramedAlertDialog<DialogInputBinding>(
     }
 
     private fun initListener() = with(childBinding) {
-        inputTextInputLayout.editText?.doOnTextChanged { text, start, before, count ->
-
-        }
+        //noop
     }
 
     var message = ""

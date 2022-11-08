@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import nativedevps.support.R
@@ -235,5 +236,9 @@ object ViewUtils {
             tab.text = tabList[position].first
             tab.icon = tabList[position].second
         }.attach()
+    }
+
+    fun MaterialButton.setBackgroundTint(color: Int) {
+        backgroundTintList = ContextCompat.getColorStateList(this.context, color);
     }
 }
