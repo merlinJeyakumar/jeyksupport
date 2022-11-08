@@ -23,7 +23,6 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     private val viewModelClass: Class<VM>,
 ) : AppCompatActivity() {
     protected val viewModel: VM by lazy { ViewModelProvider(this).get(viewModelClass) }
-    private var progressDialog: ProgressDialog? = null
 
     protected val binding: B by contentView(bindingFactory)
 
@@ -44,23 +43,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     }
 
     open fun initObserver() {
-        /*viewModel.liveDataProgressBar.observe(this) { loaderProperties ->
-            if (loaderProperties.show) {
-                progressDialog?.setProgress(loaderProperties.progress).orElse {
-                    progressDialog = ProgressDialog(this)
-                    progressDialog?.setCancelable(loaderProperties.cancellable)
-                    progressDialog?.setOnCancelListener {
-                        viewModel.onProgressDialogCancelled()
-                    }
-                    progressDialog?.setOnDismissListener {
-                        progressDialog = null
-                    }
-                }
-                progressDialog?.setMessage(loaderProperties.message)?.build()
-            } else {
-                progressDialog?.dismiss()
-            }
-        }*/
+        //todo: define own inheritance of this class and handle manually
     }
 
     private fun initBinding() {
@@ -68,11 +51,6 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     }
 
     abstract fun onInit(savedInstanceState: Bundle?)
-
-    override fun onDestroy() {
-        super.onDestroy()
-        progressDialog?.dismiss()
-    }
 
     @Deprecated("use com.nativedevps.support.utility.threading functions")
     fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit) {
@@ -85,25 +63,6 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     fun CoroutineScope.runOnUiThread(callback: suspend CoroutineScope.() -> Unit) {
         CoroutineScope(Dispatchers.Main).launch {
             callback()
-        }
-    }
-
-    open fun showProgressDialog(
-        message: String = "loading..",
-        progress: Int = -1,
-        cancellable: Boolean=false
-    ) {
-        Log.e("JK", "showProgressDialog")
-        runOnUiThread {
-            viewModel.liveDataProgressBar.value =
-                LoaderProperties(true, message, progress, cancellable)
-        }
-    }
-
-    open fun hideProgressDialog() {
-        Log.e("JK", "hideProgressDialog")
-        runOnUiThread {
-            viewModel.liveDataProgressBar.value = LoaderProperties(false)
         }
     }
 

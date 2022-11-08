@@ -6,20 +6,13 @@
     </data>
 
 
-    <ScrollView
-        android:nestedScrollingEnabled="false"
-        android:layout_width="fill_parent"
+    <com.nativedevps.support.custom_views.ScrollingTextView
+        android:id="@+id/messageAppCompatTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fillViewport="true">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:scrollbars="vertical"
-            android:id="@+id/messageAppCompatTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
-            android:maxHeight="@dimen/_200sdp"
-            android:padding="@dimen/_10sdp"
-            android:text="@string/example_lorem_ipsum" />
-    </ScrollView>
+        android:layout_margin="@dimen/_5sdp"
+        android:maxHeight="@dimen/_200sdp"
+        android:padding="@dimen/_10sdp"
+        android:scrollbars="vertical"
+        android:text="@string/example_lorem_ipsum" />
 </layout>
