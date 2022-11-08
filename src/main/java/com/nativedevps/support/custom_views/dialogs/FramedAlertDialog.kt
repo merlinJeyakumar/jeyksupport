@@ -100,6 +100,11 @@ abstract class FramedAlertDialog<B : ViewBinding>(
             closeAppCompatImageView.visibility(value)
         }
 
+    override fun setCancelable(flag: Boolean) {
+        super.setCancelable(flag)
+        hasDismissButton = flag
+    }
+
     open fun onActionButton(actionCallback: (Boolean) -> Unit) {
         this.actionCallback = actionCallback
     }

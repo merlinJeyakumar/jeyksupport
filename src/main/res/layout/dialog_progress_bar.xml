@@ -24,14 +24,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="@{progress &lt; 0 ? true:false}"
-            android:progress="@{progress}"
-            android:padding="@dimen/_10sdp" />
+            android:padding="@dimen/_10sdp"
+            android:progress="@{progress}" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/messageAppCompatTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="@dimen/_5sdp"
-            android:text="@{message}" />
+            android:text="Loading.." />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

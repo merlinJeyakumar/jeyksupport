@@ -23,7 +23,7 @@ class LoaderDialog(
 
     var message: String = ""
         set(text) = with(binding) {
-            message = text
+            messageAppCompatTextView.setText(text)
         }
 
     var progress: Int = -1

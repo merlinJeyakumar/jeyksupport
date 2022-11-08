@@ -7,7 +7,7 @@ import nativedevps.support.R
 import nativedevps.support.databinding.DialogInformationBinding
 import nativedevps.support.databinding.DialogInputBinding
 
-class InformationDialog(context: Context) : FramedAlertDialog<DialogInformationBinding>(
+class ConfirmationDialog(context: Context) : FramedAlertDialog<DialogInformationBinding>(
     context = context,
     bindingFactory = DialogInformationBinding::inflate,
     theme = R.style.TransparentDialogStyle
@@ -38,8 +38,8 @@ class InformationDialog(context: Context) : FramedAlertDialog<DialogInformationB
         }
 
     companion object {
-        fun build(context: Context): InformationDialog {
-            return InformationDialog(context).also {
+        fun build(context: Context): ConfirmationDialog {
+            return ConfirmationDialog(context).also {
                 it.show()
             }
         }
