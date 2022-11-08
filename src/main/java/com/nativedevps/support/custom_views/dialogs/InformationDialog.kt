@@ -29,7 +29,7 @@ class InformationDialog(context: Context) : FramedAlertDialog<DialogInformationB
     }
 
     private fun initPreview() {
-        hasCancelButton = false
+        //hasCancelButton = false
     }
 
     var message = ""

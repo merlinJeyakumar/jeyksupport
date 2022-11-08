@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import androidx.viewbinding.ViewBinding
 import com.nativedevps.support.base_class.dialog.BaseAlertDialog
 import com.nativedevps.support.utility.view.ViewUtils.setBackgroundTint
+import com.nativedevps.support.utility.view.ViewUtils.visibility
+import com.nativedevps.support.utility.view.ViewUtils.visible
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogFramedBinding
 import org.jetbrains.anko.backgroundColor
@@ -29,6 +31,15 @@ abstract class FramedAlertDialog<B : ViewBinding>(
         binding.frameLayout.addView(childBinding.root)
 
         initListener()
+        initPreview()
+    }
+
+    private fun initPreview() {
+        hasButton = true
+        hasCancelButton = true
+        hasOkButton= true
+        negativeButtonText = "Cancel"
+        positiveButtonText = "Ok"
     }
 
     private fun initListener() {
@@ -62,27 +73,27 @@ abstract class FramedAlertDialog<B : ViewBinding>(
 
     var hasButton: Boolean = true
         set(value) = with(binding) {
-            hasButton = value
+            buttons.visibility(value)
         }
 
     var hasOkButton: Boolean = true
         set(value) = with(binding) {
-            hasButton = value
+            okButton.visibility(value)
         }
 
     var hasCancelButton: Boolean = true
         set(value) = with(binding) {
-            hasButton = value
+            cancelButton.visibility(value)
         }
 
     var negativeButtonText: String = "Cancel"
         set(value) = with(binding) {
-            cancelButtonText = value
+            cancelButton.setText(value)
         }
 
     var positiveButtonText: String = "Ok"
         set(value) = with(binding) {
-            okButtonText = value
+            okButton.setText(value)
         }
 
     open fun onActionButton(actionCallback: (Boolean) -> Unit) {

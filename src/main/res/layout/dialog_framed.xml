@@ -2,30 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="okButtonText"
-            type="String" />
-
-        <variable
-            name="cancelButtonText"
-            type="String" />
-
-        <variable
-            name="hasButton"
-            type="Boolean" />
-
-        <variable
-            name="hasOkButton"
-            type="Boolean" />
-
-        <variable
-            name="hasCancelButton"
-            type="Boolean" />
-
-        <import type="android.view.View" />
-    </data>
+    <data></data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -87,28 +64,26 @@
                 android:layout_marginBottom="@dimen/_10sdp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:visibility="@{hasButton?View.GONE:View.VISIBLE}">
+                android:layout_marginBottom="@dimen/_10sdp">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/cancelButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:text="@{cancelButtonText}"
-                    android:visibility="@{hasCancelButton?View.VISIBLE:View.GONE}"
+                    android:textAllCaps="false"
                     app:backgroundTint="@color/gray" />
 
-                    <com.google.android.material.button.MaterialButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/okButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{okButtonText}"
-                    android:visibility="@{hasOkButton?View.VISIBLE:View.GONE}" />
+                    android:textAllCaps="false" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
