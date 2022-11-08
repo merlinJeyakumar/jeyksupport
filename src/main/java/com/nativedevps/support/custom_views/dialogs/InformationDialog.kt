@@ -32,6 +32,11 @@ class InformationDialog(context: Context) : FramedAlertDialog<DialogInformationB
         //hasCancelButton = false
     }
 
+    override fun setCancelable(flag: Boolean) {
+        super.setCancelable(flag)
+        hasDismissButton = flag
+    }
+
     var message = ""
         set(text) = with(childBinding) {
             messageAppCompatTextView.setText(text)

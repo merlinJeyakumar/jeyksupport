@@ -8,7 +8,8 @@ class LoaderDialog(
     context: Context,
 ) : BaseAlertDialog<DialogProgressBarBinding>(
     context = context,
-    bindingFactory = DialogProgressBarBinding::inflate
+    bindingFactory = DialogProgressBarBinding::inflate,
+    0
 ) {
 
     override fun onCreate() {

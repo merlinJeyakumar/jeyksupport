@@ -6,7 +6,6 @@ import androidx.viewbinding.ViewBinding
 import com.nativedevps.support.base_class.dialog.BaseAlertDialog
 import com.nativedevps.support.utility.view.ViewUtils.setBackgroundTint
 import com.nativedevps.support.utility.view.ViewUtils.visibility
-import com.nativedevps.support.utility.view.ViewUtils.visible
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogFramedBinding
 import org.jetbrains.anko.backgroundColor
@@ -36,8 +35,8 @@ abstract class FramedAlertDialog<B : ViewBinding>(
 
     private fun initPreview() {
         hasButton = true
-        hasCancelButton = true
-        hasOkButton= true
+        hasNegativeButton = true
+        hasPositiveButton= true
         negativeButtonText = "Cancel"
         positiveButtonText = "Ok"
     }
@@ -76,12 +75,12 @@ abstract class FramedAlertDialog<B : ViewBinding>(
             buttons.visibility(value)
         }
 
-    var hasOkButton: Boolean = true
+    var hasPositiveButton: Boolean = true
         set(value) = with(binding) {
             okButton.visibility(value)
         }
 
-    var hasCancelButton: Boolean = true
+    var hasNegativeButton: Boolean = true
         set(value) = with(binding) {
             cancelButton.visibility(value)
         }
@@ -94,6 +93,11 @@ abstract class FramedAlertDialog<B : ViewBinding>(
     var positiveButtonText: String = "Ok"
         set(value) = with(binding) {
             okButton.setText(value)
+        }
+
+    var hasDismissButton: Boolean = true
+        set(value) = with(binding) {
+            closeAppCompatImageView.visibility(value)
         }
 
     open fun onActionButton(actionCallback: (Boolean) -> Unit) {
