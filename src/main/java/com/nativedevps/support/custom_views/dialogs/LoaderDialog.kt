@@ -32,19 +32,10 @@ class LoaderDialog(
         }
 
     companion object {
-        private var owner: Int = 0
-        private var loaderDialog: LoaderDialog? = null
-
         fun build(context: Context): LoaderDialog {
-            if (context.hashCode() != owner) {
-                loaderDialog = LoaderDialog(context).also {
-                    it.show()
-                }
-                owner = context.hashCode()
-            } else {
-                loaderDialog?.show()
+            return LoaderDialog(context).also {
+                it.show()
             }
-            return loaderDialog ?: error("cannot be null")
         }
     }
 }
