@@ -2,7 +2,7 @@ package com.nativedevps.support.custom_views.dialogs
 
 import android.content.Context
 import android.view.WindowManager
-import androidx.core.widget.doOnTextChanged
+import com.nativedevps.support.base_class.dialog.FramedAlertDialog
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogInputBinding
 

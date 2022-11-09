@@ -1,9 +1,8 @@
-package com.nativedevps.support.custom_views.dialogs
+package com.nativedevps.support.base_class.dialog
 
 import android.content.Context
 import android.view.LayoutInflater
 import androidx.viewbinding.ViewBinding
-import com.nativedevps.support.base_class.dialog.BaseAlertDialog
 import com.nativedevps.support.utility.view.ViewUtils.setBackgroundTint
 import com.nativedevps.support.utility.view.ViewUtils.visibility
 import nativedevps.support.R
