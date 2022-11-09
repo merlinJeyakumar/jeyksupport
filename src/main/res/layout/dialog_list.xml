@@ -6,10 +6,27 @@
 
     </data>
 
-    <ListView
-        android:id="@+id/itemsListView"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/_5sdp"
-        tools:listitem="@layout/item_simple_list_view" />
+        android:orientation="vertical">
+
+        <com.nativedevps.support.custom_views.ScrollingTextView
+            android:id="@+id/messageAppCompatTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:scrollbars="vertical"
+            android:text="@string/example_lorem_ipsum" />
+
+        <ListView
+            android:layout_weight="1"
+            android:id="@+id/itemsListView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:nestedScrollingEnabled="true"
+            tools:listitem="@layout/item_simple_list_view" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

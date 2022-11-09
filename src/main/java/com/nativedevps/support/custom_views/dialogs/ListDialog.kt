@@ -1,23 +1,21 @@
 package com.nativedevps.support.custom_views.dialogs
 
 import android.content.Context
+import android.view.ViewGroup
 import com.nativedevps.support.base_class.dialog.FramedAlertDialog
 import com.nativedevps.support.custom_views.ArrayDrawableListViewAdapter
+import nativedevps.support.R
 import nativedevps.support.databinding.DialogListBinding
 
-@ExperimentalStdlibApi
 class ListDialog<TY>(
     private val activeContext: Context,
 ) : FramedAlertDialog<DialogListBinding>(
     context = activeContext,
-    bindingFactory = DialogListBinding::inflate
+    bindingFactory = DialogListBinding::inflate,
+    theme = R.style.TransparentDialogStyle
 ) {
     override fun preInit() {
     }
-
-    /*var bindingCallback: (binding: DialogSimpleListBinding, item: TY) -> Unit = { binding, item ->
-        //(binding as ItemListBinding).text1.setText(item as String)
-    }*/
 
     private fun initListener() = with(binding) {
         //noop
@@ -33,7 +31,7 @@ class ListDialog<TY>(
 
     var message = ""
         set(text) = with(childBinding) {
-            ///messageAppCompatTextView.setText(text)
+            messageAppCompatTextView.setText(text)
         }
 
     override fun onCreate() {
@@ -41,6 +39,13 @@ class ListDialog<TY>(
 
         initListener()
         initPreview()
+    }
+
+    override fun containerLayoutParams(): ViewGroup.LayoutParams {
+        return ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            context.resources.getDimensionPixelOffset(R.dimen._150sdp)
+        )
     }
 
     companion object {

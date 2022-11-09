@@ -2,6 +2,7 @@ package com.nativedevps.support.base_class.dialog
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import com.nativedevps.support.utility.view.ViewUtils.setBackgroundTint
 import com.nativedevps.support.utility.view.ViewUtils.visibility
@@ -26,7 +27,7 @@ abstract class FramedAlertDialog<B : ViewBinding>(
     private var actionCallback: ((Boolean) -> Unit)? = null
 
     override fun onCreate() {
-        binding.frameLayout.addView(childBinding.root)
+        binding.frameLayout.addView(childBinding.root, containerLayoutParams())
 
         initListener()
         initPreview()
@@ -35,7 +36,7 @@ abstract class FramedAlertDialog<B : ViewBinding>(
     private fun initPreview() {
         hasButton = true
         hasNegativeButton = true
-        hasPositiveButton= true
+        hasPositiveButton = true
         negativeButtonText = "Cancel"
         positiveButtonText = "Ok"
     }
@@ -110,5 +111,12 @@ abstract class FramedAlertDialog<B : ViewBinding>(
 
     private fun actionButton(isOkButton: Boolean) {
         actionCallback?.invoke(isOkButton)
+    }
+
+    open fun containerLayoutParams(): ViewGroup.LayoutParams {
+        return ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
     }
 }

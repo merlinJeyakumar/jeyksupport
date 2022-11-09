@@ -16,7 +16,7 @@
         <item name="android:layout_marginBottom">@dimen/_5sdp</item>
     </style>
 
-    <style name="FullScreenDialogStyle" parent="@android:style/Theme.Dialog">
+    <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsFloating">true</item>
