@@ -1,28 +1,23 @@
 package com.nativedevps.support.custom_views.dialogs
 
 import android.content.Context
-import android.view.LayoutInflater
 import com.nativedevps.support.base_class.dialog.FramedAlertDialog
-import nativedevps.support.R
-import nativedevps.support.databinding.DialogSimpleListBinding
-import nativedevps.support.databinding.ItemListBinding
+import com.nativedevps.support.custom_views.ArrayDrawableListViewAdapter
+import nativedevps.support.databinding.DialogListBinding
 
 @ExperimentalStdlibApi
-class ListDialog<BI, TY>(
+class ListDialog<TY>(
     private val activeContext: Context,
-    private val bindingFactory: ((LayoutInflater) -> BI)
-) : FramedAlertDialog<DialogSimpleListBinding>(
+) : FramedAlertDialog<DialogListBinding>(
     context = activeContext,
-    bindingFactory = DialogSimpleListBinding::inflate,
-    theme = R.style.FullScreenDialogStyle
+    bindingFactory = DialogListBinding::inflate
 ) {
     override fun preInit() {
-
     }
 
-    var bindingCallback: (binding: BI, item: TY) -> Unit = { binding, item ->
+    /*var bindingCallback: (binding: DialogSimpleListBinding, item: TY) -> Unit = { binding, item ->
         //(binding as ItemListBinding).text1.setText(item as String)
-    }
+    }*/
 
     private fun initListener() = with(binding) {
         //noop
@@ -33,20 +28,8 @@ class ListDialog<BI, TY>(
     }
 
     fun setList(list: List<TY>) = with(childBinding) {
-        val adapter = JListAdapter(
-            appContext = activeContext,
-            items = list,
-            bindingFactory = bindingFactory,
-            bindView = bindingCallback
-        )
-        itemsListView.adapter = adapter
+        itemsListView.adapter = ArrayDrawableListViewAdapter(context, list)
     }
-
-    var itemLayoutId: Int = R.layout.item_list
-        set(value) {
-            field = value
-        }
-        get() = R.layout.item_list
 
     var message = ""
         set(text) = with(childBinding) {
@@ -61,17 +44,8 @@ class ListDialog<BI, TY>(
     }
 
     companion object {
-        fun <B, T> build(
-            context: Context,
-            bindingFactory: ((LayoutInflater) -> B),
-        ): ListDialog<B, T> {
-            return ListDialog<B, T>(context, bindingFactory).also {
-                it.show()
-            }
-        }
-
-        fun build(context: Context): ListDialog<ItemListBinding, String> {
-            return ListDialog<ItemListBinding, String>(context, ItemListBinding::inflate).also {
+        fun <T> build(context: Context): ListDialog<T> {
+            return ListDialog<T>(context).also {
                 it.show()
             }
         }
