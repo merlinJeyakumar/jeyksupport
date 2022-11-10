@@ -20,47 +20,21 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary">
 
-                <RelativeLayout
-                    android:id="@+id/headerContainer"
+                <androidx.appcompat.widget.Toolbar
+                    android:theme="@style/AppTheme.Toolbar"
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp">
+                    android:layout_height="wrap_content">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/frameTitleAppCompatTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/closeAppCompatImageView"
-                        android:singleLine="true"
-                        android:text="@string/app_name"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/_13ssp"
-                        android:textStyle="bold" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/closeAppCompatImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:src="@drawable/ic_baseline_close_24"
-                        app:tint="@color/white" />
-
-                </RelativeLayout>
+                </androidx.appcompat.widget.Toolbar>
             </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_5sdp" />
 

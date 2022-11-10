@@ -12,10 +12,6 @@ class InputDialog(context: Context) : FramedAlertDialog<DialogInputBinding>(
     theme = R.style.TransparentDialogStyle
 ) {
 
-    override fun preInit() {
-        window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
-    }
-
     override fun onCreate(): Unit = with(binding) {
         super.onCreate()
 

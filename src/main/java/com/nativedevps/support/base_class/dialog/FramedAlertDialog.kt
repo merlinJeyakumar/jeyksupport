@@ -1,16 +1,16 @@
 package com.nativedevps.support.base_class.dialog
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.viewbinding.ViewBinding
+import com.nativedevps.support.utility.debugging.Log
 import com.nativedevps.support.utility.view.ViewUtils.setBackgroundTint
 import com.nativedevps.support.utility.view.ViewUtils.visibility
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogFramedBinding
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.layoutInflater
-import org.jetbrains.anko.textColor
 
 abstract class FramedAlertDialog<B : ViewBinding>(
     context: Context,
@@ -26,11 +26,29 @@ abstract class FramedAlertDialog<B : ViewBinding>(
     protected val childBinding: B by lazy { _binding as B }
     private var actionCallback: ((Boolean) -> Unit)? = null
 
+    override fun preInit() {
+        super.preInit()
+
+        window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+    }
+
     override fun onCreate() {
         binding.frameLayout.addView(childBinding.root, containerLayoutParams())
 
         initListener()
+        initToolbar()
         initPreview()
+    }
+
+    private fun initToolbar() = with(binding) {
+        toolbar.inflateMenu(createActionMenu())
+        toolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.menuCloseAction) {
+                dismiss()
+            }
+            return@setOnMenuItemClickListener true
+        }
+        prepareActionMenu(toolbar.menu)
     }
 
     private fun initPreview() {
@@ -41,21 +59,18 @@ abstract class FramedAlertDialog<B : ViewBinding>(
         positiveButtonText = "Ok"
     }
 
-    private fun initListener() {
-        binding.closeAppCompatImageView.setOnClickListener {
-            dismiss()
-        }
-        binding.okButton.setOnClickListener {
+    private fun initListener() = with(binding) {
+        okButton.setOnClickListener {
             actionButton(true)
         }
-        binding.cancelButton.setOnClickListener {
+        cancelButton.setOnClickListener {
             actionButton(false)
         }
     }
 
     var headerTitle: String = ""
         set(text) = with(binding) {
-            frameTitleAppCompatTextView.setText(text)
+            toolbar.setTitle(text)
         }
 
     var headerBackgroundColor: Int = 0
@@ -66,7 +81,7 @@ abstract class FramedAlertDialog<B : ViewBinding>(
 
     var headerTextColor: Int = 0
         set(value) = with(binding) {
-            frameTitleAppCompatTextView.textColor = value
+            toolbar.setTitleTextColor(value)
             okButton.setTextColor(value)
         }
 
@@ -97,7 +112,7 @@ abstract class FramedAlertDialog<B : ViewBinding>(
 
     var hasDismissButton: Boolean = true
         set(value) = with(binding) {
-            closeAppCompatImageView.visibility(value)
+            toolbar.menu.findItem(R.id.search).setVisible(value)
         }
 
     override fun setCancelable(flag: Boolean) {
@@ -107,6 +122,18 @@ abstract class FramedAlertDialog<B : ViewBinding>(
 
     open fun onActionButton(actionCallback: (Boolean) -> Unit) {
         this.actionCallback = actionCallback
+    }
+
+    open fun createActionMenu(): Int {
+        return R.menu.menu_framed_dialog
+    }
+
+    open fun prepareActionMenu(menu: Menu){}
+
+    open fun actionMenu(
+        actionMenuCallback: MenuItem,
+        itemId: Int,
+    ) {
     }
 
     private fun actionButton(isOkButton: Boolean) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -16,16 +17,16 @@
             android:id="@+id/messageAppCompatTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="2"
             android:ellipsize="end"
+            android:maxLines="2"
             android:scrollbars="vertical"
             android:text="@string/example_lorem_ipsum" />
 
         <ListView
-            android:layout_weight="1"
             android:id="@+id/itemsListView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             android:nestedScrollingEnabled="true"
             tools:listitem="@layout/item_simple_list_view" />
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -21,10 +21,9 @@ abstract class BaseAlertDialog<B : ViewBinding>(
     protected val binding: B by lazy { _binding as B }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        preInit()
-
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        preInit()
         onCreate()
     }
 

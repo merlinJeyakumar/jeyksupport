@@ -15,7 +15,7 @@ import org.jetbrains.anko.layoutInflater
  **/
 class ArrayDrawableListViewAdapter<T>(
     private var appContext: Context,
-    private var items: List<T>,
+    open var items: List<T>,
 ) : ArrayAdapter<T>(appContext, R.layout.item_simple_list_view, items) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
