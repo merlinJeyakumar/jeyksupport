@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.databinding.ViewDataBinding
+import androidx.viewbinding.ViewBinding
 import com.nativedevps.support.utility.view.ViewUtils.setLeftDrawable
 import nativedevps.support.R
 import nativedevps.support.databinding.ItemSimpleListViewBinding

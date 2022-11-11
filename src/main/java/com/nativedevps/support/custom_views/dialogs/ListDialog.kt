@@ -2,12 +2,16 @@ package com.nativedevps.support.custom_views.dialogs
 
 import android.content.Context
 import android.view.Menu
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import com.nativedevps.support.base_class.dialog.FramedAlertDialog
-import com.nativedevps.support.custom_views.ArrayDrawableListViewAdapter
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogListBinding
+import nativedevps.support.databinding.ItemSimpleListViewBinding
+import org.jetbrains.anko.layoutInflater
 
 class ListDialog(
     activeContext: Context,
@@ -16,21 +20,28 @@ class ListDialog(
     bindingFactory = DialogListBinding::inflate,
     theme = R.style.TransparentDialogStyle
 ) {
+    private var onItemSelectedCallback: ((ArrayDrawableListViewAdapter.ItemModel) -> Unit?)? = null
 
-    private fun initListener() = with(binding) {
-        //noop
+    private fun initListener() = with(childBinding) {
+        itemsListView.setOnItemClickListener { parent, view, position, id ->
+            val item = (itemsListView.adapter as? ArrayDrawableListViewAdapter)?.items?.get(
+                position)
+            item?.let { onItemSelectedCallback?.invoke(it) }
+        }
     }
 
     private fun initPreview() = with(binding) {
-        //noop
+        hasNegativeButton = false
     }
 
     fun setList(list: List<String>) = with(childBinding) {
-        unfilteredList = list
-        updateList(list)
+        unfilteredList = list.mapIndexed { index, s ->
+            ArrayDrawableListViewAdapter.ItemModel(index, s)
+        }
+        updateList(unfilteredList)
     }
 
-    fun updateList(list: List<String>) = with(childBinding) {
+    fun updateList(list: List<ArrayDrawableListViewAdapter.ItemModel>) = with(childBinding) {
         itemsListView.adapter = ArrayDrawableListViewAdapter(context, list)
     }
 
@@ -38,6 +49,10 @@ class ListDialog(
         set(text) = with(childBinding) {
             messageAppCompatTextView.setText(text)
         }
+
+    fun onItemSelected(callback: (ArrayDrawableListViewAdapter.ItemModel) -> Unit) {
+        this.onItemSelectedCallback = callback
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -57,10 +72,9 @@ class ListDialog(
         return R.menu.menu_list_dialog
     }
 
-    private var unfilteredList = listOf<String>()
+    private var unfilteredList = listOf<ArrayDrawableListViewAdapter.ItemModel>()
     override fun prepareActionMenu(menu: Menu) {
         val searchView = (menu.findItem(R.id.menuSearchAction).actionView as? SearchView)
-
         searchView?.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
@@ -69,11 +83,14 @@ class ListDialog(
 
                 override fun onQueryTextChange(newText: String): Boolean = with(childBinding) {
                     if (newText.isEmpty()) {
-                        binding.toolbar.collapseActionView()
+                        if (!searchView.isIconified()) {
+                            searchView.setIconified(true);
+                            searchView.onActionViewCollapsed()
+                        }
                         updateList(unfilteredList)
                     } else {
                         val filteredList = unfilteredList.filter {
-                            it.contains(newText, true)
+                            it.item.contains(newText, true)
                         }
                         updateList(filteredList)
                     }
@@ -87,6 +104,28 @@ class ListDialog(
             return ListDialog(context).also {
                 it.show()
             }
+        }
+    }
+
+
+    open class ArrayDrawableListViewAdapter(
+        private var appContext: Context,
+        var items: List<ItemModel>,
+    ) : ArrayAdapter<ArrayDrawableListViewAdapter.ItemModel>(appContext,
+        R.layout.item_simple_list_view,
+        items) {
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+            val binding =
+                ItemSimpleListViewBinding.inflate(appContext.layoutInflater, parent, false)
+            val currentItem = items[position]
+
+            binding.text1.text = currentItem.item
+            return binding.root
+        }
+
+        data class ItemModel(val position: Int, val item: String) {
+
         }
     }
 }

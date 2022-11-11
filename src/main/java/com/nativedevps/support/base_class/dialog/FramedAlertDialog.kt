@@ -41,6 +41,7 @@ abstract class FramedAlertDialog<B : ViewBinding>(
     }
 
     private fun initToolbar() = with(binding) {
+        toolbar.setTitle(context.resources.getString(R.string.app_name))
         toolbar.inflateMenu(createActionMenu())
         toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.menuCloseAction) {
@@ -128,7 +129,7 @@ abstract class FramedAlertDialog<B : ViewBinding>(
         return R.menu.menu_framed_dialog
     }
 
-    open fun prepareActionMenu(menu: Menu){}
+    open fun prepareActionMenu(menu: Menu) {}
 
     open fun actionMenu(
         actionMenuCallback: MenuItem,
