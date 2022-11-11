@@ -44,24 +44,4 @@ abstract class BaseDialogFragment<VB : ViewBinding, VM : ViewModel>(
     fun toast(string: String) {
         activity?.toast(string)
     }
-
-    @Deprecated("Consider using with inherited Custom base class")
-    open fun showProgressDialog(message: String = "loading..", progress: Int = -1) {
-       //(activity as BaseActivity<*, *>).showProgressDialog(message, progress)
-    }
-
-    @Deprecated("Consider using with inherited Custom base class")
-    open fun hideProgressDialog() {
-     //(activity as BaseActivity<*, *>).hideProgressDialog()
-    }
-
-    open fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit) {
-        (activity as BaseActivity<*, *>).runOnNewThread(callback)
-    }
-
-    fun CoroutineScope.runOnUiThread(callback: suspend CoroutineScope.() -> Unit) {
-        CoroutineScope(Dispatchers.Main).launch {
-            callback()
-        }
-    }
 }

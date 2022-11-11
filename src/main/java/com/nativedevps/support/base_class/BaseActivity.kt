@@ -52,20 +52,6 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
 
     abstract fun onInit(savedInstanceState: Bundle?)
 
-    @Deprecated("use com.nativedevps.support.utility.threading functions")
-    fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit) {
-        CoroutineScope(Dispatchers.IO).launch {
-            callback()
-        }
-    }
-
-    @Deprecated("use com.nativedevps.support.utility.threading functions")
-    fun CoroutineScope.runOnUiThread(callback: suspend CoroutineScope.() -> Unit) {
-        CoroutineScope(Dispatchers.Main).launch {
-            callback()
-        }
-    }
-
     override fun attachBaseContext(context: Context) {
         val lang = getLocale(context) ?: getDeviceLocale()?.language
         val contextWrapper = Locale(lang).let {

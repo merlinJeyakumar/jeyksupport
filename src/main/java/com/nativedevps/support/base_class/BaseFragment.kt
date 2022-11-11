@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.nativedevps.support.custom_views.ProgressDialog
 import com.nativedevps.support.inline.orElse
+import com.nativedevps.support.utility.threading.runOnAsyncThread
+import com.nativedevps.support.utility.threading.runOnMainThread
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -63,26 +65,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
 
     fun toast(string: String) {
         activity?.toast(string)
-    }
-
-    @Deprecated("extend with custom class")
-    private fun showProgressDialog(message: String = "loading..", progress: Int = -1) {
-        ////noop
-    }
-
-    @Deprecated("extend with custom class")
-    private fun hideProgressDialog() {
-        //noop
-    }
-
-    open fun runOnNewThread(callback: suspend CoroutineScope.() -> Unit) {
-        viewModel.runOnNewThread(callback)
-    }
-
-    fun CoroutineScope.runOnUiThread(callback: suspend CoroutineScope.() -> Unit) {
-        CoroutineScope(Dispatchers.Main).launch {
-            callback()
-        }
     }
 
 }
