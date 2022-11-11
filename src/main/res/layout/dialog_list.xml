@@ -17,6 +17,7 @@
             android:id="@+id/messageAppCompatTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:ellipsize="end"
             android:maxLines="2"
             android:scrollbars="vertical"
