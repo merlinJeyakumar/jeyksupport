@@ -113,7 +113,7 @@ abstract class FramedAlertDialog<B : ViewBinding>(
 
     var hasDismissButton: Boolean = true
         set(value) = with(binding) {
-            toolbar.menu.findItem(R.id.search).setVisible(value)
+            toolbar.menu.findItem(R.id.menuCloseAction)?.setVisible(value)?: error("include a menu with required menu")
         }
 
     override fun setCancelable(flag: Boolean) {
