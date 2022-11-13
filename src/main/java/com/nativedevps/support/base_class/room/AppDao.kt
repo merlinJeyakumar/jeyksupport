@@ -1,4 +1,4 @@
-package com.support.room
+package com.nativedevps.support.base_class.room
 
 
 import androidx.room.*
@@ -50,7 +50,7 @@ abstract class AppDao<T> {
     fun find(id: Long): T {
         val query = SimpleSQLiteQuery(
             "select * from $tableName where deleteFlag = 0 and id = ?",
-            arrayOf<Any>(id)
+            arrayOf(id)
         )
         return doFind(query)
     }

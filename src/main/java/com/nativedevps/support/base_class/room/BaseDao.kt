@@ -32,7 +32,7 @@ abstract class BaseDao<T : BaseEntity> {
     fun find(key: String, value: String): T {
         val query = SimpleSQLiteQuery(
             "select * from $tableName where $key=?",
-            arrayOf<Any>(value)
+            arrayOf(value)
         )
         return doFind(query)
     }
@@ -61,7 +61,7 @@ abstract class BaseDao<T : BaseEntity> {
     fun find(id: Long): T {
         val query = SimpleSQLiteQuery(
             "select * from $tableName where is_delete = 0 and id = ?",
-            arrayOf<Any>(id)
+            arrayOf(id)
         )
         return doFind(query)
     }
