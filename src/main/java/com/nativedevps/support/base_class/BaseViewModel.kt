@@ -17,13 +17,14 @@ abstract class BaseViewModel constructor(application: Application) :
     AndroidViewModel(application) {
     protected val context: Context get() = getApplication<Application>()
     val liveDataProgressBar = MutableLiveData<LoaderProperties>()
+    val liveDataErrorAction = MutableLiveData<String>()
 
     abstract fun onCreate()
 
     open fun showProgressDialog(
         message: String = "loading..",
         progress: Int = -1,
-        cancelable: Boolean = false
+        cancelable: Boolean = false,
     ) {
         Log.e("JK", "showProgressDialog")
         context.runOnUiThread {
@@ -50,5 +51,15 @@ abstract class BaseViewModel constructor(application: Application) :
     }
 
     open fun onProgressDialogCancelled() {
+    }
+
+    open fun handleError(exception: java.lang.Exception) {
+        handleError(exception.message?:exception.localizedMessage)
+    }
+
+    open fun handleError(message: String) {
+        context.runOnUiThread {
+            liveDataErrorAction.value = message
+        }
     }
 }
