@@ -37,7 +37,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
 
-        initObserver()
         onInit(inflater, container, savedInstanceState)
         onInit(savedInstanceState)
         return binding.root

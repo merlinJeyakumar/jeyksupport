@@ -26,8 +26,8 @@ abstract class BaseViewModel constructor(application: Application) :
         progress: Int = -1,
         cancelable: Boolean = false,
     ) {
-        Log.e("JK", "showProgressDialog")
         context.runOnUiThread {
+            Log.e("BaseViewModel", "ShowProgressDialog")
             liveDataProgressBar.value = LoaderProperties(
                 true,
                 message,
@@ -38,8 +38,8 @@ abstract class BaseViewModel constructor(application: Application) :
     }
 
     open fun hideProgressDialog() {
-        Log.e("JK", "hideProgressDialog")
         context.runOnUiThread {
+            Log.e("BaseViewModel", "hideProgressDialog")
             liveDataProgressBar.value = LoaderProperties(
                 false
             )
