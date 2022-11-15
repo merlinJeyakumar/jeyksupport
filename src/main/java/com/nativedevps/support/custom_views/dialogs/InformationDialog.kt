@@ -28,7 +28,7 @@ class InformationDialog(context: Context) : FramedAlertDialog<DialogInformationB
     }
 
     private fun initPreview() {
-        //noop
+        hasNegativeButton = false
     }
 
     var message = ""
