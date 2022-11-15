@@ -151,4 +151,14 @@ abstract class AbstractRecyclerAdapter<ITEM_TYPE, SELECTION_TYPE>() :
             callback()
         }
     }
+
+    open var itemListener: ItemListener<ITEM_TYPE>? = null
+    open fun setListener(itemListener: ItemListener<ITEM_TYPE>) {
+        this.itemListener = itemListener
+    }
+
+    open class ItemListener<ITEM_TYPE> {
+        open fun optionSelected(position: Int, item: ITEM_TYPE, option:Int) {}
+        open fun itemSelected(position: Int, item: ITEM_TYPE) {}
+    }
 }
