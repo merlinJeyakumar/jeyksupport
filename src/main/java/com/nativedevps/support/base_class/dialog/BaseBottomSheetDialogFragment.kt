@@ -12,6 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nativedevps.support.base_class.Inflate
+import org.jetbrains.anko.toast
 
 /*
 * supportFragmentManager.setFragmentResultListener(
@@ -121,5 +122,9 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : ViewModel>(
 
     open fun initialExpandState(): Int {
         return BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    fun toast(string:String){
+        requireContext().toast(string)
     }
 }
