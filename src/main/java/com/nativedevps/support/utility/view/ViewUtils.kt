@@ -1,6 +1,7 @@
 package com.nativedevps.support.utility.view
 
 import android.app.Activity
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -62,8 +63,8 @@ object ViewUtils {
     }
 
     fun getPopup(
-        mInstance: Activity?,
-        popupWindow: PopupWindow?,
+        mInstance: Context?,
+        popupWindow: PopupWindow? = null,
         contentView: View?,
         anchorView: View?,
     ): PopupWindow {
