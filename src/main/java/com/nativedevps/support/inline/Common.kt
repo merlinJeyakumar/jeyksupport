@@ -51,3 +51,7 @@ fun Context.getPlayStoreUrl(): String {
 fun Activity.sharePlayStoreUrl() {
     shareText(description = getSharingText())
 }
+
+fun String?.orNull(): String {
+    return this ?: "null"
+}
