@@ -8,12 +8,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import nativedevps.support.R
 import java.io.File
+
 
 object Common {
     fun Activity.shareText(
@@ -148,10 +150,22 @@ object Common {
         return connectionStatusCode == ConnectionResult.SUCCESS
     }
 
-    fun Context.acquireGooglePlayServices(): Pair<Boolean,Int> {
+    fun Context.acquireGooglePlayServices(): Pair<Boolean, Int> {
         val apiAvailability: GoogleApiAvailability = GoogleApiAvailability.getInstance()
         val connectionStatusCode: Int = apiAvailability.isGooglePlayServicesAvailable(this)
         return Pair(apiAvailability.isUserResolvableError(connectionStatusCode),
             connectionStatusCode)
+    }
+
+    fun String.copyToClipboard(context: Context) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            val clipboard =
+                context.getSystemService(Context.CLIPBOARD_SERVICE) as android.text.ClipboardManager
+            clipboard.text = this
+        } else {
+            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = ClipData.newPlainText("Copied Text", this)
+            clipboard.setPrimaryClip(clip)
+        }
     }
 }
