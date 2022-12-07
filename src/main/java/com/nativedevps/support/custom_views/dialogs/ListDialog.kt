@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.get
 import com.nativedevps.support.base_class.dialog.FramedAlertDialog
+import com.nativedevps.support.utility.view.ViewUtils.visibility
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogListBinding
 import nativedevps.support.databinding.ItemSimpleListViewBinding
@@ -14,12 +16,15 @@ import org.jetbrains.anko.layoutInflater
 
 class ListDialog(
     activeContext: Context,
+    private val allowSearch: Boolean,
 ) : FramedAlertDialog<DialogListBinding>(
     context = activeContext,
     bindingFactory = DialogListBinding::inflate,
     theme = R.style.TransparentDialogStyle
 ) {
     private var onItemSelectedCallback: ((ArrayDrawableListViewAdapter.ItemModel) -> Unit?)? = null
+    private var menu: Menu? = null
+    private val searchActionMenu get() = menu?.findItem(R.id.menuSearchAction)
 
     private fun initListener() = with(childBinding) {
         itemsListView.setOnItemClickListener { parent, view, position, id ->
@@ -42,6 +47,10 @@ class ListDialog(
 
     fun updateList(list: List<ArrayDrawableListViewAdapter.ItemModel>) = with(childBinding) {
         itemsListView.adapter = ArrayDrawableListViewAdapter(context, list)
+    }
+
+    fun setSearchAction(boolean: Boolean) {
+        searchActionMenu?.setVisible(boolean)
     }
 
     var message = ""
@@ -73,7 +82,8 @@ class ListDialog(
 
     private var unfilteredList = listOf<ArrayDrawableListViewAdapter.ItemModel>()
     override fun prepareActionMenu(menu: Menu) {
-        val searchView = (menu.findItem(R.id.menuSearchAction).actionView as? SearchView)
+        this.menu = menu
+        val searchView = (searchActionMenu?.actionView as? SearchView)
         searchView?.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
@@ -99,8 +109,8 @@ class ListDialog(
     }
 
     companion object {
-        fun build(context: Context): ListDialog {
-            return ListDialog(context).also {
+        fun build(context: Context, allowSearch: Boolean = true): ListDialog {
+            return ListDialog(context, allowSearch).also {
                 it.show()
             }
         }
