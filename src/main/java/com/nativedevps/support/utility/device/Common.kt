@@ -18,7 +18,7 @@ import java.io.File
 
 
 object Common {
-    fun Activity.shareText(
+    fun Context.shareText(
         description: String,
         subject: String? = null,
     ) {
