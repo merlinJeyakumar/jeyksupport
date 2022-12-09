@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +21,7 @@ typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 abstract class BaseDialogFragment<VB : ViewBinding, VM : ViewModel>(
     private val bindingFactory: Inflate<VB>,
     private val viewModelClass: Class<VM>,
-) : DialogFragment() {
+) : AppCompatDialogFragment() {
 
     private var _binding: VB? = null
     val binding get() = _binding!!
