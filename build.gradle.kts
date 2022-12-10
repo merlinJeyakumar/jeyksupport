@@ -1,3 +1,5 @@
+import FirebaseLibraries.firebase_platform_bom
+
 plugins {
     id("com.android.library")
     id("kotlin-android")
@@ -30,6 +32,6 @@ dependencies {
     rxJavaLibraries()
     cryptoLibraries()
     networkLibraries()
-    implementation(platform("com.google.firebase:firebase-bom:31.1.1"))
+    implementation(platform(firebase_platform_bom))
     firebaseLibraries()
 }
