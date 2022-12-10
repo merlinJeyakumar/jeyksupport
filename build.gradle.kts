@@ -30,4 +30,6 @@ dependencies {
     rxJavaLibraries()
     cryptoLibraries()
     networkLibraries()
+    implementation(platform("com.google.firebase:firebase-bom:31.1.1"))
+    firebaseLibraries()
 }
