@@ -55,3 +55,7 @@ fun Activity.sharePlayStoreUrl() {
 fun String?.orNull(): String {
     return this ?: "null"
 }
+
+fun Any?.isNotNull(): Boolean {
+    return this != null
+}
