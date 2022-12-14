@@ -1,6 +1,7 @@
 package com.nativedevps.support.custom_views.dialogs
 
 import android.content.Context
+import android.text.SpannableStringBuilder
 import android.view.WindowManager
 import com.nativedevps.support.base_class.dialog.FramedAlertDialog
 import nativedevps.support.R
@@ -35,6 +36,10 @@ class InformationDialog(context: Context) : FramedAlertDialog<DialogInformationB
         set(text) = with(childBinding) {
             messageAppCompatTextView.setText(text)
         }
+
+    fun spannableMessage(spannableStringBuilder: SpannableStringBuilder)= with(childBinding){
+        messageAppCompatTextView.text = spannableStringBuilder
+    }
 
     companion object {
         fun build(context: Context): InformationDialog {
