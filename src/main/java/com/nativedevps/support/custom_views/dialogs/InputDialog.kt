@@ -22,9 +22,13 @@ class InputDialog(context: Context) : FramedAlertDialog<DialogInputBinding>(
         //noop
     }
 
+    fun setSpannableMessage(charSequence:CharSequence)= with(childBinding){
+        messageAppCompatTextView.text = charSequence
+    }
+
     var message = ""
         set(text) = with(childBinding) {
-            messageAppCompatTextView.setText(text)
+            messageAppCompatTextView.text = text
         }
 
     var hint = ""
