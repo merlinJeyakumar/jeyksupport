@@ -36,6 +36,7 @@ class ListDialog(
 
     private fun initPreview() = with(binding) {
         hasNegativeButton = false
+        hasPositiveButton = false
     }
 
     fun setList(list: List<String>) = with(childBinding) {
