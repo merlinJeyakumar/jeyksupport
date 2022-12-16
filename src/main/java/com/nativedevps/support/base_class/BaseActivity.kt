@@ -42,7 +42,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     open fun preInit() {
     }
 
-    open fun initObserver() {
+    private fun initObserver() {
         //todo: define own inheritance of this class and handle manually
     }
 

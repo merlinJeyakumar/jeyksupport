@@ -42,7 +42,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
         return binding.root
     }
 
-    open fun initObserver() {}
+    private fun initObserver() {}
 
     override fun onDestroyView() {
         super.onDestroyView()
