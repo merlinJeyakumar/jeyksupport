@@ -22,7 +22,7 @@ suspend fun Context.downloadFile(
         val request = Request.Builder().url(url).build()
         val response = OkHttpClient().newCall(request).execute()
         val body = response.body
-        val contentLength = body!!.contentLength()
+        val contentLength = body.contentLength()
         source = body.source()
         sink = destFile.sink().buffer()
         val sinkBuffer = sink.buffer
