@@ -22,7 +22,7 @@ class ListDialog(
     bindingFactory = DialogListBinding::inflate,
     theme = R.style.TransparentDialogStyle
 ) {
-    private var onItemSelectedCallback: ((ArrayDrawableListViewAdapter.ItemModel) -> Unit?)? = null
+    private var onItemSelectedCallback: ((ArrayDrawableListViewAdapter.ItemModel, longPress: Boolean) -> Unit?)? = null
     private var menu: Menu? = null
     private val searchActionMenu get() = menu?.findItem(R.id.menuSearchAction)
 
@@ -30,7 +30,13 @@ class ListDialog(
         itemsListView.setOnItemClickListener { parent, view, position, id ->
             val item = (itemsListView.adapter as? ArrayDrawableListViewAdapter)?.items?.get(
                 position)
-            item?.let { onItemSelectedCallback?.invoke(it) }
+            item?.let { onItemSelectedCallback?.invoke(it,false) }
+        }
+        itemsListView.setOnItemLongClickListener { parent, view, position, id ->
+            val item = (itemsListView.adapter as? ArrayDrawableListViewAdapter)?.items?.get(
+                position)
+            item?.let { onItemSelectedCallback?.invoke(it, true) }
+            return@setOnItemLongClickListener true
         }
     }
 
@@ -59,7 +65,7 @@ class ListDialog(
             messageAppCompatTextView.setText(text)
         }
 
-    fun onItemSelected(callback: (ArrayDrawableListViewAdapter.ItemModel) -> Unit) {
+    fun onItemSelected(callback: (ArrayDrawableListViewAdapter.ItemModel, longPress: Boolean) -> Unit) {
         this.onItemSelectedCallback = callback
     }
 
