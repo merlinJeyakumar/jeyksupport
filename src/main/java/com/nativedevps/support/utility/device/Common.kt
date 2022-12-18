@@ -10,7 +10,6 @@ import android.content.pm.PackageManager
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.google.android.gms.common.ConnectionResult
@@ -171,7 +170,16 @@ object Common {
         }
     }
 
-    fun Context.notifyFileAdded(file:File){
-        MediaScannerConnection.scanFile(this, arrayOf(file.toString()), null, null)
+    fun Context.notifyFileAdded(file: File) {
+        try {
+            MediaScannerConnection.scanFile(this, arrayOf(file.toString()), null, null)
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+            val contentUri = Uri.fromFile(file)
+            val mediaScanIntent = Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE")
+            mediaScanIntent.data = contentUri
+            sendBroadcast(mediaScanIntent)
+        }
     }
 }
