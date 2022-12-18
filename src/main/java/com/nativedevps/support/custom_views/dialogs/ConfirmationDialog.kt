@@ -1,16 +1,10 @@
 package com.nativedevps.support.custom_views.dialogs
 
 import android.content.Context
-import android.view.ViewGroup.LayoutParams
 import android.view.WindowManager
-import androidx.core.view.children
-import androidx.core.view.updateLayoutParams
-import com.nativedevps.support.base_class.Inflate
 import com.nativedevps.support.base_class.dialog.FramedAlertDialog
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogInformationBinding
-import nativedevps.support.databinding.ItemChecklistBinding
-import org.jetbrains.anko.layoutInflater
 
 class ConfirmationDialog(context: Context) : FramedAlertDialog<DialogInformationBinding>(
     context = context,
@@ -36,31 +30,6 @@ class ConfirmationDialog(context: Context) : FramedAlertDialog<DialogInformation
     private fun initPreview() {
         //noop
     }
-
-    fun isChecked(id: String) = with(childBinding) {
-        return@with getCheckBox(id).isChecked
-    }
-
-    fun getCheckBox(id: String) = with(childBinding) {
-        return@with ItemChecklistBinding.bind(meow.children.first { it.tag == id }).materialCheckBox
-    }
-
-    fun setCheckBox(
-        id: String,
-        message: String,
-        onSelection: ((Boolean) -> Unit)? = null,
-    ): ItemChecklistBinding =
-        with(childBinding) {
-            return@with ItemChecklistBinding.inflate(context.layoutInflater).apply {
-                materialCheckBox.setTag(id)
-                materialCheckBox.text = message
-                materialCheckBox.setOnClickListener {
-                    onSelection?.invoke(materialCheckBox.isChecked)
-                }
-            }.also {
-                childBinding.meow.addView(it.root,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT)
-            }
-        }
 
     var message = ""
         set(text) = with(childBinding) {
