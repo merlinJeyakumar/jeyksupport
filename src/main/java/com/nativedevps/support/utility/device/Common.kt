@@ -7,8 +7,10 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.google.android.gms.common.ConnectionResult
@@ -167,5 +169,9 @@ object Common {
             val clip = ClipData.newPlainText("Copied Text", this)
             clipboard.setPrimaryClip(clip)
         }
+    }
+
+    fun Context.notifyFileAdded(file:File){
+        MediaScannerConnection.scanFile(this, arrayOf(file.toString()), null, null)
     }
 }
