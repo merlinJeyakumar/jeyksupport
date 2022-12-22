@@ -10,12 +10,7 @@ import java.lang.reflect.ParameterizedType
 @Dao
 abstract class BaseDao<T : BaseEntity> {
 
-    protected val tableName: String
-        get() {
-            val clazz = (javaClass.superclass!!.genericSuperclass as ParameterizedType)
-                .actualTypeArguments[0] as Class<*>
-            return clazz.simpleName
-        }
+    abstract val tableName: String
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(obj: T): Long
@@ -39,7 +34,7 @@ abstract class BaseDao<T : BaseEntity> {
 
     fun deleteAll() {
         val query = SimpleSQLiteQuery(
-            "TRUNCATE $tableName"
+            "DELETE FROM $tableName"
         )
         doDeleteAll(query)
     }
@@ -72,4 +67,9 @@ abstract class BaseDao<T : BaseEntity> {
     @RawQuery
     protected abstract fun doFind(query: SupportSQLiteQuery): T
 
+    @Transaction
+    open fun deleteAndCreate(users: List<T>) {
+        deleteAll()
+        insertAll(users)
+    }
 }
