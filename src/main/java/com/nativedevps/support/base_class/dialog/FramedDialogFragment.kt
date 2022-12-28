@@ -144,8 +144,4 @@ abstract class FramedDialogFragment<B : ViewBinding, VM: BaseViewModel>(
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
     }
-
-    override fun theme(): Int {
-        return R.style.TransparentDialogFragmentStyle
-    }
 }
