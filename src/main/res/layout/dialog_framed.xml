@@ -7,6 +7,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/_5sdp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -21,10 +22,10 @@
                 android:background="?attr/colorPrimary">
 
                 <androidx.appcompat.widget.Toolbar
-                    android:theme="@style/AppTheme.Toolbar"
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:theme="@style/AppTheme.Toolbar">
 
                 </androidx.appcompat.widget.Toolbar>
             </FrameLayout>

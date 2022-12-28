@@ -53,7 +53,7 @@ abstract class BaseDialogFragment<VB : ViewBinding, VM : ViewModel>(
         activity?.toast(string)
     }
 
-    fun theme(): Int {
+    open fun theme(): Int {
         return R.style.TransparentDialogStyle
     }
 }
