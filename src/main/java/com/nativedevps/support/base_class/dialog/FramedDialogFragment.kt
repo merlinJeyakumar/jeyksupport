@@ -43,6 +43,8 @@ abstract class FramedDialogFragment<B : ViewBinding, VM: BaseViewModel>(
         toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.menuCloseAction) {
                 dismiss()
+            }else{
+                onMenuAction(it)
             }
             return@setOnMenuItemClickListener true
         }
@@ -136,6 +138,9 @@ abstract class FramedDialogFragment<B : ViewBinding, VM: BaseViewModel>(
 
     private fun actionButton(isOkButton: Boolean) {
         actionCallback?.invoke(isOkButton)
+    }
+
+    open fun onMenuAction(menuItem: MenuItem){
     }
 
     open fun containerLayoutParams(): ViewGroup.LayoutParams {
