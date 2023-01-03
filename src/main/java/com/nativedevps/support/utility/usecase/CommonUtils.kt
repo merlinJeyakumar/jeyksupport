@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.first
 suspend fun <T> Flow<NetworkResult<T>>.await(): T {
     return when (val result = first()) {
         is SuccessApiResult -> result.data
-        is ErrorApiResult -> throw result.throwable?:Exception(result.message)
-        else -> error("not handled a status api result")
+        is ErrorApiResult -> throw result.throwable ?: Exception(result.message)
+        else -> error("not handled a $result this api")
     }
 }
