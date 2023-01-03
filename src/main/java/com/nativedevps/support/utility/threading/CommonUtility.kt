@@ -16,6 +16,12 @@ fun <T> Flow<T>.runOnLifeCycle(lifecycleCoroutineScope: LifecycleOwner, callback
     }
 }
 
+fun runOnSameThread(callback: suspend CoroutineScope.() -> Unit): Job {
+    return CoroutineScope(Dispatchers.Unconfined).launch {
+        callback()
+    }
+}
+
 fun runOnAsyncThread(callback: suspend CoroutineScope.() -> Unit): Job {
     return CoroutineScope(Dispatchers.IO).launch {
         callback()
