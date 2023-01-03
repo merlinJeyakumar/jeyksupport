@@ -6,6 +6,7 @@ import com.nativedevps.support.coroutines.SuccessApiResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 
+/*todo: handle by suspendable execution*/
 suspend fun <T> Flow<NetworkResult<T>>.await(): T {
     return when (val result = first()) {
         is SuccessApiResult -> result.data
