@@ -6,6 +6,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 const val DateTimePattern = "HH:mm:ss - dd/MM/yyyy"
+const val fancyDateTimePattern = "dd-MM-yyyy HH:mm"
 
 fun isValidDate(
     inDate: String,
