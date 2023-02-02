@@ -1,6 +1,7 @@
 package com.nativedevps.support.utility.date_time_utility
 
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 object MillisecondUtility {
     val now: Long get() = System.currentTimeMillis()
@@ -46,5 +47,9 @@ object MillisecondUtility {
         }
         gregorianMillis.add(GregorianCalendar.DAY_OF_MONTH, adjustment)
         return gregorianMillis.timeInMillis
+    }
+
+    fun Long.isToday(): Boolean {
+        return TimeUnit.MILLISECONDS.toHours(now - this) <= 23
     }
 }
