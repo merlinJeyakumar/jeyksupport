@@ -13,7 +13,7 @@ object MillisecondUtility {
         }
 
         gregorianMillis.set(GregorianCalendar.HOUR, 0)
-        gregorianMillis.set(GregorianCalendar.MINUTE, 0)
+        gregorianMillis.set(GregorianCalendar.MINUTE, 1)
         return gregorianMillis
     }
 
