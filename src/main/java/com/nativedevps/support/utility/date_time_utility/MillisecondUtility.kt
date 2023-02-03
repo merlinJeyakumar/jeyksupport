@@ -13,8 +13,20 @@ object MillisecondUtility {
         }
 
         gregorianMillis.set(GregorianCalendar.HOUR, 0)
-        gregorianMillis.set(GregorianCalendar.MINUTE, 1)
+        gregorianMillis.set(GregorianCalendar.MINUTE, 0)
         return gregorianMillis
+    }
+
+    fun dayEndMillis(millis: Long): Long {
+        val gregorianMillis = GregorianCalendar().apply {
+            timeInMillis = millis
+        }
+
+        gregorianMillis.set(GregorianCalendar.HOUR, 23)
+        gregorianMillis.set(GregorianCalendar.MINUTE, 59)
+        gregorianMillis.set(GregorianCalendar.SECOND,59)
+
+        return gregorianMillis.timeInMillis
     }
 
     fun yesterday(
@@ -45,7 +57,7 @@ object MillisecondUtility {
                 timeInMillis = millis
             }
         }
-        gregorianMillis.add(GregorianCalendar.DAY_OF_MONTH, adjustment)
+        gregorianMillis.add(GregorianCalendar.DAY_OF_YEAR, adjustment)
         return gregorianMillis.timeInMillis
     }
 
