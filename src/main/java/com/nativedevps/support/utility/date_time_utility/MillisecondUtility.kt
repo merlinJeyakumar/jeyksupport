@@ -1,5 +1,6 @@
 package com.nativedevps.support.utility.date_time_utility
 
+import android.text.format.DateUtils
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -62,6 +63,6 @@ object MillisecondUtility {
     }
 
     fun Long.isToday(): Boolean {
-        return TimeUnit.MILLISECONDS.toHours(now - this) <= 23
+        return DateUtils.isToday(this)
     }
 }
