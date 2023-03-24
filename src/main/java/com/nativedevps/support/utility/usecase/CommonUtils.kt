@@ -4,7 +4,6 @@ import com.nativedevps.support.coroutines.ErrorApiResult
 import com.nativedevps.support.coroutines.NetworkResult
 import com.nativedevps.support.coroutines.StatusApiResult
 import com.nativedevps.support.coroutines.SuccessApiResult
-import com.nativedevps.support.utility.kotlin.forInfinite
 import com.nativedevps.support.utility.threading.runOnSameThread
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.Flow
@@ -23,14 +22,14 @@ suspend fun <T> Flow<NetworkResult<T>>.await(): T {
     }
 }
 
-suspend fun <T> Flow<NetworkResult<T>>.await(producerScope: ProducerScope<NetworkResult<T>>?): T {
+suspend fun <T,I> Flow<NetworkResult<T>>.await(producerScope: ProducerScope<NetworkResult<I>>?): T {
     return suspendCancellableCoroutine { cancellableContinuation ->
         val job = runOnSameThread {
             collectLatest { result ->
                 when (result) {
                     is SuccessApiResult -> cancellableContinuation.resume(result.data)
                     is ErrorApiResult -> throw result.throwable ?: Exception(result.message)
-                    is StatusApiResult -> producerScope?.trySend(result)?: error("handle status api result")
+                    is StatusApiResult -> producerScope?.trySend(result as NetworkResult<I>)?: error("handle status api result")
                     else -> error("not handled a $result this api")
                 }
             }
