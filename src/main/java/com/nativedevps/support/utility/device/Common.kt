@@ -182,4 +182,25 @@ object Common {
             sendBroadcast(mediaScanIntent)
         }
     }
+
+    fun sendEmail(
+        context: Context,
+        emailAddress: String,
+        subject: String,
+        message: String,
+    ) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse("mailto:$emailAddress")
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        intent.putExtra(Intent.EXTRA_TEXT, message)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            val chooserIntent = Intent.createChooser(intent, "Send email with:")
+            chooserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(chooserIntent)
+        } else {
+            intent.putExtra(Intent.EXTRA_TITLE, "Send email with:")
+            context.startActivity(intent)
+        }
+    }
 }
