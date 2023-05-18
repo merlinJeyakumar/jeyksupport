@@ -6,6 +6,7 @@ import androidx.databinding.ViewDataBinding
 import nativedevps.support.R
 import nativedevps.support.databinding.ActivityActionbarBinding
 
+
 abstract class ActionBarActivity<VB : ViewDataBinding, VM : BaseViewModel>(
     private val layout: Int,
     viewModelClass: Class<VM>,
