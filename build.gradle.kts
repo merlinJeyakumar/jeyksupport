@@ -9,10 +9,11 @@ plugins {
 }
 
 android {
-    setCompileSdkVersion(Configs.compileSdkVersion)
+    namespace = "nativedevps.support"
+    compileSdk = Configs.compileSdkVersion
     defaultConfig {
-        setMinSdkVersion(Configs.minSdkVersion)
-        setTargetSdkVersion(Configs.targetSdkVersion.toString())
+        minSdk = Configs.minSdkVersion
+        targetSdk = Configs.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
     }
