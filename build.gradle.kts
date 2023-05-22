@@ -6,6 +6,7 @@ plugins {
     id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -24,6 +25,9 @@ android {
 }
 
 dependencies {
+    implementation(RequiredLibraries.core_ktx)
+    implementation(RequiredLibraries.core_ktx)
+    implementation(RequiredLibraries.viewmodel_ktx)
     requiredLibraries()
     dateTimeLibraries()
     roomLibraries()
@@ -35,4 +39,8 @@ dependencies {
     networkLibraries()
     implementation(platform(firebase_platform_bom))
     firebaseLibraries()
+}
+
+kapt {
+    correctErrorTypes = true
 }
