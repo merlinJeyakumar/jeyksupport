@@ -1,5 +1,6 @@
 package com.nativedevps.support.base_class.dialog
 
+import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -124,7 +125,26 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : ViewModel>(
         return BottomSheetBehavior.STATE_EXPANDED
     }
 
-    fun toast(string:String){
+    fun toast(string: String) {
         requireContext().toast(string)
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+        // Set the peek height to the expanded height of the bottom sheet
+        val behavior = bottomSheetDialog.behavior as BottomSheetBehavior
+        if (disableHalfExpanded()) {
+            behavior.peekHeight = resources.displayMetrics.heightPixels
+            // Disable STATE_HALF_EXPANDED
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        } else {
+            behavior.setHalfExpandedRatio(0.5f);
+            behavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+        }
+        return bottomSheetDialog
+    }
+
+    open fun disableHalfExpanded(): Boolean {
+        return true
     }
 }
