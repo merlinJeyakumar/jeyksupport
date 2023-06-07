@@ -44,7 +44,7 @@ abstract class FramedDialogFragment<B : ViewBinding, VM: BaseViewModel>(
             if (it.itemId == R.id.menuCloseAction) {
                 dismiss()
             }else{
-                onMenuAction(it)
+                onMenuItemListener(it)
             }
             return@setOnMenuItemClickListener true
         }
@@ -66,6 +66,10 @@ abstract class FramedDialogFragment<B : ViewBinding, VM: BaseViewModel>(
         cancelButton.setOnClickListener {
             actionButton(false)
         }
+    }
+
+    open fun setTitle(string: String){
+        headerTitle = string
     }
 
     var headerTitle: String = ""
@@ -140,7 +144,15 @@ abstract class FramedDialogFragment<B : ViewBinding, VM: BaseViewModel>(
         actionCallback?.invoke(isOkButton)
     }
 
-    open fun onMenuAction(menuItem: MenuItem){
+    open fun setOkEnabled(boolean: Boolean) = with(binding) {
+        okButton.isEnabled = boolean
+    }
+
+    open fun setCancelEnabled(boolean: Boolean) = with(binding) {
+        cancelButton.isEnabled = boolean
+    }
+
+    open fun onMenuItemListener(menuItem: MenuItem){
     }
 
     open fun containerLayoutParams(): ViewGroup.LayoutParams {
