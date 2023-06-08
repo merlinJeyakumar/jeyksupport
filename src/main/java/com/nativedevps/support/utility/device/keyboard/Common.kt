@@ -50,6 +50,21 @@ fun Context.showSoftKeyboard(editText: EditText) {
 
 }
 
+fun EditText.showKeyboard() {
+    try {
+        requestFocus()
+        postDelayed(
+            {
+                getInputMethodService(context).showSoftInput(this, 0)
+            }, 200
+        )
+    } catch (npe: NullPointerException) {
+        npe.printStackTrace()
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
 fun getInputMethodService(context: Context): InputMethodManager {
     return context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 }
