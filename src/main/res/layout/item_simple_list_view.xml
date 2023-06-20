@@ -19,7 +19,7 @@
             android:padding="@dimen/_10sdp"
             android:text="Select"
             android:textColor="@color/trans_black"
-            app:drawableTint="@color/trans_gray" />
+            app:drawableTint="@color/trans_gray_lite" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.cardview.widget.CardView>
