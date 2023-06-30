@@ -3,6 +3,7 @@ package com.nativedevps.support.base_class
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
@@ -64,4 +65,9 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     open fun getLocale(context: Context): String? {
         return null
     }
+
+    protected val pushNotificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            Log.v("NotificationPermission", "NotificationPermission $granted")
+        }
 }
