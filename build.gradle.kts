@@ -39,6 +39,7 @@ dependencies {
     networkLibraries()
     implementation(platform(firebase_platform_bom))
     firebaseLibraries()
+    navigationLibrary()
 }
 
 kapt {
