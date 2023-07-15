@@ -3,7 +3,7 @@ package com.nativedevps.support.utility.file
 import android.content.Context
 import android.net.Uri
 import android.webkit.MimeTypeMap
-import com.nativedevps.support.utility.debugging.JLogE
+import com.nativedevps.support.utility.debugging.Log
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileInputStream
@@ -34,7 +34,7 @@ fun Uri.getFilePath(context: Context): String? {
     return try {
         RealPathUtil.getRealPathFromURI(context, this)
     } catch (e: Exception) {
-        JLogE("FileUri: ", e.localizedMessage)
+        Log.e("FileUri: ", e.localizedMessage)
         null
     }
 }

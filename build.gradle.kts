@@ -1,4 +1,4 @@
-import FirebaseLibraries.firebase_platform_bom
+
 
 plugins {
     id("com.android.library")
@@ -33,12 +33,11 @@ dependencies {
     roomLibraries()
     supportLibraries()
     imageLoaderLibraries()
-    firebaseLibraries()
+    //firebaseLibraries()
     rxJavaLibraries()
     cryptoLibraries()
     networkLibraries()
-    implementation(platform(firebase_platform_bom))
-    firebaseLibraries()
+    //implementation(platform(firebase_platform_bom))
     navigationLibrary()
 }
 

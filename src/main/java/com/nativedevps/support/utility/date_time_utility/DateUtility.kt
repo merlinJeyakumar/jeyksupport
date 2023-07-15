@@ -43,7 +43,7 @@ fun parseStringDateToCalendar(
 
 fun parseDateFromMilliseconds(
     milliSecond: Long,
-    formatPattern: String = DateTimePattern,
+    formatPattern: String = fancyDateTimePattern,
 ): String? {
     //dd-M-yyyy hh:mm:ss
     return SimpleDateFormat(formatPattern, Locale.getDefault())

@@ -2,7 +2,6 @@ package com.nativedevps.support.utility.debugging
 
 import android.content.Context
 import android.util.Log
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 object Log {
     fun Context.i(message: String) {
@@ -92,7 +91,7 @@ object Log {
         force:Boolean = false
     ) {
         if (debugMode || force) {
-            FirebaseCrashlytics.getInstance().log("${tag}: ${message}")
+            Log.e(tag, message)
         }
     }
 }
