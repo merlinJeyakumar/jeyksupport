@@ -19,19 +19,17 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 
-abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
-    bindingFactory: Int,
+abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
+    private val bindingFactory: Int,
     private val viewModelClass: Class<VM>,
 ) : AppCompatActivity() {
+    protected val binding: VB by contentView(bindingFactory)
+
     protected val viewModel: VM by lazy { ViewModelProvider(this).get(viewModelClass) }
 
-    protected val binding: B by contentView(bindingFactory)
-
-    private lateinit var _binding: ViewBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
+
         preInit()
-        initBinding()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
