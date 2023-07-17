@@ -8,10 +8,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-fun <T> Flow<T>.runOnLifeCycle(lifecycleCoroutineScope: LifecycleOwner, callback: (T) -> Unit):Job {
+fun <T> Flow<T>.runOnLifeCycle(lifecycleCoroutineScope: LifecycleOwner, callback: ((T) -> Unit)?=null):Job {
     return lifecycleCoroutineScope.lifecycleScope.launch {
         collect{
-            callback(it)
+            callback?.invoke(it)
         }
     }
 }
