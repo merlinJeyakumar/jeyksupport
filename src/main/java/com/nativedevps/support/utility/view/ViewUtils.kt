@@ -254,4 +254,24 @@ object ViewUtils {
     fun MaterialButton.setBackgroundTint(color: Int) {
         backgroundTintList = ContextCompat.getColorStateList(this.context, color);
     }
+
+    fun View.visible(visibleIf: Boolean, gone: Boolean = true) {
+        visibility = if (visibleIf) {
+            View.VISIBLE
+        } else {
+            if (gone) {
+                View.GONE
+            } else {
+                View.INVISIBLE
+            }
+        }
+    }
+
+    fun View.gone(goneIf: Boolean) {
+        visibility = if (goneIf) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+    }
 }
