@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.SpannableStringBuilder
 import android.view.WindowManager
 import com.nativedevps.support.base_class.dialog.FramedAlertDialog
+import com.nativedevps.support.custom_views.ScrollingTextView
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogInformationBinding
 
@@ -39,6 +40,10 @@ class InformationDialog(context: Context) : FramedAlertDialog<DialogInformationB
 
     fun spannableMessage(spannableStringBuilder: SpannableStringBuilder)= with(childBinding){
         messageAppCompatTextView.text = spannableStringBuilder
+    }
+
+    fun textView(): ScrollingTextView = with(childBinding){
+        return messageAppCompatTextView
     }
 
     companion object {
