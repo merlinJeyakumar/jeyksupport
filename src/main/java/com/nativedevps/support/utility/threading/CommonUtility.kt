@@ -6,11 +6,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-fun <T> Flow<T>.runOnLifeCycle(lifecycleCoroutineScope: LifecycleOwner, callback: ((T) -> Unit)?=null):Job {
+fun <T> Flow<T>.runOnLifeCycle(
+    lifecycleCoroutineScope: LifecycleOwner,
+    callback: ((T) -> Unit)? = null
+): Job {
     return lifecycleCoroutineScope.lifecycleScope.launch {
-        collect{
+        collect {
             callback?.invoke(it)
         }
     }
@@ -42,6 +46,14 @@ private fun executeAndMainCallback(
         backgroundExecution()
         runOnMainThread {
             mainThreadExecution()
+        }
+    }
+}
+
+fun <T> Flow<T>.runOnViewHolder(callback: ((T) -> Unit)? = null): Job {
+    return CoroutineScope(Dispatchers.Main).launch {
+        collectLatest {
+            callback?.invoke(it)
         }
     }
 }
