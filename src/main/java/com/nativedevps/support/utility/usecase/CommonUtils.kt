@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 /*todo: handle by suspendable execution*/
 suspend fun <T> Flow<NetworkResult<T>>.await(): T {
@@ -30,7 +31,7 @@ suspend fun <T, I> Flow<NetworkResult<T>>.await(producerScope: ProducerScope<Net
             collectLatest { result ->
                 when (result) {
                     is SuccessApiResult -> cancellableContinuation.resume(result.data)
-                    is ErrorApiResult -> throw result.throwable ?: Exception(result.message)
+                    is ErrorApiResult -> cancellableContinuation.resumeWithException(result.throwable ?: Exception(result.message))
                     is StatusApiResult -> producerScope?.trySend(result as NetworkResult<I>)
                         ?: error("handle status api result")
 
@@ -41,9 +42,9 @@ suspend fun <T, I> Flow<NetworkResult<T>>.await(producerScope: ProducerScope<Net
     }
 }
 
-fun <T> emulate(execution: suspend () -> T) = channelFlow<NetworkResult<T>> {
+fun <T> emulate(execution: suspend (ProducerScope<NetworkResult<T>>) -> T) = channelFlow<NetworkResult<T>> {
     try {
-        trySend(SuccessApiResult(execution()))
+        trySend(SuccessApiResult(execution(this)))
     } catch (e: Exception) {
         trySend(ErrorApiResult(e.message ?: "execute with debug", e))
     }
