@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -21,6 +23,16 @@
             android:padding="@dimen/_10sdp"
             android:scrollbars="vertical"
             android:text="@string/example_lorem_ipsum" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/todoCheckBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:gravity="start|center"
+            android:visibility="gone"
+            tools:text="Are you sure to include that things?"
+            tools:visibility="visible" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

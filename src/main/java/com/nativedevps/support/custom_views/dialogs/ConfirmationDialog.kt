@@ -3,6 +3,7 @@ package com.nativedevps.support.custom_views.dialogs
 import android.content.Context
 import android.view.WindowManager
 import com.nativedevps.support.base_class.dialog.FramedAlertDialog
+import com.nativedevps.support.utility.view.ViewUtils.visible
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogInformationBinding
 
@@ -29,6 +30,26 @@ class ConfirmationDialog(context: Context) : FramedAlertDialog<DialogInformation
 
     private fun initPreview() {
         //noop
+    }
+
+    fun setCheckBox(
+        label: String,
+        checked: Boolean = false,
+        callback: ((boolean: Boolean) -> Unit)? = null
+    ) = with(childBinding)
+    {
+        todoCheckBox.apply {
+            visible()
+            setText(label)
+            todoCheckBox.isChecked = checked
+            setOnClickListener {
+                callback?.invoke(todoCheckBox.isChecked)
+            }
+        }
+    }
+
+    fun isChecked(): Boolean = with(childBinding) {
+        return todoCheckBox.isChecked
     }
 
     var message = ""
