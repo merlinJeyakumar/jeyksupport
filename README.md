@@ -1,8 +1,8 @@
 # Release
 
-Gradle implementation 'com.github.merlinJeyakumar:jeyksupport:1.0.0
+Gradle implementation 'com.github.merlinJeyakumar:jeyksupport:1.0.1'
 
-Kotlin implementation("com.github.merlinJeyakumar:jeyksupport:1.0.0")
+Kotlin implementation("com.github.merlinJeyakumar:jeyksupport:1.0.1")
 
 Jitpack https://jitpack.io/#merlinJeyakumar/jeyksupport
 
