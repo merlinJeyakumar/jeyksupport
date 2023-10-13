@@ -7,6 +7,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
     id("org.jetbrains.kotlin.android")
+    id("maven-publish")
 }
 
 android {
@@ -44,4 +45,16 @@ dependencies {
 
 kapt {
     correctErrorTypes = true
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("ReleaseAar") {
+            groupId = "com.github.merlinJeyakumar"
+            artifactId = "library"
+            version = "1.1"
+            afterEvaluate { artifact(tasks.getByName("bundleReleaseAar"))
+            }
+    }
+}
 }
