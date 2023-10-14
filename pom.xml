@@ -6,16 +6,4 @@
   <groupId>com.group.module</groupId>
   <artifactId>final</artifactId>
   <version>1.0</version>
-  <dependencies>
-    <dependency>
-      <groupId>androidx.appcompat</groupId>
-      <artifactId>appcompat</artifactId>
-      <version>1.2.0</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.android.material</groupId>
-      <artifactId>material</artifactId>
-      <version>1.2.1</version>
-    </dependency>
-  </dependencies>
 </project>
