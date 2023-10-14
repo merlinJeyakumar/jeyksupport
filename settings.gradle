@@ -1,0 +1,3 @@
+include ':app'
+include ':jeyksupport'
+project(':jeyksupport').projectDir = new File(rootDir, 'jeyksupport')
