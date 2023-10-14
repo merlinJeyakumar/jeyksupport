@@ -1,10 +1,7 @@
 # Release
 
-Gradle implementation 'com.github.merlinJeyakumar:jeyksupport:1.0.1'
-
-Kotlin implementation("com.github.merlinJeyakumar:jeyksupport:1.0.1")
-
-Jitpack https://jitpack.io/#merlinJeyakumar/jeyksupport
+Usage Demonstration: https://github.com/merlinJeyakumar/jksupport.git
+Latest release: https://github.com/merlinJeyakumar/jksupport/releases
 
 # Disclosure
 Dozens of utility, base-classes, best-implementation-methodolgy included
