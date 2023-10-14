@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.get
 import com.nativedevps.support.base_class.dialog.FramedAlertDialog
-import com.nativedevps.support.utility.view.ViewUtils.visibility
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogListBinding
 import nativedevps.support.databinding.ItemSimpleListViewBinding
@@ -79,7 +77,7 @@ class ListDialog(
     override fun containerLayoutParams(): ViewGroup.LayoutParams {
         return ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            context.resources.getDimensionPixelOffset(R.dimen._150sdp)
+            context.resources.getDimensionPixelOffset(com.intuit.sdp.R.dimen._150sdp)
         )
     }
 

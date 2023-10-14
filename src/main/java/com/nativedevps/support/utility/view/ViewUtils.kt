@@ -215,8 +215,8 @@ object ViewUtils {
     }
 
     fun View.setSize(int: Int) {
-        this.layoutParams.height = resources.getDimensionPixelSize(R.dimen._10sdp)
-        this.layoutParams.width = resources.getDimensionPixelSize(R.dimen._10sdp)
+        this.layoutParams.height = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._10sdp)
+        this.layoutParams.width = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._10sdp)
     }
 
     fun EditText.clear() {
