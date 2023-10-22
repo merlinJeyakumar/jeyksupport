@@ -95,9 +95,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":jeyksupport"))
     implementation(RequiredLibraries.core_ktx)
     implementation(RequiredLibraries.viewmodel_ktx)
     requiredLibraries()
+    networkLibraries()
     //roomLibraries()
     supportLibraries()
     imageLoaderLibraries()

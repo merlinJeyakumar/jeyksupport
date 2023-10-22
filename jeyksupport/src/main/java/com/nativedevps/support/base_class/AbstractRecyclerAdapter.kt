@@ -19,20 +19,23 @@ abstract class AbstractRecyclerAdapter<ITEM_TYPE, SELECTION_TYPE>() :
     init {
         val diffItemCallback = object : DiffUtil.ItemCallback<ITEM_TYPE>() {
             override fun areItemsTheSame(
-                oldItem: ITEM_TYPE,
-                newItem: ITEM_TYPE,
+                oldItem: ITEM_TYPE & Any,
+                newItem: ITEM_TYPE & Any
             ): Boolean {
                 return isSameItem(oldItem, newItem)
             }
 
             override fun areContentsTheSame(
-                oldItem: ITEM_TYPE,
-                newItem: ITEM_TYPE,
+                oldItem: ITEM_TYPE & Any,
+                newItem: ITEM_TYPE & Any
             ): Boolean {
                 return isSameContent(oldItem, newItem)
             }
 
-            override fun getChangePayload(oldItem: ITEM_TYPE, newItem: ITEM_TYPE): Any? {
+            override fun getChangePayload(
+                oldItem: ITEM_TYPE & Any,
+                newItem: ITEM_TYPE & Any
+            ): Any? {
                 return getChangePayload()?.let { it }
                     .orElse { super.getChangePayload(oldItem, newItem) }
             }
@@ -153,8 +156,9 @@ abstract class AbstractRecyclerAdapter<ITEM_TYPE, SELECTION_TYPE>() :
     }
 
     open var itemListener: ItemListener<ITEM_TYPE>? = null
-    open fun setListener(itemListener: ItemListener<ITEM_TYPE>) {
+    open fun setListener(itemListener: ItemListener<ITEM_TYPE>): AbstractRecyclerAdapter<ITEM_TYPE, SELECTION_TYPE> {
         this.itemListener = itemListener
+        return this
     }
 
     open class ItemListener<ITEM_TYPE> {

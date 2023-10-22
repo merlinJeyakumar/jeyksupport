@@ -9,6 +9,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+fun <T> Flow<T>.collectOnLifeCycle(
+    lifecycleCoroutineScope: LifecycleOwner,
+    callback: ((T) -> Unit)? = null
+): Job {
+    return lifecycleCoroutineScope.lifecycleScope.launch {
+        collectLatest {
+            callback?.invoke(it)
+        }
+    }
+}
+
 fun <T> Flow<T>.runOnLifeCycle(
     lifecycleCoroutineScope: LifecycleOwner,
     callback: ((T) -> Unit)? = null

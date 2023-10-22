@@ -18,7 +18,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-
+/*
+* Provide basic signature for the activity
+*
+* Example usage
+```
+@AndroidEntryPoint
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
+    R.layout.activity_main,
+    MainViewModel::class.java
+)
+```
+**/
 abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
     private val bindingFactory: Int,
     private val viewModelClass: Class<VM>,
