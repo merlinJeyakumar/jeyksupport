@@ -1,8 +1,8 @@
-# Release
+# Usable Packages (Directly)
+ - [Multi Module Architecture](https://github.com/merlinJeyakumar/kotlin-multi-module-mvvm-architecture-android.git)
+ - [Single Module Architecture](https://github.com/merlinJeyakumar/kotlin-single-module-architecture-android.git)
 
-Usage Demonstration: https://github.com/merlinJeyakumar/jksupport.git
-
-Latest release: https://github.com/merlinJeyakumar/jksupport/releases
+# Release AAR
 
 # Disclosure
 Dozens of utility, base-classes, best-implementation-methodolgy included
