@@ -22,6 +22,13 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        buildConfig = true
+    }
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
     }
 }
 
