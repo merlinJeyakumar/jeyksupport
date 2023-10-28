@@ -120,7 +120,9 @@ abstract class AbstractRecyclerAdapter<ITEM_TYPE, SELECTION_TYPE>() :
         return selectionList
     }
 
-    abstract fun getList(): List<ITEM_TYPE>
+    open fun getList(): List<ITEM_TYPE> {
+        return super.getCurrentList()
+    }
 
     open fun getIndex(itemKey: SELECTION_TYPE): Int {
         return -1
@@ -150,6 +152,13 @@ abstract class AbstractRecyclerAdapter<ITEM_TYPE, SELECTION_TYPE>() :
         withContext(Dispatchers.Main) {
             callback()
         }
+    }
+
+    override fun onBindViewHolder(
+        holder: BaseViewHolder<ITEM_TYPE, SELECTION_TYPE>,
+        position: Int,
+    ) {
+        holder.isLast = position == (getList().size - 1)
     }
 
     open var itemListener: ItemListener<ITEM_TYPE>? = null

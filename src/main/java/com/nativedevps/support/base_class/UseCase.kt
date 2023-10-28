@@ -6,7 +6,7 @@ import kotlinx.coroutines.withContext
 
 //P - request parameter
 //T - response
-
+@Deprecated("Prefer using #FlowUseCase insteadof")
 abstract class UseCase<in P, T>(private val coroutineDispatcher: CoroutineDispatcher) {
 
     suspend operator fun invoke(parameters: P): NetworkResult<T> {
