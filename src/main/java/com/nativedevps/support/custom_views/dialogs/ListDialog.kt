@@ -79,7 +79,7 @@ class ListDialog(
     override fun containerLayoutParams(): ViewGroup.LayoutParams {
         return ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            context.resources.getDimensionPixelOffset(R.dimen._150sdp)
+            context.resources.getDimensionPixelOffset(com.intuit.sdp.R.dimen._150sdp)
         )
     }
 

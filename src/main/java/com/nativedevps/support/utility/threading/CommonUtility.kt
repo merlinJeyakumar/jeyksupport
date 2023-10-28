@@ -5,8 +5,10 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 fun <T> Flow<T>.runOnLifeCycle(
@@ -55,5 +57,25 @@ fun <T> Flow<T>.runOnViewHolder(callback: ((T) -> Unit)? = null): Job {
         collectLatest {
             callback?.invoke(it)
         }
+    }
+}
+
+fun <T> Flow<T>.collectOnLifeCycle(
+    lifecycleCoroutineScope: LifecycleOwner,
+    callback: ((T) -> Unit)? = null
+): Job {
+    return lifecycleCoroutineScope.lifecycleScope.launch {
+        collectLatest {
+            callback?.invoke(it)
+        }
+    }
+}
+
+fun <T> Flow<T>.repeatEvery(interval: Long) = flow {
+    while (true) {
+        this@repeatEvery.collect {
+            emit(it)
+        }
+        delay(interval)
     }
 }

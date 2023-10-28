@@ -215,8 +215,8 @@ object ViewUtils {
     }
 
     fun View.setSize(int: Int) {
-        this.layoutParams.height = resources.getDimensionPixelSize(R.dimen._10sdp)
-        this.layoutParams.width = resources.getDimensionPixelSize(R.dimen._10sdp)
+        this.layoutParams.height = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._10sdp)
+        this.layoutParams.width = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._10sdp)
     }
 
     fun EditText.clear() {
@@ -273,5 +273,14 @@ object ViewUtils {
         } else {
             View.VISIBLE
         }
+    }
+}
+
+fun Context.simpleArrayAdapter(stringList: List<String>): ArrayAdapter<String> {
+    return ArrayAdapter(
+        this,
+        android.R.layout.simple_spinner_item, stringList
+    ).also {
+        it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
     }
 }

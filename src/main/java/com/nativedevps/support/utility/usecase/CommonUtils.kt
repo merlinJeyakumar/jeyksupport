@@ -1,6 +1,5 @@
 package com.nativedevps.support.utility.usecase
 
-import android.net.Network
 import com.nativedevps.support.coroutines.ErrorApiResult
 import com.nativedevps.support.coroutines.NetworkResult
 import com.nativedevps.support.coroutines.StatusApiResult
@@ -9,7 +8,6 @@ import com.nativedevps.support.utility.threading.runOnSameThread
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -39,13 +37,5 @@ suspend fun <T, I> Flow<NetworkResult<T>>.await(producerScope: ProducerScope<Net
                 }
             }
         }
-    }
-}
-
-fun <T> emulate(execution: suspend (ProducerScope<NetworkResult<T>>) -> T) = channelFlow<NetworkResult<T>> {
-    try {
-        trySend(SuccessApiResult(execution(this)))
-    } catch (e: Exception) {
-        trySend(ErrorApiResult(e.message ?: "execute with debug", e))
     }
 }
