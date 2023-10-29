@@ -42,7 +42,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
     }
 
     private fun initObserver() {
-        //todo: define own inheritance of this class and handle manually
+        //noop
     }
 
     private fun initBinding() {
@@ -63,9 +63,4 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
     open fun getLocale(context: Context): String? {
         return null
     }
-
-    protected val pushNotificationPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            Log.v("NotificationPermission", "NotificationPermission $granted")
-        }
 }
