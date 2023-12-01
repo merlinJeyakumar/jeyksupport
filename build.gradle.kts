@@ -39,7 +39,6 @@ dependencies {
     requiredLibraries()
     dateTimeLibraries()
     roomLibraries()
-    kapt(RoomLibraries.kapt_room_compiler)
     supportLibraries()
     imageLoaderLibraries()
     firebaseLibraries()
