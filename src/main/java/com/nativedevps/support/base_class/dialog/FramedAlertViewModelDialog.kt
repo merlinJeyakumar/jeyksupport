@@ -27,8 +27,6 @@ abstract class FramedViewModelDialog<VB : ViewBinding, VM : BaseViewModel>(
     viewModelClass
 ) {
 
-    lateinit var asdialog: Dialog
-
     private var _binding: ViewBinding = bindingFactory.invoke(context.layoutInflater)
     protected val childBinding: VB by lazy { _binding as VB }
     private var actionCallback: ((Boolean) -> Unit)? = null
@@ -42,11 +40,6 @@ abstract class FramedViewModelDialog<VB : ViewBinding, VM : BaseViewModel>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.MainDialogStyle)
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        asdialog = super.onCreateDialog(savedInstanceState)
-        return super.onCreateDialog(savedInstanceState)
     }
 
     override fun onCreateView(
