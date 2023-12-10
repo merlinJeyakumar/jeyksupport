@@ -204,3 +204,7 @@ object Common {
         }
     }
 }
+
+fun Context.getPackageName(): String {
+    return applicationContext.packageName
+}
