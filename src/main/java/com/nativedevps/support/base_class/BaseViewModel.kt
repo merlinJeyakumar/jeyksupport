@@ -27,13 +27,13 @@ abstract class BaseViewModel constructor(application: Application) :
         cancelable: Boolean = false,
     ) {
         context.runOnUiThread {
-            Log.e("BaseViewModel", "ShowProgressDialog")
-            liveDataProgressBar.value = LoaderProperties(
+            Log.e("BaseViewModel", "ShowProgressDialog $message")
+            liveDataProgressBar.postValue(LoaderProperties(
                 true,
                 message,
                 progress,
                 cancelable
-            )
+            ))
         }
     }
 
