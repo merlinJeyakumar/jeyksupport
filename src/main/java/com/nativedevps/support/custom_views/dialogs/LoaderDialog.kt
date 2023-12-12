@@ -2,6 +2,7 @@ package com.nativedevps.support.custom_views.dialogs
 
 import android.content.Context
 import com.nativedevps.support.base_class.dialog.BaseAlertDialog
+import com.nativedevps.support.model.LoaderProperties
 import nativedevps.support.databinding.DialogProgressBarBinding
 
 class LoaderDialog(
@@ -30,6 +31,13 @@ class LoaderDialog(
         set(value) = with(binding) {
             progress = value
         }
+
+    fun setLoaderProperties(loaderProperties: LoaderProperties) {
+        loaderProperties.progress = loaderProperties.progress
+        setCancelable(loaderProperties.cancellable)
+        message = loaderProperties.message
+        allowDuplicate(false)
+    }
 
     companion object {
         fun build(context: Context): LoaderDialog {

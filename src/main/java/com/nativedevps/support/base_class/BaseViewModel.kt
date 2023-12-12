@@ -28,20 +28,24 @@ abstract class BaseViewModel constructor(application: Application) :
     ) {
         context.runOnUiThread {
             Log.e("BaseViewModel", "ShowProgressDialog $message")
-            liveDataProgressBar.postValue(LoaderProperties(
-                true,
-                message,
-                progress,
-                cancelable
-            ))
+            liveDataProgressBar.postValue(
+                LoaderProperties(
+                    true,
+                    message,
+                    progress,
+                    cancelable
+                )
+            )
         }
     }
 
     open fun hideProgressDialog() {
         context.runOnUiThread {
             Log.e("BaseViewModel", "hideProgressDialog")
-            liveDataProgressBar.value = LoaderProperties(
-                false
+            liveDataProgressBar.postValue(
+                LoaderProperties(
+                    false
+                )
             )
         }
     }
@@ -54,7 +58,7 @@ abstract class BaseViewModel constructor(application: Application) :
     }
 
     open fun handleError(exception: java.lang.Exception) {
-        handleError(exception.message?:exception.localizedMessage)
+        handleError(exception.message ?: exception.localizedMessage)
     }
 
     open fun handleError(message: String) {
