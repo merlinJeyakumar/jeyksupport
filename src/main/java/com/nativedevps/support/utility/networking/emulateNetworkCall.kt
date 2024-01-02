@@ -23,6 +23,7 @@ fun <T> emulate(execution: suspend (ProducerScope<NetworkResult<T>>) -> NetworkR
             trySend(execution(this))
         } catch (e: Exception) {
             trySend(ErrorApiResult(e.message ?: "execute with debug", e))
+            e.printStackTrace()
         }
     }
 
