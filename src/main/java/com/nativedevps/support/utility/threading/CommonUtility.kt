@@ -8,6 +8,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
@@ -77,5 +78,14 @@ fun <T> Flow<T>.repeatEvery(interval: Long) = flow {
             emit(it)
         }
         delay(interval)
+    }
+}
+
+fun <T> Flow<T>.firstOrNullOnLifecycle(
+    lifecycleCoroutineScope: LifecycleOwner,
+    callback: ((T?) -> Unit)? = null
+): Job {
+    return lifecycleCoroutineScope.lifecycleScope.launch {
+        callback?.invoke(firstOrNull())
     }
 }

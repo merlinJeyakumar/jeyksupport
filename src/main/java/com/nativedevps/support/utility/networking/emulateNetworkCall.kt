@@ -17,8 +17,9 @@ import retrofit2.HttpException
  *
  * @return channelFlow with {@link NetworkResult} including success result/failure exception
  */
-fun <T> emulate(execution: suspend (ProducerScope<NetworkResult<T>>) -> NetworkResult<T>) =
-    channelFlow<NetworkResult<T>> {
+fun <T> emulate(
+    execution: suspend (ProducerScope<NetworkResult<T>>) -> NetworkResult<T>
+) = channelFlow<NetworkResult<T>> {
         try {
             trySend(execution(this))
         } catch (e: Exception) {
