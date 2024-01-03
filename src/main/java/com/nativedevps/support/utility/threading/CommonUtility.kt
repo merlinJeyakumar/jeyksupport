@@ -7,9 +7,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 fun <T> Flow<T>.runOnLifeCycle(
@@ -89,3 +91,7 @@ fun <T> Flow<T>.firstOrNullOnLifecycle(
         callback?.invoke(firstOrNull())
     }
 }
+
+fun <T> runAsyncFlow(execution: suspend () -> T) = channelFlow<T> {
+    trySend(execution())
+}.flowOn(Dispatchers.IO)
