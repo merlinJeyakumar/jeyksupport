@@ -10,6 +10,8 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.TextPaint
 import android.text.style.URLSpan
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
@@ -18,6 +20,7 @@ import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.coroutineScope
@@ -254,4 +257,8 @@ fun View.setMarginEnd(margin: Int) {
 
 fun EditText.moveCursorToEnd() {
     this.setSelection(this.text.length)
+}
+
+fun Menu.findMenuItem(@IdRes res: Int): MenuItem? {
+    return findItem(res)
 }
