@@ -76,7 +76,7 @@ abstract class FramedAlertDialog<B : ViewBinding>(
 
     var headerBackgroundColor: Int = 0
         set(value) = with(binding) {
-            //headerParentLayout.backgroundColor = value
+            headerParentLayout.backgroundColor = value
             okButton.setBackgroundTint(value)
         }
 
