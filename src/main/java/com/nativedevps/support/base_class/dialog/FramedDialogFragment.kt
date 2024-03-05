@@ -79,7 +79,7 @@ abstract class FramedDialogFragment<B : ViewBinding, VM: BaseViewModel>(
 
     var headerBackgroundColor: Int = 0
         set(value) = with(binding) {
-            headerParentLayout.backgroundColor = value
+            //headerParentLayout.backgroundColor = value
             okButton.setBackgroundTint(value)
         }
 

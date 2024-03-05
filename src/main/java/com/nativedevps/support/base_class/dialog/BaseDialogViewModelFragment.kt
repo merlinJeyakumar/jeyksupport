@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.databinding.ViewDataBinding
@@ -34,6 +35,8 @@ abstract class BaseDialogViewModelFragment<VB : ViewDataBinding, VM : ViewModel>
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
         _binding = bindingFactory.invoke(inflater, container, false)
+        getDialog()?.getWindow()?.requestFeature(Window.FEATURE_NO_TITLE);
+
 
         onInit(savedInstanceState)
         return binding.root
