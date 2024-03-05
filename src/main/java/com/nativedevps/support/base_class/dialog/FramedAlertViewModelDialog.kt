@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import com.nativedevps.support.base_class.BaseViewModel
-import com.nativedevps.support.base_class.Inflate
 import com.nativedevps.support.utility.view.ViewUtils.setBackgroundTint
 import com.nativedevps.support.utility.view.ViewUtils.visibility
 import nativedevps.support.R
@@ -56,7 +55,7 @@ abstract class FramedViewModelDialog<VB : ViewBinding, VM : BaseViewModel>(
     }
 
     private fun initToolbar() = with(binding) {
-        toolbar.setTitle(requireContext().resources.getString(R.string.app_name))
+        toolbar.setTitle(headerTitle ?: requireContext().resources.getString(R.string.app_name))
         toolbar.inflateMenu(createActionMenu())
         toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.menuCloseAction) {
@@ -84,9 +83,7 @@ abstract class FramedViewModelDialog<VB : ViewBinding, VM : BaseViewModel>(
         }
     }
 
-    fun headerTitle(text: String) = with(binding) {
-        toolbar.setTitle(text)
-    }
+    var headerTitle: String? = null
 
     fun headerBackgroundColor(value: Int) = with(binding) {
         headerParentLayout.backgroundColor = value

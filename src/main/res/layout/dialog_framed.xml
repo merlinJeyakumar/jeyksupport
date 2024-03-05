@@ -27,9 +27,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
                     android:gravity="start|center"
-                    android:theme="@style/AppTheme.Toolbar">
-
-                </androidx.appcompat.widget.Toolbar>
+                    android:theme="@style/AppTheme.Toolbar" />
             </FrameLayout>
 
             <FrameLayout
