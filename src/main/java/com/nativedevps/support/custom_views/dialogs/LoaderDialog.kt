@@ -16,6 +16,11 @@ class LoaderDialog(
     override fun onCreate() {
 
         initListener()
+        initPreview()
+    }
+
+    private fun initPreview() = with(binding) {
+        progress = 0
     }
 
     private fun initListener() {
@@ -27,7 +32,7 @@ class LoaderDialog(
             messageAppCompatTextView.setText(text)
         }
 
-    var progress: Int = -1
+    var progress: Int = 0
         set(value) = with(binding) {
             progress = value
         }

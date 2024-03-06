@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminate="@{progress &lt; 0 ? true:false}"
+            android:indeterminate="@{progress == 0 ? true:false}"
             android:padding="@dimen/_10sdp"
             android:progress="@{progress}" />
 
