@@ -69,4 +69,7 @@
         <item name="android:windowMinWidthMinor">95%</item>
     </style>
 
+    <style name="TextInputEditText">
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
 </resources>
