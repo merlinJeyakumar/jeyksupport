@@ -156,6 +156,18 @@ object ViewUtils {
         }
     }
 
+    fun Collection<View>.visible(){
+        for (view in this) {
+            view.visible()
+        }
+    }
+
+    fun Collection<View>.gone(){
+        for (view in this) {
+            view.gone()
+        }
+    }
+
     fun View.gone() {
         this.visibility = View.GONE
     }
