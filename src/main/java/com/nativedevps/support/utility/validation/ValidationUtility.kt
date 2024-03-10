@@ -2,7 +2,10 @@ package com.nativedevps.support.utility.validation
 
 import android.content.Context
 import android.util.Patterns
+import android.widget.EditText
 import android.widget.Toast
+import com.google.android.material.textfield.TextInputEditText
+import org.jetbrains.anko.toast
 import java.util.regex.Pattern
 
 /**
@@ -43,11 +46,22 @@ object ValidationUtility {
         return !isNullOrEmpty(mobile) && Pattern.matches(regex, mobile)
     }
 
-    fun isValidPassword(password: String?): String? {
+    fun isValidPassword(password: String?, context: Context? = null): String? {
         return when {
             isNullOrEmpty(password) -> "Please enter Password first."
             password!!.length < 6 -> "Password length should not be less than 6 characters"
             password.length > 30 -> "Password length should not be greater than 30 characters"
+            else -> return null
+        }.also {
+            context?.toast(it)
+        }
+    }
+
+    fun String.isValidPassword(): String? {
+        return when {
+            isNullOrEmpty(this) -> "Please enter Password first."
+            this.length < 6 -> "Password length should not be less than 6 characters"
+            this.length > 30 -> "Password length should not be greater than 30 characters"
             else -> return null
         }
     }
