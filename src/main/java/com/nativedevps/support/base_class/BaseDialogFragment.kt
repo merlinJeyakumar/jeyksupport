@@ -1,9 +1,11 @@
 package com.nativedevps.support.base_class
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModel
@@ -30,6 +32,7 @@ abstract class BaseDialogFragment<VB : ViewBinding, VM : ViewModel>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        configureDialog(dialog)
         setStyle(STYLE_NO_TITLE, theme())
     }
 
@@ -55,5 +58,12 @@ abstract class BaseDialogFragment<VB : ViewBinding, VM : ViewModel>(
 
     open fun theme(): Int {
         return R.style.TransparentDialogStyle
+    }
+
+    open fun configureDialog(dialog: Dialog?) {
+        dialog?.getWindow()?.apply {
+            setBackgroundDrawableResource(android.R.color.transparent)
+            requestFeature(Window.FEATURE_NO_TITLE);
+        }
     }
 }

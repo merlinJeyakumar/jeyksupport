@@ -1,11 +1,15 @@
 package com.nativedevps.support.utility.networking
 
 
+import android.content.Context
+import android.content.res.Configuration
+import android.widget.Toast
 import com.nativedevps.support.coroutines.ErrorApiResult
 import com.nativedevps.support.coroutines.NetworkResult
 import com.nativedevps.support.coroutines.SuccessApiResult
 import com.nativedevps.support.inline.orElse
 import kotlinx.coroutines.channels.ProducerScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import org.json.JSONObject
 import retrofit2.HttpException
@@ -56,5 +60,21 @@ suspend fun <T> Result<T>.emulateNetworkCall(
         }
         onFailure?.invoke(httpException)
         ErrorApiResult(exception)
+    }
+}
+fun Context.isDarkMode(): Boolean {
+    val darkModeFlag = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+    return darkModeFlag == Configuration.UI_MODE_NIGHT_YES
+}
+
+fun Context.toast(string: String) {
+    Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
+}
+
+fun attempt(callback: () -> Unit) {
+    try {
+        callback()
+    } catch (e: Exception) {
+        e.printStackTrace()
     }
 }
