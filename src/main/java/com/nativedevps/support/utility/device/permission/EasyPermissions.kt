@@ -22,7 +22,7 @@ object EasyPermissions {
 
     private val TAG = "EasyPermissions"
     internal var timeWhenRequestingStart: Long = 0
-    internal lateinit var `object`: Any
+    internal lateinit var activityContext: Any
     //private var finalPermissionDialog: MConfirmationDialog? = null
     private var callbacks: PermissionCallbacks? = null
     private var permissionGroups: HashMap<String, Array<String>>? = null
@@ -100,7 +100,7 @@ object EasyPermissions {
     /**
      * Request a set of permissions, showing rationale if the system requests it.
      *
-     * @param obj            Activity or Fragment requesting permissions. Should implement
+     * @param activityContext            Activity or Fragment requesting permissions. Should implement
      * [ActivityCompat.OnRequestPermissionsResultCallback]
      * or
      * @param rationale      a message explaining why the application needs this set of permissions, will
@@ -111,14 +111,14 @@ object EasyPermissions {
      * @param permission     a set of permissions or permission.group to be requested.
      */
     fun requestPermissions(
-        obj: Any, rationale: String,
+        activityContext: Any, rationale: String,
         @StringRes positiveButton: Int,
         @StringRes negativeButton: Int,
         requestCode: Int, callback: PermissionCallbacks, vararg permission: String
     ) {
 
         callbacks = callback
-        `object` = obj
+        this.activityContext = activityContext
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             // only for lower of M
             //            PermissionCallbacks callbacks = (PermissionCallbacks) object;
@@ -127,10 +127,10 @@ object EasyPermissions {
         }
 
 
-        checkCallingObjectSuitability(`object`)
+        checkCallingObjectSuitability(this.activityContext)
         //        final PermissionCallbacks callbacks = (PermissionCallbacks) object;
         val perms = getActualPermissions(
-            `object`,
+            this.activityContext,
             permission
         )
 
@@ -142,7 +142,7 @@ object EasyPermissions {
         var shouldShowRationale = false
         for (perm in perms) {
             shouldShowRationale = shouldShowRationale || shouldShowRequestPermissionRationale(
-                `object`, perm)
+                this.activityContext, perm)
         }
 
         if (shouldShowRationale) {
@@ -164,19 +164,19 @@ object EasyPermissions {
 //                finalPermissionDialog = MConfirmationDialog(getActivity(`object`), builder)
 //                finalPermissionDialog!!.show()
             } else {
-                executePermissionsRequest(`object`, perms, requestCode)
+                executePermissionsRequest(this.activityContext, perms, requestCode)
             }
         } else {
             for (perm in perms) {
                 shouldShowRationale = shouldShowRationale || shouldShowRequestPermissionRationale(
-                    `object`, perm)
+                    this.activityContext, perm)
             }
             if (shouldShowRationale) {
                 Log.d(TAG, "requestPermissions: show dialog")
 
             } else {
                 timeWhenRequestingStart = System.currentTimeMillis()
-                executePermissionsRequest(`object`, perms, requestCode)
+                executePermissionsRequest(this.activityContext, perms, requestCode)
             }
 
         }
@@ -275,8 +275,8 @@ object EasyPermissions {
             } else {
                 /**if deny then it will true and on never as me again it will return false
                  */
-                if(EasyPermissions::`object`.isInitialized) {
-                    val showRationale = shouldShowRequestPermissionRationale(`object`, perm)
+                if(EasyPermissions::activityContext.isInitialized) {
+                    val showRationale = shouldShowRequestPermissionRationale(activityContext, perm)
                     if (showRationale) {
                         isPermenantlyDisabled = false //deny
                         //                        timeWhenRequestingStart = System.currentTimeMillis() - 2;
@@ -373,9 +373,9 @@ object EasyPermissions {
     fun startSetting() {
         val intent = Intent()
         intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-        val uri = Uri.fromParts("package", getActivity(`object`)!!.packageName, null)
+        val uri = Uri.fromParts("package", getActivity(activityContext)!!.packageName, null)
         intent.data = uri
-        getActivity(`object`)!!.startActivity(intent)
+        getActivity(activityContext)!!.startActivity(intent)
     }
 
     interface PermissionCallbacks {
