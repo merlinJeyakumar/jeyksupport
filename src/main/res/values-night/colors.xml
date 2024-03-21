@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+    <color name="gray">#8A8A8A</color>
+    <color name="trans_gray_lite">#7F7F7F</color>
+    <color name="trans_gray">#66878787</color>
+    <color name="trans_black">#80000000</color>
+    <color name="whiteLight">#1A1A1A</color>
+    <color name="whiteLightTrans">#88F9F5F5</color>
+    <color name="whiteLightChatTrans">#F0F0F0</color>
+    <color name="colorBlackTrans_50">#66000000</color>
+    <color name="colorBlackTrans_25">#40000000</color>
+    <color name="black_smoke">#707070</color>
+    <color name="shimmer">#323232</color>
+    <color name="white">#EEEEEE</color>
+    <color name="solidGreen">#00C853</color>
+    <color name="color_background">#37474F</color>
+    <color name="colorBlack">#FFFFFF</color>
+    <color name="colorLink">#B2EBF2</color>
+    <color name="colorLoveRed">#F44336</color>
+    <color name="windowsBackground">#263238</color>
+
+    <color name="colorPrimary">#388E3C</color>
+    <color name="colorPrimaryDark">#1B5E20</color>
+    <color name="colorPrimaryLight">#C8E6C9</color>
+    <color name="colorAccent">#BDBDBD</color>
+    <color name="colorTextIcons">#FFFFFF</color>
+    <color name="colorPrimaryText">#EEEEEE</color>
+    <color name="colorSecondaryText">#BDBDBD</color>
+    <color name="grey">#8A8A8A</color>
+    <color name="red_alert">#FF5252</color>
+    <color name="red_alert_light">#EF695F</color>
+    <color name="light_blue_400">#FF29B6F6</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="gray_400">#FFBDBDBD</color>
+    <color name="gray_600">#FF757575</color>
+    <color name="light_gray">#707070</color>
+
+</resources>
