@@ -7,7 +7,6 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/_5sdp"
         app:cardElevation="@dimen/_5sdp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -18,16 +17,16 @@
             <FrameLayout
                 android:id="@+id/headerParentLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary">
+                android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
+                    android:background="?attr/colorPrimary"
                     android:gravity="start|center"
-                    android:theme="@style/AppTheme.Toolbar" />
+                    app:titleTextColor="#ffffff" />
             </FrameLayout>
 
             <FrameLayout

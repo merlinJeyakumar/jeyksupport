@@ -1,14 +1,14 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="textAppearanceBodyMedium">@style/TextAppearance.AppCompat.Medium</item>
+
     </style>
 
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents" />
 
     <style name="divider_style">
         <item name="android:background">@color/trans_gray</item>
@@ -31,18 +31,17 @@
         <item name="android:windowMinWidthMinor">100%</item>
     </style>
 
-    <style name="TransparentDialogStyle" parent="Theme.MaterialComponents.DayNight.Dialog" >
+    <style name="TransparentDialogStyle" parent="Theme.MaterialComponents.DayNight.Dialog">
         <item name="android:windowMinWidthMajor">90%</item>
         <item name="android:windowMinWidthMinor">90%</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="ToolBarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+    <style name="ToolBarTheme" parent="ThemeOverlay.MaterialComponents.ActionBar">
 
     </style>
 
     <style name="AppTheme.Toolbar" parent="AppTheme">
-        <!--This line changes the color of text in Toolbar-->
 
     </style>
 
@@ -68,7 +67,7 @@
 
     </style>
 
-    <style name="OtpWidget"/>
+    <style name="OtpWidget" />
 
     <style name="OtpWidget.OtpView" parent="Widget.AppCompat.EditText">
         <item name="android:background">@null</item>
