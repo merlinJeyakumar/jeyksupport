@@ -31,7 +31,7 @@
         <item name="android:windowMinWidthMinor">100%</item>
     </style>
 
-    <style name="TransparentDialogStyle" >
+    <style name="TransparentDialogStyle" parent="Theme.MaterialComponents.DayNight.Dialog" >
         <item name="android:windowMinWidthMajor">90%</item>
         <item name="android:windowMinWidthMinor">90%</item>
         <item name="android:windowBackground">@android:color/transparent</item>
