@@ -190,7 +190,7 @@ fun addDate(initialDate: Calendar, daysToAdd: Int): Date? {
 
 fun getStringDateFromMillis(
     milliSecond: Long,
-    formatPattern: String?,
+    formatPattern: String? = fancyDateTimePattern,
 ): String? {
     //dd-M-yyyy hh:mm:ss
     return SimpleDateFormat(formatPattern, Locale.getDefault())

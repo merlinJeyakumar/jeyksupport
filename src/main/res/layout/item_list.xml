@@ -15,7 +15,6 @@
             android:id="@id/text1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            android:background="@color/solidGreen"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_25sdp"
             android:maxHeight="@dimen/_200sdp"

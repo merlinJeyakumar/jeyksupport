@@ -20,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxHeight="@dimen/_200sdp"
-            android:textColor="@color/colorTextIcons"
             android:padding="@dimen/_10sdp"
             android:scrollbars="vertical"
             android:text="@string/example_lorem_ipsum" />
@@ -32,7 +31,6 @@
             android:checked="true"
             android:gravity="start|center"
             android:visibility="gone"
-            android:textColor="@color/colorTextIcons"
             tools:text="Are you sure to include that things?"
             tools:visibility="visible" />
 

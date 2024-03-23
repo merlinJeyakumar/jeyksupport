@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -12,27 +13,35 @@
             type="int" />
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="start"
-        android:orientation="horizontal">
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="@dimen/_5sdp">
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/progressCircularProgressIndicator"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="@{progress == 0 ? true:false}"
-            android:padding="@dimen/_10sdp"
-            android:progress="@{progress}" />
+            android:gravity="start"
+            android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/messageAppCompatTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="@dimen/_5sdp"
-            android:text="Loading.." />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progressCircularProgressIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="@{progress == 0 ? true:false}"
+                android:padding="@dimen/_10sdp"
+                android:progress="@{progress}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/messageAppCompatTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:text="Loading.." />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
 </layout>
