@@ -66,7 +66,7 @@ object Utility {
     }
 
     fun saveBitmap(bm: Bitmap, filePath: String?): Boolean {
-        val f = File(filePath)
+        val f = File(filePath).mkParentDirsIfNotFound()
         if (f.exists()) {
             f.delete()
         }
@@ -132,4 +132,11 @@ private fun calculateInSampleSize(
     }
 
     return inSampleSize
+}
+
+fun File.mkParentDirsIfNotFound(): File {
+    if (parentFile?.exists() != true) {
+        parentFile?.mkdirs()
+    }
+    return this
 }

@@ -14,11 +14,11 @@ android {
     namespace = "nativedevps.support"
     compileSdk = Configs.compileSdkVersion
     defaultConfig {
-        minSdk = Configs.minSdkVersion
+        minSdk = 19
         targetSdk = Configs.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
-        buildConfigField("int", "BuildVersionCode", "12")
+        buildConfigField("int", "BuildVersionCode", "13")
     }
     buildFeatures {
         viewBinding = true
