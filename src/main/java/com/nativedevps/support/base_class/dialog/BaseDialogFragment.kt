@@ -1,50 +1,58 @@
 package com.nativedevps.support.base_class.dialog
 
+import android.app.Dialog
 import android.os.Bundle
-import android.view.*
-import androidx.annotation.Nullable
-import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.viewbinding.ViewBinding
 import com.nativedevps.support.base_class.Inflate
 import nativedevps.support.R
+import org.jetbrains.anko.toast
 
 abstract class BaseDialogFragment<VB : ViewBinding> constructor(
-    private val inflate: Inflate<VB>
-) : DialogFragment() {
+    private val bindingFactory: Inflate<VB>
+) : AppCompatDialogFragment() {
 
     private var _binding: VB? = null
     val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        preInit()
-    }
-
-    open fun preInit() {
-
+        configureDialog(dialog)
+        setStyle(STYLE_NO_TITLE, theme())
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
-        _binding = inflate.invoke(inflater, container, false)
+        _binding = bindingFactory.invoke(inflater, container, false)
 
-        onInit()
+        onInit(savedInstanceState)
         return binding.root
     }
 
-    override fun setStyle(style: Int, theme: Int) {
-        super.setStyle(style, R.style.FullScreenDialogStyle)
+    override fun onDestroyView() {
+        super.onDestroyView()
     }
 
-    abstract fun onInit()
-
-    override fun onViewCreated(view: View, @Nullable savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    open fun onInit(savedInstanceState: Bundle?) {
     }
 
+    fun toast(string: String) {
+        activity?.toast(string)
+    }
+
+    open fun theme(): Int {
+        return R.style.TransparentDialogStyle
+    }
+
+    open fun configureDialog(dialog: Dialog?) {
+        dialog?.getWindow()?.apply {
+            setBackgroundDrawableResource(android.R.color.transparent)
+            requestFeature(Window.FEATURE_NO_TITLE);
+        }
+    }
 }

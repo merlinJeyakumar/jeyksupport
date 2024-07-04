@@ -1,11 +1,30 @@
 package com.nativedevps.support.utility.encryption
 
+import android.content.Context
 import android.util.Base64
 import com.google.crypto.tink.Aead
+import com.google.crypto.tink.KeyTemplates
+import com.google.crypto.tink.aead.AeadConfig
+import com.google.crypto.tink.integration.android.AndroidKeysetManager
 import java.nio.charset.StandardCharsets
 import java.nio.ByteBuffer
 
-class SecurityUtil(private val aead: Aead) {
+class SecurityUtil(private val context: Context) {
+    private val KEYSET_NAME = "master_keyset"
+    private val PREFERENCE_FILE = "master_key_preference"
+    private val MASTER_KEY_URI = "android-keystore://master_key"
+    private lateinit var aead: Aead
+
+    init {
+        AeadConfig.register()
+        aead = AndroidKeysetManager.Builder()
+            .withSharedPref(context, KEYSET_NAME, PREFERENCE_FILE)
+            .withKeyTemplate(KeyTemplates.get("AES256_GCM"))
+            .withMasterKeyUri(MASTER_KEY_URI)
+            .build()
+            .keysetHandle
+            .getPrimitive(Aead::class.java)
+    }
 
     private val TYPE_STRING = 1
     private val TYPE_BOOLEAN = 2
