@@ -26,6 +26,8 @@
     <color name="colorAccent">#BDBDBD</color>
     <color name="colorTextIcons">#FFFFFF</color>
     <color name="colorPrimaryText">#FFFFFF</color>
+    <color name="dayNightWhite">#FFFFFF</color>
+    <color name="dayNightBlack">#000000</color>
     <color name="colorSecondaryText">#757575</color>
 
 </resources>

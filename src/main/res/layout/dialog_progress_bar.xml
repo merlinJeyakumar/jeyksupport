@@ -13,35 +13,54 @@
             type="int" />
     </data>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/_5sdp"
-        app:cardElevation="@dimen/_5sdp">
+        app:cardBackgroundColor="@color/dayNightWhite"
+        app:cardCornerRadius="@dimen/_5sdp">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="start"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp">
 
-            <com.google.android.material.progressindicator.CircularProgressIndicator
-                android:id="@+id/progressCircularProgressIndicator"
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieAnimationView"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_gravity="center"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:indeterminate="@{progress == 0 ? true:false}"
-                android:padding="@dimen/_10sdp"
-                android:progress="@{progress}" />
+                android:gravity="start"
+                android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/messageAppCompatTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="@dimen/_5sdp"
-                android:text="Loading.." />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressCircularProgressIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="@{progress == 0 ? true:false}"
+                    android:padding="@dimen/_10sdp"
+                    android:progress="@{progress}" />
 
-    </com.google.android.material.card.MaterialCardView>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/messageAppCompatTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/dayNightBlack"
+                    android:text="Loading.."
+                    android:textStyle="bold"
+                    android:typeface="monospace" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 </layout>

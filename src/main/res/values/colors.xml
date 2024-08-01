@@ -13,6 +13,8 @@
     <color name="black_smoke">#454242</color>
     <color name="shimmer">#32e6e6e6</color>
     <color name="white">#FFFFFF</color>
+    <color name="dayNightWhite">#000000</color>
+    <color name="dayNightBlack">#FFFFFF</color>
     <color name="solidGreen">#00C853</color>
     <color name="color_background">#eceff1</color>
     <color name="colorBlack">#000000</color>
