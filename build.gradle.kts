@@ -18,7 +18,7 @@ android {
         targetSdk = Configs.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
-        buildConfigField("int", "BuildVersionCode", "17")
+        buildConfigField("int", "BuildVersionCode", "18")
     }
     buildFeatures {
         viewBinding = true

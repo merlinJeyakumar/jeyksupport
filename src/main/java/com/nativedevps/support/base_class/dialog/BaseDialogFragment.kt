@@ -1,6 +1,7 @@
 package com.nativedevps.support.base_class.dialog
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -54,5 +55,9 @@ abstract class BaseDialogFragment<VB : ViewBinding> constructor(
             setBackgroundDrawableResource(android.R.color.transparent)
             requestFeature(Window.FEATURE_NO_TITLE);
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
     }
 }
