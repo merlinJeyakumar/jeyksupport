@@ -26,7 +26,7 @@
                     android:layout_gravity="top|center"
                     android:background="?attr/colorPrimary"
                     android:gravity="start|center"
-                    app:titleTextColor="#ffffff" />
+                    app:titleTextColor="@color/white" />
             </FrameLayout>
 
             <FrameLayout
@@ -59,7 +59,9 @@
                     android:id="@+id/okButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:backgroundTint="?attr/colorPrimary" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
