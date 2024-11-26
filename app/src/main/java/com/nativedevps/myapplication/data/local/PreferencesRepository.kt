@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken
 import com.nativedevps.myapplication.domain.datasource.local.IPreferences
 import com.nativedevps.myapplication.domain.model.currency.CurrencyModel
 import com.nativedevps.myapplication.domain.model.user.UserResponseModel
-import com.nativedevps.myapplication.support.json.toJson
+import com.nativedevps.support.inline.toJson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

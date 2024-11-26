@@ -45,14 +45,6 @@ suspend fun <T, I> Flow<NetworkResult<T>>.await(producerScope: ProducerScope<Net
     }
 }
 
-fun <T> emulate(execution: suspend (ProducerScope<NetworkResult<T>>) -> T) = channelFlow<NetworkResult<T>> {
-    try {
-        trySend(SuccessApiResult(execution(this)))
-    } catch (e: Exception) {
-        trySend(ErrorApiResult(e.message ?: "execute with debug", e))
-    }
-}
-
 
 /**
  * Introduced for reducing boilerplate code reducing

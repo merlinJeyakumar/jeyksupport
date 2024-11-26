@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar", "*.jar"))))
     implementation(RequiredLibraries.core_ktx)
     implementation(RequiredLibraries.core_ktx)
     implementation(RequiredLibraries.viewmodel_ktx)

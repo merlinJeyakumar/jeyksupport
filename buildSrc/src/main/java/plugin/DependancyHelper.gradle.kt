@@ -5,8 +5,8 @@ fun DependencyHandler.requiredLibraries() {
     api(RequiredLibraries.kotlinStdLib)
     api(RequiredLibraries.core_ktx)
     api(RequiredLibraries.coroutines_android)
-    api(RequiredLibraries.anko)
-    api(RequiredLibraries.anko_commons)
+    //api(RequiredLibraries.anko)
+    //api(RequiredLibraries.anko_commons)
     api(RequiredLibraries.coroutines_core)
     api(RequiredLibraries.coroutines_test)
     api(RequiredLibraries.lifecycle_extension)
@@ -49,7 +49,6 @@ fun DependencyHandler.supportLibraries() {
 fun DependencyHandler.imageLoaderLibraries() {
     implementation(ImageLoaderLibraries.glide)
     implementation(ImageLoaderLibraries.glide_integration)
-    implementation(ImageLoaderLibraries.glide_transformations)
     kapt(ImageLoaderLibraries.kapt_glide_integration)
 }
 

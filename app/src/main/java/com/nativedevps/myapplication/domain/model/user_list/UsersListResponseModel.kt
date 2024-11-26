@@ -19,7 +19,7 @@ data class UsersListResponseModel(
 ){
 
     @Keep
-    open data class Data(
+    data class Data(
         @SerializedName("avatar")
         val avatar: String,
         @SerializedName("email")

@@ -29,8 +29,8 @@ object RequiredLibraries {
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines_test}"
     const val coroutines_play_services =
         "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:${Versions.coroutines_play_services}"
-    const val anko = "org.jetbrains.anko:anko:${Versions.anko}"
-    const val anko_commons = "org.jetbrains.anko:anko-commons:${Versions.anko_commons}"
+    /*const val anko = "org.jetbrains.anko:anko:${Versions.anko}"
+    const val anko_commons = "org.jetbrains.anko:anko-commons:${Versions.anko_commons}"*/ //removed
     const val lifecycle_extension =
         "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle_extension}"
     const val multi_dex = "androidx.multidex:multidex:${Versions.multi_dex}"
@@ -149,8 +149,6 @@ object ExoPlayerLibraries {
 
 object ImageLoaderLibraries {
     const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
-    const val glide_transformations =
-        "jp.wasabeef:glide-transformations:${Versions.glide_transformations}"
     const val glide_integration =
         "com.github.bumptech.glide:okhttp3-integration:${Versions.glide_integration}"
     const val kapt_glide_integration = "com.github.bumptech.glide:compiler:${Versions.glide}"
