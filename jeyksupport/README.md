@@ -1,21 +1,12 @@
-# Release
+# Usable Packages
+ - [Multi Module Architecture](https://github.com/merlinJeyakumar/kotlin-multi-module-mvvm-architecture-android.git)
+ - [Single Module Architecture](https://github.com/merlinJeyakumar/kotlin-single-module-architecture-android.git)
 
-Gradle implementation 'com.github.merlinJeyakumar:jeyksupport:1.0.1'
+# Release AAR
+ - [Apple - 1.0.0](https://github.com/merlinJeyakumar/jeyksupport/releases/tag/Apple)
 
-Kotlin implementation("com.github.merlinJeyakumar:jeyksupport:1.0.1")
-
-Jitpack https://jitpack.io/#merlinJeyakumar/jeyksupport
+# References
+- [BuildSrc](https://github.com/merlinJeyakumar/android-compact-dependencies.git)
 
 # Disclosure
 Dozens of utility, base-classes, best-implementation-methodolgy included
-
-# Architectures
-- Basic-MVVM-Architecture (NA)
-- Multi-Industrial-Multi-Clean-Architecture (https://github.com/merlinJeyakumar/android-architecture-mvvm-versions)
-- Libraries & Versions
-- SupportLibraries.gradle.kt
-- Versions.gradle.kt
-  
-# References
-- BuildSrc
-- Architecture

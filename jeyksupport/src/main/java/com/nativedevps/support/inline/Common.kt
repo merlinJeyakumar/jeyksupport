@@ -6,6 +6,7 @@ import android.content.Context
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.nativedevps.support.utility.device.Common.shareText
 
 import nativedevps.support.R
@@ -63,3 +64,5 @@ fun Any?.isNotNull(): Boolean {
 fun Any?.isNull(): Boolean {
     return this == null
 }
+
+inline fun <reified T> Gson.listFromJson(json: String) = fromJson<T>(json, object : TypeToken<T>() {}.type)

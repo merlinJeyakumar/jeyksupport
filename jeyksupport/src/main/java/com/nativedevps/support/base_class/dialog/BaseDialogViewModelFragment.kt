@@ -1,26 +1,22 @@
-package com.nativedevps.support.base_class
+package com.nativedevps.support.base_class.dialog
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.fragment.app.DialogFragment
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewbinding.ViewBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.nativedevps.support.base_class.Inflate
 import nativedevps.support.R
-import org.jetbrains.anko.layoutInflater
 import org.jetbrains.anko.toast
 
-typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
-
-abstract class BaseDialogFragment<VB : ViewBinding, VM : ViewModel>(
+abstract class BaseDialogViewModelFragment<VB : ViewDataBinding, VM : ViewModel>(
     private val bindingFactory: Inflate<VB>,
     private val viewModelClass: Class<VM>,
 ) : AppCompatDialogFragment() {
@@ -32,21 +28,18 @@ abstract class BaseDialogFragment<VB : ViewBinding, VM : ViewModel>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        configureDialog(dialog)
-        setStyle(STYLE_NO_TITLE, theme())
+        setStyle(STYLE_NORMAL, theme())
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
         _binding = bindingFactory.invoke(inflater, container, false)
+        getDialog()?.getWindow()?.requestFeature(Window.FEATURE_NO_TITLE);
+
 
         onInit(savedInstanceState)
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
     }
 
     open fun onInit(savedInstanceState: Bundle?) {
@@ -60,10 +53,21 @@ abstract class BaseDialogFragment<VB : ViewBinding, VM : ViewModel>(
         return R.style.TransparentDialogStyle
     }
 
-    open fun configureDialog(dialog: Dialog?) {
-        dialog?.getWindow()?.apply {
-            setBackgroundDrawableResource(android.R.color.transparent)
-            requestFeature(Window.FEATURE_NO_TITLE);
+    @SuppressLint("RestrictedApi")
+    override fun setupDialog(dialog: Dialog, style: Int) {
+        super.setupDialog(dialog, style)
+
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setOnCancelListener {
+            toast("Cancelling")
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
     }
 }

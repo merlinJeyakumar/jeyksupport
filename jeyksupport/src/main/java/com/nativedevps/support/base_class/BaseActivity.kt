@@ -2,21 +2,12 @@ package com.nativedevps.support.base_class
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewbinding.ViewBinding
-import com.nativedevps.support.custom_views.ProgressDialog
-import com.nativedevps.support.inline.orElse
-import com.nativedevps.support.model.LoaderProperties
 import com.nativedevps.support.utility.language.ContextWrapper
 import com.nativedevps.support.utility.language.Utility.getDeviceLocale
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Locale
 
 /*
 * Provide basic signature for the activity
@@ -53,7 +44,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
     }
 
     private fun initObserver() {
-        //todo: define own inheritance of this class and handle manually
+        //noop
     }
 
     private fun initBinding() {
@@ -74,9 +65,4 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : BaseViewModel>(
     open fun getLocale(context: Context): String? {
         return null
     }
-
-    protected val pushNotificationPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            Log.v("NotificationPermission", "NotificationPermission $granted")
-        }
 }

@@ -156,6 +156,18 @@ object ViewUtils {
         }
     }
 
+    fun Collection<View>.visible(){
+        for (view in this) {
+            view.visible()
+        }
+    }
+
+    fun Collection<View>.gone(){
+        for (view in this) {
+            view.gone()
+        }
+    }
+
     fun View.gone() {
         this.visibility = View.GONE
     }
@@ -273,5 +285,14 @@ object ViewUtils {
         } else {
             View.VISIBLE
         }
+    }
+}
+
+fun Context.simpleArrayAdapter(stringList: List<String>): ArrayAdapter<String> {
+    return ArrayAdapter(
+        this,
+        android.R.layout.simple_spinner_item, stringList
+    ).also {
+        it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
     }
 }

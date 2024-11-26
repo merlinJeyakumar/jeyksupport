@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,29 +12,68 @@
         <variable
             name="progress"
             type="int" />
+
+        <variable
+            name="canLottie"
+            type="Boolean" />
+
+        <import type="android.view.View" />
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="start"
-        android:orientation="horizontal">
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:id="@+id/progressCircularProgressIndicator"
+        app:cardCornerRadius="@dimen/_5sdp">
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="@{progress &lt; 0 ? true:false}"
-            android:padding="@dimen/_10sdp"
-            android:progress="@{progress}" />
+            android:orientation="vertical"
+            android:padding="@dimen/_8sdp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/messageAppCompatTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="@dimen/_5sdp"
-            android:text="Loading.." />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieAnimationView"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_gravity="center"
+                android:visibility="@{canLottie ? View.VISIBLE : View.GONE,default=gone}"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                tools:src="@drawable/share_round_icon"
+                tools:visibility="visible" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp">
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressCircularProgressIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="@{progress == 0 ? true:false}"
+                    android:progress="@{progress}" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/messageAppCompatTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:text="Loading.."
+                    android:textColor="@color/dayNightBlack"
+                    android:textStyle="bold"
+                    android:typeface="monospace" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 </layout>

@@ -3,6 +3,7 @@ package com.nativedevps.support.custom_views.dialogs
 import android.content.Context
 import android.view.WindowManager
 import com.nativedevps.support.base_class.dialog.FramedAlertDialog
+import com.nativedevps.support.utility.view.ViewUtils.gone
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogInputBinding
 
@@ -16,13 +17,20 @@ class InputDialog(context: Context) : FramedAlertDialog<DialogInputBinding>(
         super.onCreate()
 
         initListener()
+        initPreview()
     }
 
     private fun initListener() = with(childBinding) {
         //noop
     }
 
-    fun setSpannableMessage(charSequence:CharSequence)= with(childBinding){
+    private fun initPreview() = with(childBinding) {
+        if (messageAppCompatTextView.text.isNullOrEmpty()) {
+            messageAppCompatTextView.gone()
+        }
+    }
+
+    fun setSpannableMessage(charSequence: CharSequence) = with(childBinding) {
         messageAppCompatTextView.text = charSequence
     }
 

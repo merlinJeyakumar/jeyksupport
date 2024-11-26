@@ -3,6 +3,7 @@ package com.nativedevps.support.utility.debugging
 import android.content.Context
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.nativedevps.support.utility.networking.attempt
 
 object Log {
     fun Context.i(message: String) {
@@ -15,7 +16,9 @@ object Log {
 
     fun i(tag: String, message: String) {
         Log.i(tag, message)
-        CrashlyticsLog(tag,message)
+        attempt {
+            CrashlyticsLog(tag,message)
+        }
     }
 
     fun i(message: String, throwable: Throwable) {

@@ -13,8 +13,6 @@
     <color name="black_smoke">#454242</color>
     <color name="shimmer">#32e6e6e6</color>
     <color name="white">#FFFFFF</color>
-    <color name="dayNightWhite">#000000</color>
-    <color name="dayNightBlack">#FFFFFF</color>
     <color name="solidGreen">#00C853</color>
     <color name="color_background">#eceff1</color>
     <color name="colorBlack">#000000</color>
@@ -26,8 +24,10 @@
     <color name="colorPrimaryDark">#388E3C</color>
     <color name="colorPrimaryLight">#C8E6C9</color>
     <color name="colorAccent">#BDBDBD</color>
-    <color name="colorTextIcons">#212121</color>
-    <color name="colorPrimaryText">#212121</color>
+    <color name="colorTextIcons">#FFFFFF</color>
+    <color name="colorPrimaryText">#FFFFFF</color>
+    <color name="dayNightWhite">#FFFFFF</color>
+    <color name="dayNightBlack">#000000</color>
     <color name="colorSecondaryText">#757575</color>
 
 </resources>

@@ -7,8 +7,11 @@ import org.jetbrains.anko.toast
 
 abstract class BaseViewHolder<M, SELECTION_TYPE>(
     private val selectedList: List<SELECTION_TYPE>,
-    itemView: View
+    itemView: View,
 ) : RecyclerView.ViewHolder(itemView) {
+
+    open var isLast: Boolean? =
+        null //make sure you used #super.onBindViewHolder(holder, position) #isLast?.ifTrue {}
 
     val context: Context get() = itemView.context
 
@@ -25,14 +28,14 @@ abstract class BaseViewHolder<M, SELECTION_TYPE>(
     open fun bind(
         position: Int,
         item: M,
-        payload: List<Any>
+        payload: List<Any>,
     ) {
     }
 
     open fun setOptions(
         position: Int,
         item: M,
-        option: Map<String, Any> = mutableMapOf()
+        option: Map<String, Any> = mutableMapOf(),
     ) {
     }
 

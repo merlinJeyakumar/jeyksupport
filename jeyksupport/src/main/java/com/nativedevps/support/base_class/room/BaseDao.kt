@@ -1,13 +1,16 @@
 package com.nativedevps.support.base_class.room
 
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.RawQuery
+import androidx.room.Transaction
+import androidx.room.Update
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
 
-import java.lang.reflect.ParameterizedType
-
-@Dao
 abstract class BaseDao<T : BaseEntity> {
 
     abstract val tableName: String
