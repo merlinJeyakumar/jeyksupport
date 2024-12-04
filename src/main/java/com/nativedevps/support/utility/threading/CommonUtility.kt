@@ -14,16 +14,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
-fun <T> Flow<T>.collectOnLifeCycle(
-    lifecycleCoroutineScope: LifecycleOwner,
-    callback: ((T) -> Unit)? = null
-): Job {
-    return lifecycleCoroutineScope.lifecycleScope.launch {
-        collectLatest {
-            callback?.invoke(it)
-        }
-    }
-}
 
 fun <T> Flow<T>.runOnLifeCycle(
     lifecycleCoroutineScope: LifecycleOwner,

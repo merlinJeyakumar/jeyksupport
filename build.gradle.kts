@@ -18,10 +18,12 @@ android {
         targetSdk = Configs.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
+        buildConfigField("int", "BuildVersionCode", "18")
     }
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        buildConfig = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -33,9 +35,14 @@ android {
             languageVersion.set(JavaLanguageVersion.of(17))
         }
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+kapt {
+    generateStubs = true
 }
 
 dependencies {
@@ -57,18 +64,15 @@ dependencies {
     navigationLibrary()
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 publishing {
     publications {
         create<MavenPublication>("ReleaseAar") {
             groupId = "com.github.merlinJeyakumar"
             artifactId = "library"
             version = "1.1"
-            afterEvaluate { artifact(tasks.getByName("bundleReleaseAar"))
+            afterEvaluate {
+                artifact(tasks.getByName("bundleReleaseAar"))
             }
+        }
     }
-}
 }
