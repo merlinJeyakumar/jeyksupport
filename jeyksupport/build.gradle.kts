@@ -41,6 +41,15 @@ android {
         baseline = file("lint-baseline.xml")
     }
 
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+        getByName("debug") {
+            isMinifyEnabled = false
+        }
+    }
+
     packagingOptions {
         exclude("META-INF/LICENSE")
         exclude("META-INF/NOTICE")
@@ -54,6 +63,15 @@ android {
         exclude("META-INF/AL2.0")
         exclude("META-INF/LGPL2.1")
         resources.excludes.add("META-INF/*")
+    }
+
+    productFlavors {
+        create("production") {
+            dimension = "environment"
+        }
+        create("development") {
+            dimension = "environment"
+        }
     }
 }
 
@@ -105,9 +123,9 @@ tasks.register<Zip>("createAAR") {
     from(android.sourceSets["main"].manifest.srcFile)
     from(tasks.named("copyDependencies"))
 
-    archiveBaseName.set("your-library-name")
+    archiveBaseName.set("JeyKSupport")
     archiveVersion.set("1.0.0")
-    destinationDirectory.set(file("$buildDir/outputs/aar"))
+    destinationDirectory.set(file("AARBundles"))
     archiveExtension.set("aar")
 }
 
