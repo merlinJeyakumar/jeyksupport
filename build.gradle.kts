@@ -60,3 +60,8 @@ dependencies {
     firebaseLibraries()
     navigationLibrary()
 }
+
+/*tasks.withType<com.android.build.gradle.tasks.BundleAar> {
+    // Only include necessary dependencies and JARs for NativeDevps
+    from(configurations.kotlinCompilerClasspath.get().filter { it.name.endsWith("jar") })
+}*/
