@@ -36,6 +36,25 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+
+    packagingOptions {
+        exclude("META-INF/LICENSE")
+        exclude("META-INF/NOTICE")
+        exclude("META-INF/ASL2.0")
+        exclude("META-INF/main.kotlin_module")
+        exclude("META-INF/*.kotlin_module")
+        exclude("META-INF/DEPENDENCIES")
+        exclude("META-INF/LICENSE")
+        exclude("META-INF/INDEX.LIST")
+        exclude("META-INF/library_release.kotlin_module")
+        exclude("META-INF/AL2.0")
+        exclude("META-INF/LGPL2.1")
+        resources.excludes.add("META-INF/*")
+    }
 }
 
 dependencies {
@@ -67,8 +86,31 @@ publishing {
             groupId = "com.github.merlinJeyakumar"
             artifactId = "library"
             version = "1.1"
-            afterEvaluate { artifact(tasks.getByName("bundleReleaseAar"))
+            afterEvaluate {
+                artifact(tasks.getByName("bundleReleaseAar"))
             }
+        }
     }
 }
+tasks.register<Copy>("copyDependencies") {
+    from(configurations.kotlinCompilerClasspath)
+    into("$buildDir/libs")
+}
+
+tasks.register<Zip>("createAAR") {
+    from(android.sourceSets["main"].java.srcDirs)
+    from(android.sourceSets["main"].res.srcDirs)
+    from(android.sourceSets["main"].assets.srcDirs)
+    from(android.sourceSets["main"].jniLibs.srcDirs)
+    from(android.sourceSets["main"].manifest.srcFile)
+    from(tasks.named("copyDependencies"))
+
+    archiveBaseName.set("your-library-name")
+    archiveVersion.set("1.0.0")
+    destinationDirectory.set(file("$buildDir/outputs/aar"))
+    archiveExtension.set("aar")
+}
+
+tasks.named("assemble") {
+    dependsOn("createAAR")
 }
