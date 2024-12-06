@@ -35,14 +35,11 @@ android {
             languageVersion.set(JavaLanguageVersion.of(17))
         }
     }
-}
 
-kapt {
-    correctErrorTypes = true
-}
-
-kapt {
-    generateStubs = true
+    kapt {
+        correctErrorTypes = true
+        generateStubs = true
+    }
 }
 
 dependencies {
@@ -62,17 +59,4 @@ dependencies {
     implementation(platform(firebase_platform_bom))
     firebaseLibraries()
     navigationLibrary()
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("ReleaseAar") {
-            groupId = "com.github.merlinJeyakumar"
-            artifactId = "library"
-            version = "1.1"
-            afterEvaluate {
-                artifact(tasks.getByName("bundleReleaseAar"))
-            }
-        }
-    }
 }
