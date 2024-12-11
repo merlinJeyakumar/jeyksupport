@@ -15,7 +15,6 @@ fun NotificationManagerCompat.isNotificationAllowed() = when {
     Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
         notificationChannels.firstOrNull { channel -> channel.importance == NotificationManager.IMPORTANCE_NONE } == null
     }
-
     else -> true
 }
 
