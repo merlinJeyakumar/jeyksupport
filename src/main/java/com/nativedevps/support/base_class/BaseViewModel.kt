@@ -21,6 +21,18 @@ abstract class BaseViewModel constructor(application: Application) :
 
     abstract fun onCreate()
 
+    open fun updateLoaderMessage(
+        message: String,
+        progress: Int = 0
+    ) = context.runOnUiThread {
+        liveDataProgressBar.value = LoaderProperties(
+            true,
+            message,
+            progress,
+            false
+        )
+    }
+
     open fun showProgressDialog(
         message: String = "loading..",
         progress: Int = -1,
