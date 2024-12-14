@@ -1,4 +1,5 @@
 import FirebaseLibraries.firebase_platform_bom
+import com.android.build.gradle.tasks.BundleAar
 
 plugins {
     id("com.android.library")
@@ -65,3 +66,23 @@ dependencies {
     // Only include necessary dependencies and JARs for NativeDevps
     from(configurations.kotlinCompilerClasspath.get().filter { it.name.endsWith("jar") })
 }*/
+
+tasks.withType<BundleAar> {
+    val targetDirectory = "D:\\Android\\scrap-note\\modules\\jeyksupport"
+    // Set the archive base name directly as a string
+    //archiveFileName.set("nativedevps.aar")
+    destinationDirectory.set(file(targetDirectory))
+
+    doFirst {
+        val destinationDir = file(targetDirectory)
+        if (destinationDir.exists()) {
+            destinationDir.listFiles { file -> file.extension == "aar" }?.forEach { aarFile ->
+                if (aarFile.delete()) {
+                    println("Deleted: ${aarFile.name}")
+                } else {
+                    println("Failed to delete: ${aarFile.name}")
+                }
+            }
+        }
+    }
+}
