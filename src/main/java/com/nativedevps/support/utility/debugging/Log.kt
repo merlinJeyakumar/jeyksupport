@@ -46,6 +46,10 @@ object Log {
         e("Error", throwable.localizedMessage)
     }
 
+    fun e(throwable: Throwable) {
+        e("Error: ", throwable.message ?:throwable.localizedMessage)
+    }
+
     fun e(message: String) {
         e("Error: ", message)
     }
