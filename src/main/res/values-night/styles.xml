@@ -38,7 +38,7 @@
     </style>
 
     <style name="ToolBarTheme" parent="ThemeOverlay.MaterialComponents.ActionBar">
-
+        <item name="colorOnPrimary">@color/white</item>
     </style>
 
     <style name="AppTheme.Toolbar" parent="AppTheme">
