@@ -2,6 +2,8 @@ package com.nativedevps.support.utility.threading
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.nativedevps.support.coroutines.NetworkResult
+import com.nativedevps.support.coroutines.SuccessApiResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -96,3 +98,7 @@ fun <T> Flow<T>.firstOrNullOnLifecycle(
 fun <T> runAsyncFlow(execution: suspend () -> T) = channelFlow<T> {
     trySend(execution())
 }.flowOn(Dispatchers.IO)
+
+fun <T> NetworkResult<T>.getData(): T? {
+    return (this as? SuccessApiResult<T>)?.data
+}
