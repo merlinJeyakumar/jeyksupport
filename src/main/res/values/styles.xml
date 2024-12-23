@@ -1,10 +1,21 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
-
+        <item name="actionModeStyle">@style/ActionModeStyle</item>
+        <item name="actionOverflowButtonStyle">@style/CustomOverflowButtonStyle</item>
     </style>
 
+    <style name="CustomOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/white</item>
+    </style>
+
+    <style name="ActionModeStyle" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="theme">@style/ActionMode.Theme</item>
+    </style>
+
+    <style name="ActionMode.Theme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:textColorSecondary">?attr/colorPrimary</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" />
 
