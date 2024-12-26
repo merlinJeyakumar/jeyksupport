@@ -21,12 +21,11 @@
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
+                    app:titleTextColor="@color/colorTextIcons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
-                    android:background="?attr/colorPrimary"
-                    android:gravity="start|center"
-                    app:titleTextColor="@color/white" />
+                    android:gravity="start|center" />
             </FrameLayout>
 
             <FrameLayout
@@ -53,15 +52,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:textAllCaps="false"
+                    android:textColor="@color/colorBlack"
                     app:backgroundTint="@color/gray" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/okButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    app:backgroundTint="?attr/colorPrimary" />
+                    android:textColor="@color/colorAccent"
+                    android:textAllCaps="false" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -22,11 +22,8 @@
     <color name="colorLoveRed">#a83f39</color>
     <color name="windowsBackground">#F9FAFB</color>
 
-    <color name="colorPrimary">#4CAF50</color>
-    <color name="colorPrimaryDark">#388E3C</color>
-    <color name="colorPrimaryLight">#C8E6C9</color>
     <color name="colorAccent">#BDBDBD</color>
-    <color name="colorTextIcons">#212121</color>
+    <color name="colorTextIcons">#E0E0E0</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
 
