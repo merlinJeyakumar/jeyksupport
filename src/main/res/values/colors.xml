@@ -21,10 +21,4 @@
     <color name="colorLink">#0645AD</color>
     <color name="colorLoveRed">#a83f39</color>
     <color name="windowsBackground">#F9FAFB</color>
-
-    <color name="colorAccent">#BDBDBD</color>
-    <color name="colorTextIcons">#E0E0E0</color>
-    <color name="colorPrimaryText">#212121</color>
-    <color name="colorSecondaryText">#757575</color>
-
 </resources>

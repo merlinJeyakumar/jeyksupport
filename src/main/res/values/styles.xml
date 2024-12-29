@@ -1,8 +1,9 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="actionModeStyle">@style/ActionModeStyle</item>
         <item name="actionOverflowButtonStyle">@style/CustomOverflowButtonStyle</item>
+        <item name="iconTint">@color/colorBlack</item>
     </style>
 
     <style name="CustomOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
