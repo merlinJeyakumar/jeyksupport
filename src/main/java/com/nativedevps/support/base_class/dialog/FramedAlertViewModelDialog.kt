@@ -87,7 +87,7 @@ abstract class FramedViewModelDialog<VB : ViewBinding, VM : BaseViewModel>(
 
     fun headerBackgroundColor(value: Int) = with(binding) {
         headerParentLayout.backgroundColor = value
-        okButton.setBackgroundTint(value)
+        //okButton.setBackgroundTint(value)
     }
 
     fun headerTextColor(color: Int) = with(binding) {
