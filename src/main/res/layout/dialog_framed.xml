@@ -21,6 +21,7 @@
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/toolbar"
+                    app:popupTheme="@style/AppTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
@@ -51,13 +52,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorBlack"
                     app:backgroundTint="@color/gray" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/okButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/buttonTextColor"
                     android:textAllCaps="false" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 

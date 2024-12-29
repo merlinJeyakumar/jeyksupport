@@ -21,4 +21,6 @@
     <color name="colorLink">#0645AD</color>
     <color name="colorLoveRed">#a83f39</color>
     <color name="windowsBackground">#F9FAFB</color>
+
+    <color name="buttonTextColor">#FFFFFF</color>
 </resources>
