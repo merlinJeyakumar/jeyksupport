@@ -5,6 +5,5 @@
         android:id="@id/menuCloseAction"
         android:icon="@drawable/ic_baseline_close_24"
         android:title="Cancel"
-        app:iconTint="?attr/colorPrimary"
         app:showAsAction="always" />
 </menu>
