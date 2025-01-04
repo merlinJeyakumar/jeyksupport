@@ -68,7 +68,8 @@ dependencies {
 }*/
 
 tasks.withType<BundleAar> {
-    val targetDirectory = "D:\\Android\\scrap-note\\modules\\jeyksupport"
+    //val targetDirectory = "D:\\Android\\scrap-note\\modules\\jeyksupport" //scrapnote
+    val targetDirectory = "D:\\Android\\hanuman-chalisa-revamp\\modules\\jeyksupport" //hanumanchalisa
     // Set the archive base name directly as a string
     //archiveFileName.set("nativedevps.aar")
     destinationDirectory.set(file(targetDirectory))

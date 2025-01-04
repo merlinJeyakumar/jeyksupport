@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:textColorPrimary">?attr/colorPrimary</item>
+        <item name="android:textColorPrimary">?attr/titleTextColor</item>
         <item name="actionModeStyle">@style/ActionModeStyle</item>
         <item name="actionOverflowButtonStyle">@style/CustomOverflowButtonStyle</item>
     </style>
