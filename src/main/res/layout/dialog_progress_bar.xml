@@ -68,7 +68,6 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:text="Loading.."
-                    android:textColor="@color/dayNightBlack"
                     android:textStyle="bold"
                     android:typeface="monospace" />
             </androidx.appcompat.widget.LinearLayoutCompat>
