@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#00000000</color>
+    <color name="colorDisabled">#808080</color>
     <color name="gray">#CACACA</color>
     <color name="trans_gray_lite">#B3B3B3</color>
     <color name="trans_gray">#88979797</color>
