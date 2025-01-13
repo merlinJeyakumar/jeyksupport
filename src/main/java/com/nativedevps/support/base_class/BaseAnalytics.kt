@@ -27,7 +27,7 @@ open class BaseAnalytics(private val context: Context) {
                 }
             }
             bundle.putString(Constant.EVENT_NAME, baseAnalyticsEvent.eventName)
-            bundle.putString(Constant.SCREEN_NAME, baseAnalyticsEvent.screenName)
+            bundle.putString(Constant.SCREEN_NAME, baseAnalyticsEvent.screen.screenName)
         }
 
         Log.d("baseAnalyticsEvent.eventName", bundle.toJson() ?: "bundle")
@@ -36,30 +36,30 @@ open class BaseAnalytics(private val context: Context) {
 
     sealed class BaseAnalyticsEvent {
         abstract val eventName: String
-        abstract val screenName: String
+        abstract val screen: BaseAnalyticsScreen
 
-        class AppLaunch(override val screenName: String) : BaseAnalyticsEvent() {
+        class AppLaunch(override val screen: BaseAnalyticsScreen) : BaseAnalyticsEvent() {
             override val eventName: String
                 get() = "app_launch"
         }
 
-        class AppExit(override val screenName: String) : BaseAnalyticsEvent() {
+        class AppExit(override val screen: BaseAnalyticsScreen) : BaseAnalyticsEvent() {
             override val eventName: String
                 get() = "app_exit"
         }
 
-        class AppForeground(override val screenName: String) : BaseAnalyticsEvent() {
+        class AppForeground(override val screen: BaseAnalyticsScreen) : BaseAnalyticsEvent() {
             override val eventName: String
                 get() = "app_foreground"
         }
 
-        class AppBackground(override val screenName: String) : BaseAnalyticsEvent() {
+        class AppBackground(override val screen: BaseAnalyticsScreen) : BaseAnalyticsEvent() {
             override val eventName: String
                 get() = "app_background"
         }
 
         class ScreenEvent(
-            override val screenName: String,
+            override val screen: BaseAnalyticsScreen,
             private val action: AnalyticsAction
         ) : BaseAnalyticsEvent() {
             override val eventName: String
@@ -68,7 +68,7 @@ open class BaseAnalytics(private val context: Context) {
     }
 
     class AnalyticsEvent(
-        override val screenName: String,
+        override val screen: BaseAnalyticsScreen,
         private val event: String
     ) : BaseAnalyticsEvent() {
         override val eventName: String
@@ -76,15 +76,15 @@ open class BaseAnalytics(private val context: Context) {
     }
 
     sealed class AnalyticsAction {
-        object Click : AnalyticsAction() {
+        class Click(private var properties: String) : AnalyticsAction() {
             override fun toString(): String {
-                return "click"
+                return "click_$properties"
             }
         }
 
-        object View : AnalyticsAction() {
+        class View(private var properties: String) : AnalyticsAction() {
             override fun toString(): String {
-                return "view"
+                return "view_$properties"
             }
         }
 
@@ -93,6 +93,10 @@ open class BaseAnalytics(private val context: Context) {
                 return action
             }
         }
+    }
+
+    open class BaseAnalyticsScreen {
+        open val screenName: String = ""
     }
 
     object Constant {
