@@ -24,7 +24,6 @@
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         app:cardCornerRadius="@dimen/_5sdp">
 
         <LinearLayout
@@ -67,6 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
+                    android:textColor="?android:textColorTertiaryInverse"
                     android:text="Loading.."
                     android:textStyle="bold"
                     android:typeface="monospace" />
