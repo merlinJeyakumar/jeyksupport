@@ -73,7 +73,7 @@ class LoaderDialog(
             context: Context,
             loaderConstraints: LoaderConstraints,
         ): LoaderDialog {
-            return LoaderDialog(context, loaderConstraints,).also {
+            return LoaderDialog(context, loaderConstraints).also {
                 if (loaderConstraints.autoShowLoader) {
                     it.show(fragmentManager, "loader")
                 }
