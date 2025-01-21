@@ -1,19 +1,23 @@
 package com.nativedevps.support.utility.encryption
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.util.Base64
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.KeyTemplates
 import com.google.crypto.tink.aead.AeadConfig
 import com.google.crypto.tink.integration.android.AndroidKeysetManager
-import java.nio.charset.StandardCharsets
+import com.nativedevps.support.utility.debugging.Log
 import java.nio.ByteBuffer
+import java.nio.charset.StandardCharsets
+import java.security.MessageDigest
+import java.security.cert.CertificateFactory
 
 class SecurityUtil(private val context: Context) {
     private val KEYSET_NAME = "master_keyset"
     private val PREFERENCE_FILE = "master_key_preference"
     private val MASTER_KEY_URI = "android-keystore://master_key"
-    private lateinit var aead: Aead
+    private var aead: Aead
 
     init {
         AeadConfig.register()
@@ -39,10 +43,12 @@ class SecurityUtil(private val context: Context) {
                 type = TYPE_STRING
                 data.toByteArray(StandardCharsets.UTF_8)
             }
+
             is Boolean -> {
                 type = TYPE_BOOLEAN
                 ByteBuffer.allocate(1).put(if (data) 1.toByte() else 0.toByte()).array()
             }
+
             is Number -> {
                 type = when (data) {
                     is Int -> TYPE_INT
@@ -52,6 +58,7 @@ class SecurityUtil(private val context: Context) {
                 }
                 numberToByteArray(data)
             }
+
             else -> throw IllegalArgumentException("Data type not supported for encryption.")
         }
 
@@ -61,7 +68,8 @@ class SecurityUtil(private val context: Context) {
             put(encryptedData)
         }.array()
 
-        return Base64.encodeToString(encryptedWithType, Base64.DEFAULT).replace("\\r\\n|\\r|\\n".toRegex(), "")
+        return Base64.encodeToString(encryptedWithType, Base64.DEFAULT)
+            .replace("\\r\\n|\\r|\\n".toRegex(), "")
     }
 
     fun decrypt(data: String): Any {
@@ -69,7 +77,8 @@ class SecurityUtil(private val context: Context) {
             return ""
         }
 
-        val encryptedWithType = Base64.decode(data.replace("\\r\\n|\\r|\\n".toRegex(), ""), Base64.DEFAULT)
+        val encryptedWithType =
+            Base64.decode(data.replace("\\r\\n|\\r|\\n".toRegex(), ""), Base64.DEFAULT)
         val type = encryptedWithType[0].toInt()
 
         val encryptedData = encryptedWithType.copyOfRange(1, encryptedWithType.size)
@@ -108,4 +117,72 @@ class SecurityUtil(private val context: Context) {
 
     private fun byteArrayToInt(byteArray: ByteArray): Int {
         return ByteBuffer.wrap(byteArray).int
-    }}
+    }
+
+    fun isValidKeystore(): Boolean {
+        return getFingerPrint() != null
+    }
+
+    fun getFingerPrint(): String? {
+        try {
+            val packageName = context.applicationContext.packageName
+            val packageManager = context.packageManager
+
+            // Handle API compatibility for signing information
+            val packageInfo =
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                    packageManager.getPackageInfo(
+                        packageName,
+                        PackageManager.GET_SIGNING_CERTIFICATES
+                    )
+                } else {
+                    packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+                }
+
+            val signatures =
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                    packageInfo.signingInfo.apkContentsSigners
+                } else {
+                    packageInfo.signatures
+                }
+
+            if (signatures.isEmpty()) {
+                Log.e("Keystore Info", "No signing certificates found!")
+                return null
+            }
+
+            for (signature in signatures) {
+                try {
+                    // Parse the certificate
+                    val certFactory = CertificateFactory.getInstance("X.509")
+                    val cert =
+                        certFactory.generateCertificate(signature.toByteArray().inputStream())
+
+                    // Compute SHA-256 hash
+                    val messageDigest = try {
+                        MessageDigest.getInstance("SHA-256")
+                    } catch (e: Exception) {
+                        Log.e("Keystore Info", "SHA-256 not supported: ${e.message}")
+                        continue
+                    }
+
+                    val sha256Hash = messageDigest.digest(cert.encoded)
+                    val sha256Base64 = com.google.crypto.tink.subtle.Base64.encodeToString(
+                        sha256Hash,
+                        com.google.crypto.tink.subtle.Base64.DEFAULT
+                    )
+
+                    // Log the keystore certificate hash
+                    Log.d("Keystore Info", "SHA-256 Certificate: $sha256Base64")
+                    return sha256Base64
+                } catch (e: Exception) {
+                    Log.e("Keystore Info", "Failed to parse certificate: ${e.message}")
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("Keystore Info", "Failed to retrieve keystore info: ${e.message}")
+        }
+        return null
+    }
+
+}
