@@ -100,17 +100,17 @@ fun okioFileDownload(url: String, destFile: File): Observable<Int>? {
             val request = Request.Builder().url(url).build()
             val response = OkHttpClient().newCall(request).execute()
             val body = response.body
-            val contentLength = body.contentLength()
-            source = body.source()
+            val contentLength = body?.contentLength()
+            source = body?.source()
             sink = destFile.sink().buffer()
             val sinkBuffer = sink.buffer()
             var totalBytesRead: Long = 0
             val bufferSize = 6 * 1024
             var bytesRead: Long
-            while (source.read(sinkBuffer, bufferSize.toLong()).also { bytesRead = it } != -1L) {
+            while (source?.read(sinkBuffer, bufferSize.toLong()).also { bytesRead = it!! } != -1L) {
                 sink.emit()
                 totalBytesRead += bytesRead
-                val progress = (totalBytesRead * 100 / contentLength).toInt()
+                val progress = (totalBytesRead * 100 / contentLength!!).toInt()
                 if (lastProgress != progress) { //reduce_redundant_callback
                     emitter.onNext(progress)
                 }
