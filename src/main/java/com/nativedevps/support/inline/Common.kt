@@ -8,9 +8,8 @@ import android.webkit.MimeTypeMap
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nativedevps.support.utility.device.Common.shareText
-
 import nativedevps.support.R
-import java.util.*
+import java.util.Locale
 
 fun Any.toJson(): String? {
     try {
@@ -65,4 +64,11 @@ fun Any?.isNull(): Boolean {
     return this == null
 }
 
-inline fun <reified T> Gson.listFromJson(json: String) = fromJson<T>(json, object : TypeToken<T>() {}.type)
+inline fun <reified T> Gson.listFromJson(json: String) =
+    fromJson<T>(json, object : TypeToken<T>() {}.type)
+
+inline fun <T> Boolean.whenIf(callback: () -> T): Boolean = apply {
+    if (this) {
+        callback()
+    }
+}
