@@ -35,16 +35,16 @@ public class AESUtil {
         cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
 
         byte[] encryptedText = cipher.doFinal(plainText.getBytes("UTF-8"));
-        return Base64.encodeToString(salt, Base64.DEFAULT) + ":" + 
-               Base64.encodeToString(iv, Base64.DEFAULT) + ":" + 
-               Base64.encodeToString(encryptedText, Base64.DEFAULT);
+        return Base64.encodeToString(salt, Base64.NO_WRAP) + ":" +
+               Base64.encodeToString(iv, Base64.NO_WRAP) + ":" +
+               Base64.encodeToString(encryptedText, Base64.NO_WRAP);
     }
 
     public static String decrypt(String cipherText, String password) throws Exception {
         String[] parts = cipherText.split(":");
-        byte[] salt = Base64.decode(parts[0], Base64.DEFAULT);
-        byte[] iv = Base64.decode(parts[1], Base64.DEFAULT);
-        byte[] encryptedText = Base64.decode(parts[2], Base64.DEFAULT);
+        byte[] salt = Base64.decode(parts[0], Base64.NO_WRAP);
+        byte[] iv = Base64.decode(parts[1], Base64.NO_WRAP);
+        byte[] encryptedText = Base64.decode(parts[2], Base64.NO_WRAP);
 
         SecretKeyFactory factory = SecretKeyFactory.getInstance(SECRET_KEY_ALGORITHM);
         PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt, ITERATION_COUNT, KEY_SIZE);
