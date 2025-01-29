@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.nativedevps.support.utility.networking.attempt
+import timber.log.Timber
 
 object Log {
     fun Context.i(message: String) {
@@ -17,7 +18,7 @@ object Log {
     fun i(tag: String, message: String) {
         Log.i(tag, message)
         attempt {
-            CrashlyticsLog(tag,message)
+            crashlyticsLog(tag,message)
         }
     }
 
@@ -39,7 +40,7 @@ object Log {
 
     fun v(tag: String, message: String) {
         Log.v(tag, message)
-        CrashlyticsLog(tag,message)
+        crashlyticsLog(tag,message)
     }
 
     fun e(message: String, throwable: Throwable) {
@@ -56,7 +57,7 @@ object Log {
 
     fun e(tag: String, message: String) {
         Log.e(tag, message)
-        CrashlyticsLog(tag, message, true)
+        crashlyticsLog(tag, message, true)
     }
 
     fun Context.e(message: String) {
@@ -69,7 +70,7 @@ object Log {
 
     fun wtf(tag: String, message: String) {
         Log.w(tag, message)
-        CrashlyticsLog(tag,message)
+        crashlyticsLog(tag,message)
     }
 
     fun Context.wtf(message: String) {
@@ -90,16 +91,23 @@ object Log {
 
     fun d(tag: String, message: String) {
         Log.d(tag, message)
-        CrashlyticsLog(tag,message)
+        crashlyticsLog(tag,message)
+        timberLog(tag,message)
     }
 
-    private fun CrashlyticsLog(
+    private fun timberLog(tag: String, message: String) {
+        Timber.log(Log.ERROR, "$tag:$message")
+    }
+
+    private fun crashlyticsLog(
         tag: String,
         message: String,
         force:Boolean = false
     ) {
         if (debugMode || force) {
-            FirebaseCrashlytics.getInstance().log("${tag}: ${message}")
+            attempt {
+                FirebaseCrashlytics.getInstance().log("${tag}: ${message}")
+            }
         }
     }
 }

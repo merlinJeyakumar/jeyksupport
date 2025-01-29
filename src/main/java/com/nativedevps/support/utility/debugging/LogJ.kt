@@ -17,7 +17,7 @@ fun JLogI(message: String) {
 @Deprecated("use com.nativedevps.support.utility.debugging.Log.i instead")
 fun JLogI(tag: String, message: String) {
     Log.i(tag, message)
-    CrashlyticsLog(tag,message)
+    crashlyticsLog(tag,message)
 }
 
 @Deprecated("use com.nativedevps.support.utility.debugging.Log.i instead")
@@ -43,7 +43,7 @@ fun JLogV(message: String) {
 @Deprecated("use com.nativedevps.support.utility.debugging.Log.v instead")
 fun JLogV(tag: String, message: String) {
     Log.v(tag, message)
-    CrashlyticsLog(tag,message)
+    crashlyticsLog(tag,message)
 }
 
 @Deprecated("use com.nativedevps.support.utility.debugging.Log.e instead")
@@ -59,7 +59,7 @@ fun JLogE(message: String) {
 @Deprecated("use com.nativedevps.support.utility.debugging.Log.e instead")
 fun JLogE(tag: String, message: String) {
     Log.e(tag, message)
-    CrashlyticsLog(tag, message, true)
+    crashlyticsLog(tag, message, true)
 }
 
 @Deprecated("use com.nativedevps.support.utility.debugging.Log.e instead")
@@ -75,7 +75,7 @@ fun JLogW(message: String) {
 @Deprecated("use com.nativedevps.support.utility.debugging.Log.wtf instead")
 fun JLogW(tag: String, message: String) {
     Log.w(tag, message)
-    CrashlyticsLog(tag,message)
+    crashlyticsLog(tag,message)
 }
 
 @Deprecated("use com.nativedevps.support.utility.debugging.Log.wtf instead")
@@ -101,10 +101,10 @@ fun Context.JLogD(message: String) {
 @Deprecated("use com.nativedevps.support.utility.debugging.Log.d instead")
 fun JLogD(tag: String, message: String) {
     Log.d(tag, message)
-    CrashlyticsLog(tag,message)
+    crashlyticsLog(tag,message)
 }
 
-private fun CrashlyticsLog(
+private fun crashlyticsLog(
     tag: String,
     message: String,
     force:Boolean = false
