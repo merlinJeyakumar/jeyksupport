@@ -104,10 +104,15 @@ object Log {
         message: String,
         force:Boolean = false
     ) {
+        if (CRASHLYTICS_ENABLED.not()) {
+            return
+        }
         if (debugMode || force) {
             attempt {
                 FirebaseCrashlytics.getInstance().log("${tag}: ${message}")
             }
         }
     }
+
+    var CRASHLYTICS_ENABLED = true
 }
