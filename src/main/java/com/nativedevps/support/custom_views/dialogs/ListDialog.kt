@@ -1,41 +1,37 @@
 package com.nativedevps.support.custom_views.dialogs
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.Menu
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.nativedevps.support.base_class.dialog.FramedAlertDialog
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogListBinding
 import nativedevps.support.databinding.ItemSimpleListViewBinding
-import org.jetbrains.anko.layoutInflater
 
 class ListDialog(
     activeContext: Context,
-    private val allowSearch: Boolean,
+    private val allowSearch: Boolean = true,
 ) : FramedAlertDialog<DialogListBinding>(
     context = activeContext,
     bindingFactory = DialogListBinding::inflate,
     theme = R.style.TransparentDialogStyle
 ) {
-    private var onItemSelectedCallback: ((ArrayDrawableListViewAdapter.ItemModel, longPress: Boolean) -> Unit?)? = null
+    var checkedList: List<ArrayDrawableListViewAdapter.ItemModel> = listOf()
+    var checkable: Boolean = false
+    private var onItemSelectedCallback: ((ArrayDrawableListViewAdapter.ItemModel, longPress: Boolean) -> Unit?)? =
+        null
+    private var onItemsSelectedCallback: ((List<ArrayDrawableListViewAdapter.ItemModel>, longPress: Boolean) -> Unit?)? =
+        null
+
     private var menu: Menu? = null
     private val searchActionMenu get() = menu?.findItem(R.id.menuSearchAction)
 
     private fun initListener() = with(childBinding) {
-        itemsListView.setOnItemClickListener { parent, view, position, id ->
-            val item = (itemsListView.adapter as? ArrayDrawableListViewAdapter)?.items?.get(
-                position)
-            item?.let { onItemSelectedCallback?.invoke(it,false) }
-        }
-        itemsListView.setOnItemLongClickListener { parent, view, position, id ->
-            val item = (itemsListView.adapter as? ArrayDrawableListViewAdapter)?.items?.get(
-                position)
-            item?.let { onItemSelectedCallback?.invoke(it, true) }
-            return@setOnItemLongClickListener true
-        }
+        ///todo
     }
 
     private fun initPreview() = with(binding) {
@@ -51,20 +47,52 @@ class ListDialog(
     }
 
     fun updateList(list: List<ArrayDrawableListViewAdapter.ItemModel>) = with(childBinding) {
-        itemsListView.adapter = ArrayDrawableListViewAdapter(context, list)
+        itemsListView.adapter = ArrayDrawableListViewAdapter(
+            context,
+            list,
+            checkable,
+            object : ArrayDrawableListViewAdapter.ArrayViewHolder.OnItemClickListener {
+                override fun onItemClick(position: Int) {
+                    adapter?.items?.getOrNull(position)?.let {
+                        onItemSelectedCallback?.invoke(it, false)
+                        onItemsSelectedCallback?.invoke(listOf(it), false)
+                    }
+                }
+
+                override fun onItemLongClick(position: Int) {
+                    adapter?.items?.getOrNull(position)?.let {
+                        onItemSelectedCallback?.invoke(it, true)
+                        onItemsSelectedCallback?.invoke(listOf(it), true)
+                    }
+                }
+
+                override fun onItemsChecked(list: List<ArrayDrawableListViewAdapter.ItemModel>) {
+                    onItemsSelectedCallback?.invoke(list, true)
+                    checkedList = list
+                }
+
+            }
+        )
     }
 
     fun setSearchAction(boolean: Boolean) {
         searchActionMenu?.setVisible(boolean)
     }
 
+    var adapter: ArrayDrawableListViewAdapter? = null
+
     var message = ""
         set(text) = with(childBinding) {
             messageAppCompatTextView.setText(text)
         }
 
+    @Deprecated("use list callback instead")
     fun onItemSelected(callback: (ArrayDrawableListViewAdapter.ItemModel, longPress: Boolean) -> Unit) {
         this.onItemSelectedCallback = callback
+    }
+
+    fun onItemsSelected(callback: (List<ArrayDrawableListViewAdapter.ItemModel>, longPress: Boolean) -> Unit) {
+        this.onItemsSelectedCallback = callback
     }
 
     override fun onCreate() {
@@ -125,21 +153,73 @@ class ListDialog(
     open class ArrayDrawableListViewAdapter(
         private var appContext: Context,
         var items: List<ItemModel>,
-    ) : ArrayAdapter<ArrayDrawableListViewAdapter.ItemModel>(appContext,
-        R.layout.item_simple_list_view,
-        items) {
+        private val checkable: Boolean,
+        private var itemClickListener: ArrayViewHolder.OnItemClickListener? = null,
+    ) : RecyclerView.Adapter<ArrayDrawableListViewAdapter.ArrayViewHolder>() {
 
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val binding =
-                ItemSimpleListViewBinding.inflate(appContext.layoutInflater, parent, false)
-            val currentItem = items[position]
+        data class ItemModel(val position: Int, val item: String, var isChecked: Boolean = false)
 
-            binding.text1.text = currentItem.item
-            return binding.root
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArrayViewHolder {
+            return ArrayViewHolder(
+                ItemSimpleListViewBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ),
+                appContext,
+                checkable,
+                items,
+                itemClickListener
+            )
         }
 
-        data class ItemModel(val position: Int, val item: String) {
+        override fun getItemCount(): Int {
+            return items.size
+        }
 
+        override fun onBindViewHolder(holder: ArrayViewHolder, position: Int) {
+            holder.bind(items[position])
+        }
+
+        class ArrayViewHolder(
+            private val binding: ItemSimpleListViewBinding,
+            private val appContext: Context,
+            private val checkable: Boolean = false,
+            private val items: List<ItemModel>,
+            private val itemClickListener: OnItemClickListener?,
+        ) : RecyclerView.ViewHolder(binding.root) {
+            fun bind(item: ItemModel) {
+                binding.text1.text = item.item
+                if (checkable.not()) {
+                    binding.text1.isClickable = false
+                    binding.text1.buttonDrawable =
+                        ContextCompat.getDrawable(appContext, android.R.color.transparent)
+                }
+                val currentItem = items[position]
+
+                binding.text1.text = currentItem.item
+                itemView.setOnClickListener {
+                    itemClickListener?.onItemClick(currentItem.position)
+                }
+
+                itemView.setOnLongClickListener {
+                    itemClickListener?.onItemLongClick(currentItem.position)
+                    return@setOnLongClickListener true
+                }
+
+                binding.text1.addOnCheckedStateChangedListener { checkBox, state ->
+                    if (checkable) {
+                        currentItem.isChecked = checkBox.isChecked
+                        itemClickListener?.onItemsChecked(items.filter { it.isChecked })
+                    }
+                }
+            }
+
+            interface OnItemClickListener {
+                fun onItemClick(position: Int)
+                fun onItemLongClick(position: Int)
+                fun onItemsChecked(list: List<ItemModel>)
+            }
         }
     }
 }

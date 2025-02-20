@@ -47,7 +47,7 @@ object DialogBox {
         return materialAlertDialogBuilder.show()
     }
 
-    fun <T> Activity.listDialog(
+    /*fun <T> Activity.listDialog(
         title: String? = "Alert",
         isCancellable: Boolean = true,
         stringList: List<T>,
@@ -79,7 +79,7 @@ object DialogBox {
                 callback(false, null)
             }
         }
-    }
+    }*/
 
     fun Activity.informationDialog(
         title: String? = "Alert",
