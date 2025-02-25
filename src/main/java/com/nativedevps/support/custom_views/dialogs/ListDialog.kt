@@ -46,6 +46,11 @@ class ListDialog(
         updateList(unfilteredList)
     }
 
+    fun setInitialCheckedItems(list: List<String>) {
+        unfilteredList.filter { list.contains(it.item) }.forEach { it.isChecked = true }
+        updateList(unfilteredList)
+    }
+
     fun updateList(list: List<ArrayDrawableListViewAdapter.ItemModel>) = with(childBinding) {
         itemsListView.adapter = ArrayDrawableListViewAdapter(
             context,
@@ -188,7 +193,7 @@ class ListDialog(
             private val items: List<ItemModel>,
             private val itemClickListener: OnItemClickListener?,
         ) : RecyclerView.ViewHolder(binding.root) {
-            fun bind(item: ItemModel) {
+            fun bind(item: ItemModel) = with(binding) {
                 binding.text1.text = item.item
                 if (checkable.not()) {
                     binding.text1.isClickable = false
@@ -197,7 +202,8 @@ class ListDialog(
                 }
                 val currentItem = items[position]
 
-                binding.text1.text = currentItem.item
+                text1.isChecked = currentItem.isChecked
+                text1.text = currentItem.item
                 itemView.setOnClickListener {
                     itemClickListener?.onItemClick(currentItem.position)
                 }
