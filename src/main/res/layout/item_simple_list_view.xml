@@ -14,6 +14,7 @@
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/text1"
             android:layout_width="match_parent"
+            android:foreground="?attr/selectableItemBackground"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/_10sdp"
             android:padding="@dimen/_10sdp"

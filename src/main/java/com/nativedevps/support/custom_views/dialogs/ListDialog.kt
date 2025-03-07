@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -52,39 +53,40 @@ class ListDialog(
     }
 
     fun updateList(list: List<ArrayDrawableListViewAdapter.ItemModel>) = with(childBinding) {
+        val onItemClickListener = object : ArrayDrawableListViewAdapter.ArrayViewHolder.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                adapter?.items?.getOrNull(position)?.let {
+                    onItemSelectedCallback?.invoke(it, false)
+                    onItemsSelectedCallback?.invoke(listOf(it), false)
+                }
+            }
+
+            override fun onItemLongClick(position: Int) {
+                adapter?.items?.getOrNull(position)?.let {
+                    onItemSelectedCallback?.invoke(it, true)
+                    onItemsSelectedCallback?.invoke(listOf(it), true)
+                }
+            }
+
+            override fun onItemsChecked(list: List<ArrayDrawableListViewAdapter.ItemModel>) {
+                onItemsSelectedCallback?.invoke(list, true)
+                checkedList = list
+            }
+        }
+
         itemsListView.adapter = ArrayDrawableListViewAdapter(
             context,
             list,
             checkable,
-            object : ArrayDrawableListViewAdapter.ArrayViewHolder.OnItemClickListener {
-                override fun onItemClick(position: Int) {
-                    adapter?.items?.getOrNull(position)?.let {
-                        onItemSelectedCallback?.invoke(it, false)
-                        onItemsSelectedCallback?.invoke(listOf(it), false)
-                    }
-                }
-
-                override fun onItemLongClick(position: Int) {
-                    adapter?.items?.getOrNull(position)?.let {
-                        onItemSelectedCallback?.invoke(it, true)
-                        onItemsSelectedCallback?.invoke(listOf(it), true)
-                    }
-                }
-
-                override fun onItemsChecked(list: List<ArrayDrawableListViewAdapter.ItemModel>) {
-                    onItemsSelectedCallback?.invoke(list, true)
-                    checkedList = list
-                }
-
-            }
+            onItemClickListener
         )
     }
+
+    private val adapter get() = (childBinding.itemsListView.adapter as? ArrayDrawableListViewAdapter)
 
     fun setSearchAction(boolean: Boolean) {
         searchActionMenu?.setVisible(boolean)
     }
-
-    var adapter: ArrayDrawableListViewAdapter? = null
 
     var message = ""
         set(text) = with(childBinding) {
@@ -105,13 +107,6 @@ class ListDialog(
 
         initListener()
         initPreview()
-    }
-
-    override fun containerLayoutParams(): ViewGroup.LayoutParams {
-        return ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            context.resources.getDimensionPixelOffset(com.intuit.sdp.R.dimen._150sdp)
-        )
     }
 
     override fun createActionMenu(): Int {
