@@ -4,6 +4,7 @@ package com.nativedevps.support.utility.networking
 import android.content.Context
 import android.content.res.Configuration
 import android.widget.Toast
+import com.google.gson.Gson
 import com.nativedevps.support.coroutines.ErrorApiResult
 import com.nativedevps.support.coroutines.NetworkResult
 import com.nativedevps.support.coroutines.SuccessApiResult
@@ -21,15 +22,21 @@ import retrofit2.HttpException
  * @return channelFlow with {@link NetworkResult} including success result/failure exception
  */
 fun <T> emulate(
-    execution: suspend (ProducerScope<NetworkResult<T>>) -> NetworkResult<T>
+    execution: suspend (ProducerScope<NetworkResult<T>>) -> NetworkResult<T>,
 ) = channelFlow<NetworkResult<T>> {
-        try {
-            trySend(execution(this))
-        } catch (e: Exception) {
+    try {
+        trySend(execution(this))
+    } catch (e: Exception) {
+        if (e is HttpException) {
+            trySend(ErrorApiResult(e.extractErrorBody().let {
+                "${it.code}: ${it.message}"
+            }, e))
+        } else {
             trySend(ErrorApiResult(e.message ?: "execute with debug", e))
-            e.printStackTrace()
         }
+        e.printStackTrace()
     }
+}
 
 
 /**
@@ -61,6 +68,7 @@ suspend fun <T> Result<T>.emulateNetworkCall(
         ErrorApiResult(exception)
     }
 }
+
 fun Context.isDarkMode(): Boolean {
     val darkModeFlag = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
     return darkModeFlag == Configuration.UI_MODE_NIGHT_YES
@@ -75,5 +83,15 @@ fun attempt(callback: () -> Unit) {
         callback()
     } catch (e: Exception) {
         e.printStackTrace()
+    }
+}
+
+fun HttpException.extractErrorBody(): ErrorBodyModel {
+    return try {
+        val errorBody = response()?.errorBody()?.string()
+        val json = Gson().fromJson(errorBody, ErrorBodyModel::class.java)
+        json
+    } catch (e: Exception) {
+        ErrorBodyModel(500, e.message ?: e.localizedMessage)
     }
 }
