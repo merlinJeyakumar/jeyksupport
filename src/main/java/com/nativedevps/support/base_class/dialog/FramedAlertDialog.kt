@@ -70,8 +70,8 @@ abstract class FramedAlertDialog<B : ViewBinding>(
     }
 
     var headerTitle: String = ""
-        set(text) = with(binding) {
-            toolbar.setTitle(text)
+        set(text) {
+            binding?.toolbar?.setTitle(text)
         }
 
     var headerBackgroundColor: Int = 0
