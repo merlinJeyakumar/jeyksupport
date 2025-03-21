@@ -78,11 +78,20 @@ fun Context.toast(string: String) {
     Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
 }
 
-fun attempt(callback: () -> Unit) {
+inline fun attempt(callback: () -> Unit) {
     try {
         callback()
     } catch (e: Exception) {
         e.printStackTrace()
+    }
+}
+
+inline fun <R> attemptOrNull(callback: () -> R?): R? {
+    return try {
+        callback()
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
     }
 }
 
