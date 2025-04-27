@@ -97,9 +97,14 @@ inline fun <R> attemptOrNull(callback: () -> R?): R? {
 
 fun HttpException.extractErrorBody(): ErrorBodyModel {
     return try {
-        val errorBody = response()?.errorBody()?.string()
-        val json = Gson().fromJson(errorBody, ErrorBodyModel::class.java)
-        json
+        val errorBody = response()?.errorBody()?.string().takeIf { it?.isNotEmpty() == true }
+
+        val errorBodyModel = Gson().fromJson(errorBody, ErrorBodyModel::class.java)
+        if (errorBodyModel.code == 0) {
+            ErrorBodyModel(this.code(), this.message ?: this.localizedMessage)
+        } else {
+            errorBodyModel
+        }
     } catch (e: Exception) {
         ErrorBodyModel(500, e.message ?: e.localizedMessage)
     }
