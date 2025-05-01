@@ -5,16 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.nativedevps.support.custom_views.ProgressDialog
-import com.nativedevps.support.inline.orElse
-import com.nativedevps.support.utility.threading.runOnAsyncThread
-import com.nativedevps.support.utility.threading.runOnMainThread
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.jetbrains.anko.toast
 
 
@@ -25,20 +19,32 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
 
     private var _binding: VB? = null
     val binding get() = _binding!!
+    private val bindingLiveData = MutableLiveData<VB>()
     protected val viewModel: VM by lazy { ViewModelProvider(this).get(viewModelClass) }
     private val baseViewModel: BaseViewModel get() = viewModel
     private val currentActivity get() = (activity as BaseActivity<*, *>)
     private var progressDialog: ProgressDialog? = null
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        _binding = inflate.invoke(inflater, container, false)
+        if (bindingLiveData.value == null) {
+            _binding = inflate.invoke(requireActivity().layoutInflater, container, false).also {
+                bindingLiveData.value = it
+            }
 
-        onInit(inflater, container, savedInstanceState)
-        onInit(savedInstanceState)
+            onInit(inflater, container, savedInstanceState)
+            onInit(savedInstanceState)
+        } else {
+            _binding = bindingLiveData.value
+        }
         return binding.root
     }
 
