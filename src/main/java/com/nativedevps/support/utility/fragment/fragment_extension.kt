@@ -8,18 +8,25 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import nativedevps.support.R
 import org.jetbrains.anko.toast
+
+private val navOptions = NavOptions.Builder()
+    .setRestoreState(true)
+    .setLaunchSingleTop(true)
+    .build()
 
 fun Fragment.setResult(key: String, value: Any) {
     findNavController().previousBackStackEntry?.savedStateHandle?.set(key, value)
@@ -30,23 +37,23 @@ fun <T> Fragment.onResult(key: String): MutableLiveData<T>? {
 }
 
 fun Activity.goto(hostFragmentId: Int = R.id.nav_host_fragment, id: Int, bundle: Bundle) {
-    findNavController(hostFragmentId).navigate(id, bundle)
+    findNavController(hostFragmentId)
+        .navigate(id, bundle, navOptions)
 }
 
 fun Activity.goto(hostFragmentId: Int = R.id.nav_host_fragment, id: Int) {
-    findNavController(hostFragmentId).navigate(id)
+    findNavController(hostFragmentId)
+        .navigate(id, bundleOf(), navOptions)
 }
 
 fun Fragment.goto(id: Int) {
-    activity?.let {
-        findNavController().navigate(id)
-    }
+    findNavController()
+        .navigate(id, bundleOf(), navOptions)
 }
 
 fun Fragment.goto(id: Int, bundle: Bundle) {
-    activity?.let {
-        findNavController().navigate(id, bundle)
-    }
+    findNavController()
+        .navigate(id, bundle, navOptions)
 }
 
 fun Fragment.goto(directions: NavDirections) {
