@@ -9,14 +9,13 @@ import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import com.nativedevps.support.base_class.BaseDialogFragment
 import com.nativedevps.support.base_class.BaseViewModel
-import com.nativedevps.support.utility.view.ViewUtils.setBackgroundTint
 import com.nativedevps.support.utility.view.ViewUtils.visibility
 import nativedevps.support.R
 import nativedevps.support.databinding.DialogFramedBinding
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.layoutInflater
 
-abstract class FramedDialogFragment<B : ViewBinding, VM: BaseViewModel>(
+abstract class FramedDialogFragment<B : ViewBinding, VM : BaseViewModel>(
     context: Context,
     bindingFactory: (LayoutInflater) -> B,
     viewModelClass: Class<VM>,
@@ -43,7 +42,7 @@ abstract class FramedDialogFragment<B : ViewBinding, VM: BaseViewModel>(
         toolbar.setOnMenuItemClickListener {
             if (it.itemId == R.id.menuCloseAction) {
                 dismiss()
-            }else{
+            } else {
                 onMenuItemListener(it)
             }
             return@setOnMenuItemClickListener true
@@ -61,14 +60,14 @@ abstract class FramedDialogFragment<B : ViewBinding, VM: BaseViewModel>(
 
     private fun initListener() = with(binding) {
         okButton.setOnClickListener {
-            actionButton(true)
+            setAction(true)
         }
         cancelButton.setOnClickListener {
-            actionButton(false)
+            setAction(false)
         }
     }
 
-    open fun setTitle(string: String){
+    open fun setTitle(string: String) {
         headerTitle = string
     }
 
@@ -140,8 +139,8 @@ abstract class FramedDialogFragment<B : ViewBinding, VM: BaseViewModel>(
     ) {
     }
 
-    private fun actionButton(isOkButton: Boolean) {
-        actionCallback?.invoke(isOkButton)
+    open fun setAction(isPositive: Boolean) {
+        actionCallback?.invoke(isPositive)
     }
 
     open fun setOkEnabled(boolean: Boolean) = with(binding) {
@@ -152,7 +151,7 @@ abstract class FramedDialogFragment<B : ViewBinding, VM: BaseViewModel>(
         cancelButton.isEnabled = boolean
     }
 
-    open fun onMenuItemListener(menuItem: MenuItem){
+    open fun onMenuItemListener(menuItem: MenuItem) {
     }
 
     open fun containerLayoutParams(): ViewGroup.LayoutParams {
