@@ -46,7 +46,7 @@ fun CoroutineScope.runOnMainThread(callback: suspend CoroutineScope.() -> Unit):
     }
 }
 
-private fun executeAndMainCallback(
+fun executeAndMainCallback(
     backgroundExecution: () -> Unit,
     mainThreadExecution: () -> Unit
 ): Job {
