@@ -2,11 +2,13 @@ package com.nativedevps.support.utility.threading
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.nativedevps.support.coroutines.ErrorApiResult
 import com.nativedevps.support.coroutines.NetworkResult
 import com.nativedevps.support.coroutines.SuccessApiResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
@@ -19,7 +21,7 @@ import kotlinx.coroutines.launch
 
 fun <T> Flow<T>.runOnLifeCycle(
     lifecycleCoroutineScope: LifecycleOwner,
-    callback: ((T) -> Unit)? = null
+    callback: ((T) -> Unit)? = null,
 ): Job {
     return lifecycleCoroutineScope.lifecycleScope.launch {
         collect {
@@ -46,14 +48,14 @@ fun CoroutineScope.runOnMainThread(callback: suspend CoroutineScope.() -> Unit):
     }
 }
 
-fun executeAndMainCallback(
-    backgroundExecution: () -> Unit,
-    mainThreadExecution: () -> Unit
+fun <T> executeAndMainCallback(
+    backgroundExecution: suspend () -> T,
+    mainThreadExecution: (T) -> Unit,
 ): Job {
     return runOnAsyncThread {
-        backgroundExecution()
+        val output = backgroundExecution()
         runOnMainThread {
-            mainThreadExecution()
+            mainThreadExecution(output)
         }
     }
 }
@@ -68,7 +70,7 @@ fun <T> Flow<T>.runOnViewHolder(callback: ((T) -> Unit)? = null): Job {
 
 fun <T> Flow<T>.collectOnLifeCycle(
     lifecycleCoroutineScope: LifecycleOwner,
-    callback: ((T) -> Unit)? = null
+    callback: ((T) -> Unit)? = null,
 ): Job {
     return lifecycleCoroutineScope.lifecycleScope.launch {
         collectLatest {
@@ -88,7 +90,7 @@ fun <T> Flow<T>.repeatEvery(interval: Long) = flow {
 
 fun <T> Flow<T>.firstOrNullOnLifecycle(
     lifecycleCoroutineScope: LifecycleOwner,
-    callback: ((T?) -> Unit)? = null
+    callback: ((T?) -> Unit)? = null,
 ): Job {
     return lifecycleCoroutineScope.lifecycleScope.launch {
         callback?.invoke(firstOrNull())
@@ -101,4 +103,19 @@ fun <T> runAsyncFlow(execution: suspend () -> T) = channelFlow<T> {
 
 fun <T> NetworkResult<T>.getData(): T? {
     return (this as? SuccessApiResult<T>)?.data
+}
+
+fun <T : Any> T.asSuccessApiResult(): SuccessApiResult<T> {
+    return SuccessApiResult(this)
+}
+
+fun <T> emulateWithEmission(function: suspend (ProducerScope<NetworkResult<T>>) -> Unit): Flow<NetworkResult<T>> {
+    return channelFlow {
+        try {
+            function.invoke(this)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            trySend(ErrorApiResult(e.message ?: "execute with debug", e))
+        }
+    }
 }
