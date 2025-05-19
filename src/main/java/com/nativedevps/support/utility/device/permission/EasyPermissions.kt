@@ -122,7 +122,7 @@ object EasyPermissions {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             // only for lower of M
             //            PermissionCallbacks callbacks = (PermissionCallbacks) object;
-            callbacks!!.onPermissionsGranted(requestCode, ArrayList(Arrays.asList(*permission)))
+            callbacks?.onPermissionsGranted(requestCode, ArrayList(Arrays.asList(*permission)))
             return
         }
 
@@ -135,7 +135,7 @@ object EasyPermissions {
         )
 
         if (perms.size <= 0) {
-            callbacks!!.onPermissionsGranted(requestCode, ArrayList(Arrays.asList(*permission)))
+            callbacks?.onPermissionsGranted(requestCode, ArrayList(Arrays.asList(*permission)))
             return
         }
 
@@ -155,7 +155,7 @@ object EasyPermissions {
 //                    .setPositiveButton(positiveButton)
 //                    .setNegativeButton(negativeButton)
 //                    .setOnNegativeClickListener(DialogInterface.OnClickListener { dialog, which ->
-//                        callbacks!!.onPermissionsDenied(requestCode, Arrays.asList(*perms))
+//                        callbacks?.onPermissionsDenied(requestCode, Arrays.asList(*perms))
 //                        finalPermissionDialog!!.dismiss()
 //                    }).setOnPositiveClickListener(DialogInterface.OnClickListener { dialog, which ->
 //                        executePermissionsRequest(`object`, perms, requestCode)
@@ -291,12 +291,12 @@ object EasyPermissions {
         // Report granted permissions, if any.
         if (!granted.isEmpty() && denied.isEmpty()) {
             // Notify callbacks
-            callbacks!!.onPermissionsGranted(requestCode, granted)
+            callbacks?.onPermissionsGranted(requestCode, granted)
         } else if (granted.isEmpty() && !denied.isEmpty() && isPermenantlyDisabled) {
             val diff = System.currentTimeMillis() - timeWhenRequestingStart
             //            if (diff < 350) {
             //means it is permenantly disabled
-            callbacks!!.onPermissionsPermanentlyDeclined(requestCode, denied)
+            callbacks?.onPermissionsPermanentlyDeclined(requestCode, denied)
             //            }
             Log.i("TAG", diff.toString() + "")
         }// Report denied permissions, if any.
@@ -306,7 +306,7 @@ object EasyPermissions {
 
         // Report denied permissions, if any.
         if (!denied.isEmpty() && !isPermenantlyDisabled) {
-            callbacks!!.onPermissionsDenied(requestCode, denied)
+            callbacks?.onPermissionsDenied(requestCode, denied)
         }
 
         /*// If 100% successful, call annotated methods
