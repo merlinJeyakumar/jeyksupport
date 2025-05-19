@@ -6,10 +6,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.nativedevps.support.model.LoaderProperties
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import com.nativedevps.support.utility.Event
 import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 
@@ -77,5 +74,11 @@ abstract class BaseViewModel constructor(application: Application) :
         context.runOnUiThread {
             liveDataErrorAction.value = message
         }
+    }
+
+    val navigateEvent = MutableLiveData<Event<Unit>>()
+
+    fun onNavigateTrigger() {
+        navigateEvent.value = Event(Unit)
     }
 }
