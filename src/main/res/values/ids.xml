@@ -2,4 +2,5 @@
 <resources>
     <item name="menuCloseAction" type="id" />
     <item name="nav_host_fragment" type="id"/>
+    <id name="loadingViewContainer" type="id"/>
 </resources>
