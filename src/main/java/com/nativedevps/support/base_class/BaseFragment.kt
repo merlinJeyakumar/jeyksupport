@@ -35,7 +35,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        if (bindingLiveData.value == null) {
+        if (bindingLiveData.value == null || !preserveState()) {
             _binding = inflate.invoke(requireActivity().layoutInflater, container, false).also {
                 bindingLiveData.value = it
             }
@@ -72,4 +72,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(
         activity?.toast(string)
     }
 
+    open fun preserveState(): Boolean {
+        return false
+    }
 }
