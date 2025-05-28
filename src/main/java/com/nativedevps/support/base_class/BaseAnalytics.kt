@@ -30,7 +30,7 @@ open class BaseAnalytics(private val context: Context) {
             bundle.putString(Constant.SCREEN_NAME, baseAnalyticsEvent.screen.screenName)
         }
 
-        Log.d("baseAnalyticsEvent.eventName", bundle.toJson() ?: "bundle")
+        Log.v("baseAnalyticsEvent.eventName", bundle.toJson() ?: "bundle")
         firebaseAnalytics.logEvent(baseAnalyticsEvent.eventName, bundle)
     }
 
