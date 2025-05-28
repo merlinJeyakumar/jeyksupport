@@ -1,6 +1,7 @@
 package com.nativedevps.support.base_class
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,7 @@ abstract class BaseDialogFragment<VB : ViewBinding, VM : ViewModel>(
 
     private var _binding: VB? = null
     val binding get() = _binding!!
+    private var callback: (() -> Unit)? = null
 
     protected val viewModel: VM by lazy { ViewModelProvider(this).get(viewModelClass) }
 
@@ -58,6 +60,15 @@ abstract class BaseDialogFragment<VB : ViewBinding, VM : ViewModel>(
 
     open fun theme(): Int {
         return R.style.TransparentDialogStyle
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        callback?.invoke()
+    }
+
+    fun onDismissCallback(callback: () -> Unit) {
+        this@BaseDialogFragment.callback = callback
     }
 
     open fun configureDialog(dialog: Dialog?) {
