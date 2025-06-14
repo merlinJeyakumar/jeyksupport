@@ -35,7 +35,7 @@ abstract class BaseDialogFragment<VB : ViewBinding, VM : ViewModel>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         configureDialog(dialog)
-        setStyle(STYLE_NO_TITLE, theme())
+        setStyle(STYLE_NO_TITLE, dialogTheme())
     }
 
     override fun onCreateView(
@@ -58,8 +58,13 @@ abstract class BaseDialogFragment<VB : ViewBinding, VM : ViewModel>(
         activity?.toast(string)
     }
 
+    @Deprecated("use dialog theme method")
     open fun theme(): Int {
         return R.style.TransparentDialogStyle
+    }
+
+    open fun dialogTheme(): Int {
+        return super.getTheme()
     }
 
     override fun onDismiss(dialog: DialogInterface) {
