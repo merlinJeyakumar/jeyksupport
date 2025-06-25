@@ -26,6 +26,7 @@ open class BaseAnalytics(private val context: Context) {
                     else -> bundle.putString(key, value.toString())
                 }
             }
+            bundle.putString(Constant.USER_NAME, baseAnalyticsEvent.eventName)
             bundle.putString(Constant.EVENT_NAME, baseAnalyticsEvent.eventName)
             bundle.putString(Constant.SCREEN_NAME, baseAnalyticsEvent.screen.screenName)
         }
@@ -102,5 +103,6 @@ open class BaseAnalytics(private val context: Context) {
     object Constant {
         const val SCREEN_NAME = "screen_name"
         const val EVENT_NAME = "event_name"
+        const val USER_NAME = "user_name"
     }
 }
