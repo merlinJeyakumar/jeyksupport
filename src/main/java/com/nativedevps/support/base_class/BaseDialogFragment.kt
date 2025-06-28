@@ -64,7 +64,7 @@ abstract class BaseDialogFragment<VB : ViewBinding, VM : ViewModel>(
     }
 
     open fun dialogTheme(): Int {
-        return super.getTheme()
+        return R.style.TransparentDialogStyle
     }
 
     override fun onDismiss(dialog: DialogInterface) {
