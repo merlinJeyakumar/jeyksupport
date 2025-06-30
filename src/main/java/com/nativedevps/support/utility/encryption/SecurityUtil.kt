@@ -141,17 +141,17 @@ class SecurityUtil(private val context: Context) {
 
             val signatures =
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-                    packageInfo.signingInfo.apkContentsSigners
+                    packageInfo.signingInfo?.apkContentsSigners
                 } else {
                     packageInfo.signatures
                 }
 
-            if (signatures.isEmpty()) {
+            if (signatures?.isEmpty() == true) {
                 Log.e("Keystore Info", "No signing certificates found!")
                 return null
             }
 
-            for (signature in signatures) {
+            for (signature in signatures?: error("Signatures cannot be null")) {
                 try {
                     // Parse the certificate
                     val certFactory = CertificateFactory.getInstance("X.509")
