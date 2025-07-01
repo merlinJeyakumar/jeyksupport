@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
-                    android:textColor="?android:textColorTertiaryInverse"
+                    android:textColor="@color/dayNightWhite"
                     android:text="Loading.."
                     android:textStyle="bold"
                     android:typeface="monospace" />
