@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="@dimen/_5sdp"
+            android:textColor="@color/dayNightWhite"
             android:text="loading.." />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

@@ -33,7 +33,7 @@ class LoaderDialog(
             )
             lottieAnimationView.playAnimation()
         }
-        cardView.setCardBackgroundColor(requireContext().resources.getColor(loaderConstraints.cardBackgroundColor))
+        //cardView.setCardBackgroundColor(requireContext().resources.getColor(loaderConstraints.cardBackgroundColor))
         onViewReadyCallback?.invoke(this@LoaderDialog, binding)
     }
 
@@ -85,6 +85,7 @@ class LoaderDialog(
         val message: String = "Loading",
         val lottieFile: Int? = null,
         val autoShowLoader: Boolean = true,
-        val cardBackgroundColor:Int = R.color.dayNightWhite
+        @Deprecated("Use LoaderProperties instead")
+        val cardBackgroundColor:Int = R.color.dayNightBlack
     )
 }
