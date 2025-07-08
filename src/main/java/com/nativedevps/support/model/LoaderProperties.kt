@@ -1,5 +1,8 @@
 package com.nativedevps.support.model
 
+import androidx.annotation.Keep
+
+@Keep
 class LoaderProperties(
     var show: Boolean,
     var message: String = "",
