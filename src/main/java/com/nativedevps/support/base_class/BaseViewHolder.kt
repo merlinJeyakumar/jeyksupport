@@ -50,4 +50,12 @@ abstract class BaseViewHolder<M, SELECTION_TYPE>(
     fun isSelectionMode(): Boolean {
         return getSelectionList().isNotEmpty()
     }
+
+    /*
+    * Call required with onViewRecycled from inherited adapter class
+    * This method is called when the ViewHolder is no longer needed.
+    */
+    open fun onCleared() {
+
+    }
 }
