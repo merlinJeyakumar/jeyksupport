@@ -4,7 +4,9 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.provider.MediaStore
 import android.util.Base64
+import com.nativedevps.support.utility.networking.attemptOrNull
 import java.io.*
 
 
@@ -140,3 +142,24 @@ fun File.mkParentDirsIfNotFound(): File {
     }
     return this
 }
+
+/*
+* This function retrieves a unique key for an image URI.
+* It first attempts to query the MediaStore for the image ID.
+* If that fails, it falls back to generating a hash code from the URI string.
+* @param context The application context.
+* @return A unique string key for the image, or null if the URI is invalid.
+*/
+fun Uri.getUniqueImageKey(context: Context): String? {
+    return attemptOrNull {
+        val projection = arrayOf(MediaStore.Images.Media._ID)
+        context.contentResolver.query(this, projection, null, null, null)?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                val idIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+                return cursor.getLong(idIndex).toString()
+            }
+        }
+        return this.toString().hashCode().toString() // fallback for older or unknown cases
+    }
+}
+
