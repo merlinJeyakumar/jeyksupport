@@ -218,3 +218,16 @@ fun getCalendarFromTime(TimeHHmm: String): Calendar {
     calendar[Calendar.SECOND] = 0
     return calendar
 }
+
+fun toMillisFromTimeStamp(epochStringTime: String, formatPattern: String): Long {
+    val sdf = SimpleDateFormat(formatPattern, Locale.getDefault())
+    return try {
+        val mDate = sdf.parse(epochStringTime)
+        val timeInMilliseconds = mDate.time
+        println("Date in milli :: $timeInMilliseconds")
+        timeInMilliseconds
+    } catch (e: ParseException) {
+        e.printStackTrace()
+        0
+    }
+}
