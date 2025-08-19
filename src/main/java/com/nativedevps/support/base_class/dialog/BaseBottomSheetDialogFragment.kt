@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
 import androidx.annotation.Nullable
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
@@ -146,5 +147,16 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : ViewModel>(
 
     open fun disableHalfExpanded(): Boolean {
         return true
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null   // avoid holding old view references after rotation
+    }
+}
+
+fun BottomSheetDialogFragment.safeShow(manager: FragmentManager, tag: String) {
+    if (manager.findFragmentByTag(tag) == null) {
+        show(manager, tag)
     }
 }
