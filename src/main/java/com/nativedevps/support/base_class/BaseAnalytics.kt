@@ -8,7 +8,9 @@ import com.nativedevps.support.inline.toJson
 import com.nativedevps.support.utility.debugging.Log
 
 @SuppressLint("MissingPermission")
-open class BaseAnalytics(private val context: Context) {
+open class BaseAnalytics(
+    private val context: Context
+) {
     private val firebaseAnalytics: FirebaseAnalytics by lazy { FirebaseAnalytics.getInstance(context) }
 
     fun logEvent(
@@ -26,13 +28,17 @@ open class BaseAnalytics(private val context: Context) {
                     else -> bundle.putString(key, value.toString())
                 }
             }
-            bundle.putString(Constant.USER_NAME, baseAnalyticsEvent.eventName)
             bundle.putString(Constant.EVENT_NAME, baseAnalyticsEvent.eventName)
             bundle.putString(Constant.SCREEN_NAME, baseAnalyticsEvent.screen.screenName)
         }
 
         Log.v("baseAnalyticsEvent.eventName", bundle.toJson() ?: "bundle")
-        firebaseAnalytics.logEvent(baseAnalyticsEvent.eventName, bundle)
+
+        logEvent(baseAnalyticsEvent.eventName, bundle)
+    }
+
+    open fun logEvent(eventName: String, bundle: Bundle) {
+        firebaseAnalytics.logEvent(eventName, bundle)
     }
 
     sealed class BaseAnalyticsEvent {
