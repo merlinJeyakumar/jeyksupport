@@ -106,7 +106,7 @@ object ViewUtils {
         setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, drawable);
     }
 
-    inline fun View.setClickListener(onClickEvent: (view: View) -> Unit) {
+    fun View.setClickListener(onClickEvent: (view: View) -> Unit) {
         this.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 onClickEvent(v)
@@ -188,7 +188,7 @@ object ViewUtils {
         return this.visibility == View.GONE
     }
 
-    fun View.isInvisible(): Boolean {
+    inline fun View.isInvisible(): Boolean {
         return this.visibility == View.INVISIBLE
     }
 
@@ -231,7 +231,7 @@ object ViewUtils {
         this.layoutParams.width = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._10sdp)
     }
 
-    fun EditText.clear() {
+    inline fun EditText.clear() {
         setText("")
     }
 
@@ -267,7 +267,7 @@ object ViewUtils {
         backgroundTintList = ContextCompat.getColorStateList(this.context, color);
     }
 
-    fun View.visible(visibleIf: Boolean, gone: Boolean = true) {
+    inline fun View.visible(visibleIf: Boolean, gone: Boolean = true) {
         visibility = if (visibleIf) {
             View.VISIBLE
         } else {
