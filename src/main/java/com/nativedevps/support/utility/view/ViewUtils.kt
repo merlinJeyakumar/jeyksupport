@@ -90,23 +90,23 @@ object ViewUtils {
         window.setStatusBarColor(color)
     }
 
-    fun TextView.setLeftDrawable(@DrawableRes drawable: Int) {
+    inline fun TextView.setLeftDrawable(@DrawableRes drawable: Int) {
         setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);
     }
 
-    fun TextView.setTopDrawable(@DrawableRes drawable: Int) {
+    inline fun TextView.setTopDrawable(@DrawableRes drawable: Int) {
         setCompoundDrawablesWithIntrinsicBounds(0, drawable, 0, 0);
     }
 
-    fun TextView.setRightDrawable(@DrawableRes drawable: Int) {
+    inline fun TextView.setRightDrawable(@DrawableRes drawable: Int) {
         setCompoundDrawablesWithIntrinsicBounds(0, 0, drawable, 0);
     }
 
-    fun TextView.setBottomDrawable(@DrawableRes drawable: Int) {
+    inline fun TextView.setBottomDrawable(@DrawableRes drawable: Int) {
         setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, drawable);
     }
 
-    fun View.setClickListener(onClickEvent: (view: View) -> Unit) {
+    inline fun View.setClickListener(onClickEvent: (view: View) -> Unit) {
         this.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 onClickEvent(v)
@@ -115,7 +115,7 @@ object ViewUtils {
         }
     }
 
-    fun View.click() {
+    inline fun View.click() {
         val downTime: Long = SystemClock.uptimeMillis()
         val eventTime: Long = SystemClock.uptimeMillis() + 100
         val x = 0.0f
@@ -132,7 +132,7 @@ object ViewUtils {
         dispatchTouchEvent(motionEvent)
     }
 
-    fun View.visibility(visible: Boolean, makeGone: Boolean = true) {
+    inline fun View.visibility(visible: Boolean, makeGone: Boolean = true) {
         if (visible) {
             visible()
         } else {
@@ -144,7 +144,7 @@ object ViewUtils {
         }
     }
 
-    fun View.invertVisibility(gone: Boolean = true) {
+    inline fun View.invertVisibility(gone: Boolean = true) {
         if (this.visibility == View.VISIBLE) {
             this.visibility = if (gone) {
                 View.GONE
@@ -156,35 +156,35 @@ object ViewUtils {
         }
     }
 
-    fun Collection<View>.visible(){
+    inline fun Collection<View>.visible(){
         for (view in this) {
             view.visible()
         }
     }
 
-    fun Collection<View>.gone(){
+    inline fun Collection<View>.gone(){
         for (view in this) {
             view.gone()
         }
     }
 
-    fun View.gone() {
+    inline fun View.gone() {
         this.visibility = View.GONE
     }
 
-    fun View.visible() {
+    inline fun View.visible() {
         this.visibility = View.VISIBLE
     }
 
-    fun View.invisible() {
+    inline fun View.invisible() {
         this.visibility = View.INVISIBLE
     }
 
-    fun View.isVisible(): Boolean {
+    inline fun View.isVisible(): Boolean {
         return this.visibility == View.VISIBLE
     }
 
-    fun View.isGone(): Boolean {
+    inline fun View.isGone(): Boolean {
         return this.visibility == View.GONE
     }
 
