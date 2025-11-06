@@ -6,12 +6,12 @@
         android:icon="@drawable/ic_baseline_search_24"
         android:title="Search items"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:iconTint="@color/white"
+        app:iconTint="@color/dayNightWhite"
         app:showAsAction="always" />
     <item
         android:id="@id/menuCloseAction"
         android:icon="@drawable/ic_baseline_close_24"
         android:title=""
-        app:iconTint="@color/white"
+        app:iconTint="@color/dayNightWhite"
         app:showAsAction="always" />
 </menu>

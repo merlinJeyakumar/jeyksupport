@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.nativedevps.support.inline.toJson
 import com.nativedevps.support.utility.debugging.Log
+import kotlin.reflect.KClass
 
 @SuppressLint("MissingPermission")
 open class BaseAnalytics(
@@ -38,7 +39,16 @@ open class BaseAnalytics(
     }
 
     open fun logEvent(eventName: String, bundle: Bundle) {
-        firebaseAnalytics.logEvent(eventName, bundle)
+        if (classExists("com.google.firebase.analytics.FirebaseAnalytics")) {
+            firebaseAnalytics.logEvent(eventName, bundle)
+        }
+    }
+
+    fun classExists(name: String) = try {
+        Class.forName(name)
+        true
+    } catch (e: ClassNotFoundException) {
+        false
     }
 
     sealed class BaseAnalyticsEvent {
