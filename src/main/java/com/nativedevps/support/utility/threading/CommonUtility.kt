@@ -5,6 +5,7 @@ import androidx.lifecycle.lifecycleScope
 import com.nativedevps.support.coroutines.ErrorApiResult
 import com.nativedevps.support.coroutines.NetworkResult
 import com.nativedevps.support.coroutines.SuccessApiResult
+import com.nativedevps.support.utility.networking.attemptOrNull
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -33,6 +34,12 @@ fun <T> Flow<T>.runOnLifeCycle(
 fun runOnSameThread(callback: suspend CoroutineScope.() -> Unit): Job {
     return CoroutineScope(Dispatchers.Unconfined).launch {
         callback()
+    }
+}
+
+fun runOnAsyncThreadWithCatch(callback: suspend CoroutineScope.() -> Unit): Job {
+    return CoroutineScope(Dispatchers.IO).launch {
+        attemptOrNull { callback() }
     }
 }
 
