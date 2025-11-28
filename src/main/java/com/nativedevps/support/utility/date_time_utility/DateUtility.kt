@@ -56,7 +56,6 @@ fun parseMillisFromString(formatPattern: String?): Long {
     return try {
         val mDate = sdf.parse(formatPattern)
         val timeInMilliseconds = mDate.time
-        println("Date in milli :: $timeInMilliseconds")
         timeInMilliseconds
     } catch (e: ParseException) {
         // TODO Auto-generated catch block
@@ -224,7 +223,6 @@ fun toMillisFromTimeStamp(epochStringTime: String, formatPattern: String): Long 
     return try {
         val mDate = sdf.parse(epochStringTime)
         val timeInMilliseconds = mDate.time
-        println("Date in milli :: $timeInMilliseconds")
         timeInMilliseconds
     } catch (e: ParseException) {
         e.printStackTrace()
