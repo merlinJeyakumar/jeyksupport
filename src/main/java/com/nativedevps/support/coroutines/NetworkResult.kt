@@ -15,6 +15,10 @@ data class SuccessApiResult<out T>(
     val data: T,
 ) : NetworkResult<T>()
 
+data class CompletionApiResult<out T>(
+    val data: T,
+) : NetworkResult<T>()
+
 data class EmissionApiResult<out T>(
     val data: T,
 ) : NetworkResult<T>()
@@ -23,3 +27,5 @@ sealed class Status
 data class Information<T>(val message: String, val result: T) : Status()
 data class Error<out T>(val exception: T) : Status()
 data class Progress<out T>(val progress: T) : Status()
+data object Loading : Status()
+data class Completed<out T>(val result: T) : Status()
