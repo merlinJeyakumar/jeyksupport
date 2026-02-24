@@ -5,8 +5,8 @@ import com.nativedevps.myapplication.domain.model.update.UpdateResponseModel
 import com.nativedevps.myapplication.domain.model.user.UserRequestModel
 import com.nativedevps.support.base_class.FlowUseCase
 import com.nativedevps.support.coroutines.NetworkResult
-import com.nativedevps.support.utility.usecase.emulate
-import com.nativedevps.support.utility.usecase.emulateNetworkCall
+import com.nativedevps.support.utility.networking.emulate
+import com.nativedevps.support.utility.networking.emulateNetworkCall
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
