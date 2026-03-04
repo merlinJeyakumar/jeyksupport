@@ -9,4 +9,7 @@
 - [BuildSrc](https://github.com/merlinJeyakumar/android-compact-dependencies.git)
 
 # Disclosure
-Dozens of utility, base-classes, best-implementation-methodolgy included
+Dozens of utility, base-classes, best-implementation-methodology included.
+
+# Development Guidelines
+This repository contains a `.cursorrules` file at the root. Developers working on this SDK must adhere to the generic, reusable, and backward-compatible principles outlined within it to ensure seamless integration into consumer applications.

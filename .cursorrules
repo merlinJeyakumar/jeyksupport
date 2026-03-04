@@ -1,0 +1,30 @@
+# JeyKSupport Android SDK - Project Rules
+
+## 🚨 CRITICAL: SDK Maintenance Rules 🚨
+- This package generates an `.aar` file that is consumed by **multiple external projects**. 
+- **NEVER REMOVE** any public function, base class, or property. 
+- If an API must be changed, mark it with `@Deprecated("Reason...", ReplaceWith("newFunction()"))` instead of deleting it.
+- **Before creating or editing** an existing function or base class, thoroughly research and consider the side effects it will have on all consuming projects.
+- Maintain strict backward compatibility for public APIs at all times to avoid breaking dependent applications.
+
+## General Principles
+- This is a library/SDK project providing base classes, utilities, and common infrastructure for NativeDevps applications.
+- Keep implementations generic, reusable, and independent of specific app business logic.
+- Avoid introducing heavy third-party dependencies unless strictly necessary for the core utility.
+
+## Architecture & Structure
+- Expose clear abstractions and base classes for MVVM patterns (`BaseActivity`, `BaseFragment`, `BaseViewModel`).
+- Ensure UI components and extensions are flexibly themed and styled.
+- Provide comprehensive analytics interfaces (like `BaseAnalytics`) for apps to implement.
+- Organize utilities logically (e.g., `device`, `network`, `view`, `coroutines`).
+
+## Code Style
+- Use Kotlin idioms (extensions, scope functions, coroutines).
+- Ensure thread safety in core utilities (e.g., using `runOnAsyncThread` and `runOnMainThread`).
+- Avoid hardcoding strings or dimensions; use context-provided resources.
+- Fully document public functions and classes to facilitate usage by dependent apps.
+
+## Utilities
+- Before creating a new helper or utility function, **ALWAYS consult `utilities.md`**.
+- NativeDevps maintains over 50 utility classes in the `com.nativedevps.support.utility` package. Check for existing implementations (e.g., in `device`, `network`, `view`, `date_time_utility`) before writing custom logic.
+- Prefer Kotlin extension functions for view and collection utilities to maintain call-site brevity.
