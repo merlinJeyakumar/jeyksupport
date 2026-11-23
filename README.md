@@ -17,17 +17,17 @@ The project is documented for source builds. A public dependency coordinate is i
 - Runtime-permission, keyboard, device, network, storage, file, MIME-type, and notification helpers.
 - UI, adapter, RecyclerView, and custom-view helpers.
 - Coroutine and main-thread/background-thread utilities.
-- Retrofit `ResultCallAdapterFactory` and response-wrapper support.
-- Room and shared-preference helpers.
-- Logging plus encryption, hashing, and keystore-related helper code.
+- Retrofit result-call adapter support through the canonical `com.nativedevps.support.utility.network` package.
+- Room and shared-preference helper bases that consumers should align with their own persistence schema.
+- Logging and platform-signature helpers, plus cryptographic and key-management utilities.
 
-Use only the APIs that fit the host application's architecture and Android-version requirements.
+Consumers should select and review the appropriate API for their Android-version and threat-model requirements.
 
 ## Repository layout
 
 | Path | Purpose |
 | --- | --- |
-| `app/` | Sample and consumer Android application module. |
+| `app/` | Consumer/scaffold module with dependency wiring and model/use-case examples; it is not an end-to-end demo application. |
 | `jeyksupport/` | Reusable Android library module. |
 | `buildSrc/` | Shared Gradle build configuration and version constants. |
 | `utilities.md` | Additional utility-package reference material. |
@@ -42,7 +42,7 @@ The current project configuration uses:
 - Android `minSdk 21`
 - Android `compileSdk 33` and `targetSdk 33`
 
-View Binding and Data Binding are enabled in the library module. The project also includes Hilt support for applications that use dependency injection.
+View Binding and Data Binding are enabled in the library module. The project includes Hilt dependencies and application-scaffold wiring, but it does not provide a complete library-level dependency-injection solution.
 
 ## Build from source
 
